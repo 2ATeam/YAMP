@@ -21,12 +21,13 @@
     </comment>
     <comment
       Id="78a5efc9-57f7-4cd7-a7a8-886ac9ebd8e5">
-      <body>Plays Sounds</body>
+      <body>Plays Stream
+(Static)</body>
       <annotatedElements>
         <classMoniker
           Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
           LastKnownName="SoundController"
-          LastKnownLocation="YAMP.uml" />
+          LastKnownLocation="Package_0920.uml" />
       </annotatedElements>
     </comment>
   </ownedCommentsInternal>
@@ -149,7 +150,7 @@
           <property
             Id="697d4449-9f43-47f2-bd5e-90780905407c"
             name="tracks"
-            visibility="Private"
+            visibility="Protected"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -186,7 +187,7 @@
             <classMoniker
               Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
               LastKnownName="SoundController"
-              LastKnownLocation="YAMP.uml" />
+              LastKnownLocation="Package_0920.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
@@ -563,80 +564,17 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
-        <targetEnds>
-          <association
-            Id="4c274c1a-101c-4d71-88be-2b68dc70bd2b"
-            isDerived="false"
-            sourceEndRoleName="PlayList"
-            targetEndRoleName="AudioLibrary"
-            isLeaf="false"
-            isAbstract="false">
+        <generalsInternal>
+          <generalization
+            Id="296ecc20-2964-45fa-8991-f32c15880d5d"
+            isSubstitutable="false">
             <classMoniker
               Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
               LastKnownName="PlayList"
               LastKnownLocation="YAMP.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="57ad5500-ae86-49b6-b697-8e31a5bad61c"
-                  name="PlayList"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="4346b6c3-d282-46e6-accd-3540a10273a0"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="e61fb46c-c50f-457b-a116-ad4a20d8ab22"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="d26f0f3b-6037-4fc7-8989-92da4318f9ac"
-                  name="AudioLibrary"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
+          </generalization>
+        </generalsInternal>
         <ownedAttributesInternal>
-          <property
-            Id="2c7d6950-162c-4b8a-b971-feea998c2764"
-            name="files"
-            visibility="Private"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <type_NamedElement>
-              <classMoniker
-                Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
-                LastKnownName="PlayList"
-                LastKnownLocation="YAMP.uml" />
-            </type_NamedElement>
-          </property>
           <property
             Id="de6bad82-b7ee-4b39-a233-b6df7f1a5ea8"
             name="tarckLists"
@@ -767,26 +705,6 @@
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
-        Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
-        name="SoundController"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <ownedOperationsInternal>
-          <operation
-            Id="a34ceaf3-b51a-495e-a638-e1ae9c80a1e8"
-            name="lowLevelStuff"
-            visibility="Private"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-        </ownedOperationsInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
         Id="5556734d-1776-4d4e-a956-d77991848de8"
         name="AudioLibraryManager"
         isAbstract="false"
@@ -846,20 +764,10 @@
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <class
-        Id="dc184f83-bf8e-4bbf-bb9b-8116a30a8110"
-        name="Visualizer"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false" />
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="4f196a3c-3cf6-4822-9e64-032fd8b74955"
-        name="Equalizer"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false" />
+      <packageMoniker
+        Id="b846d626-49af-4d44-9a87-36318c24bab5"
+        LastKnownName="Sound Management"
+        LastKnownLocation="Package_0920.uml" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

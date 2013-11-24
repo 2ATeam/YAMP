@@ -13,13 +13,6 @@
         <classMoniker Id="461db0d2-3bd3-4132-a86d-49ab1498612f" LastKnownName="AudioLibraryManager" />
       </annotatedElements>
     </comment>
-    <comment Id="3c01ebfb-b4c8-4d9c-a0ce-56f1ef7386d5">
-      <elementDefinition Id="78a5efc9-57f7-4cd7-a7a8-886ac9ebd8e5" />
-      <body>Plays Sounds</body>
-      <annotatedElements>
-        <classMoniker Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" LastKnownName="SoundController" />
-      </annotatedElements>
-    </comment>
   </ownedCommentsInternal>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
@@ -70,10 +63,10 @@
           </association>
         </targetEnds>
         <ownedAttributesInternal>
-          <property Id="3032caba-8df5-4888-9e20-9ccb0a8cf7ff" name="tracks" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="3032caba-8df5-4888-9e20-9ccb0a8cf7ff" name="tracks" visibility="Protected" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="697d4449-9f43-47f2-bd5e-90780905407c" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="ac7708e4-ec63-47b8-87a8-19c84128c259" LastKnownName="ArrayList&lt;AudioFile&gt;" />
+              <referencedTypeMoniker Id="f0deb85b-35c7-476b-914c-f1e1dd652d48" LastKnownName="ArrayList&lt;AudioFile&gt;" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -239,41 +232,13 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="ed792d5c-6e66-4171-a7aa-47fa54c1805e" name="AudioLibrary" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5343060b-52d1-426b-9b4a-f749caa03242" />
-        <targetEnds>
-          <association Id="a490ad99-d5e4-45b8-bfc4-b8228d6022bf" isDerived="false" sourceEndRoleName="PlayList" targetEndRoleName="AudioLibrary" isLeaf="false" isAbstract="false">
+        <generalsInternal>
+          <generalization Id="8c2cab29-968d-4c63-9dbc-32c048a66c2f" isSubstitutable="false">
             <classMoniker Id="5be37de1-d65f-48e1-b789-778a068b9271" LastKnownName="PlayList" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="cd2da238-e30c-4d78-aa96-ee80b73e9c97" name="PlayList" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString Id="e7e646f3-f0af-4520-835c-e7afab95e808" name="Lower" value="*">
-                      <elementDefinition Id="4346b6c3-d282-46e6-accd-3540a10273a0" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="36d09577-c4e3-459c-9c8c-8a9dfbc3b15a" name="Upper" value="*">
-                      <elementDefinition Id="e61fb46c-c50f-457b-a116-ad4a20d8ab22" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="57ad5500-ae86-49b6-b697-8e31a5bad61c" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="8034f5f4-2593-4f4d-a057-a7ab8ab4f82e" name="AudioLibrary" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
-                  <elementDefinition Id="d26f0f3b-6037-4fc7-8989-92da4318f9ac" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="4c274c1a-101c-4d71-88be-2b68dc70bd2b" />
-          </association>
-        </targetEnds>
+            <elementDefinition Id="296ecc20-2964-45fa-8991-f32c15880d5d" />
+          </generalization>
+        </generalsInternal>
         <ownedAttributesInternal>
-          <property Id="740239d3-291e-4065-b744-5a46f5a0774c" name="files" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="2c7d6950-162c-4b8a-b971-feea998c2764" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="c85c46ce-c792-4f4e-b788-5cb9680f238f" LastKnownName="PlayList" />
-            </type_NamedElement>
-          </property>
           <property Id="00c8a155-2ba8-4eec-9a68-38f177ce0901" name="tarckLists" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="de6bad82-b7ee-4b39-a233-b6df7f1a5ea8" />
             <type_NamedElement>
@@ -283,11 +248,6 @@
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="ac7708e4-ec63-47b8-87a8-19c84128c259" name="ArrayList&lt;AudioFile&gt;" isAbstract="false" isLeaf="false" cachedFullName="ArrayList&lt;AudioFile&gt;">
-        <elementDefinition Id="dc0cd54c-cb0f-4ee0-8c86-692769f8d39a" />
-      </referencedType>
-    </packageHasNamedElement>
     <packageHasNamedElement>
       <referencedType Id="c85c46ce-c792-4f4e-b788-5cb9680f238f" name="PlayList" isAbstract="false" isLeaf="false" cachedFullName="YAMP::PlayList">
         <elementDefinition Id="e8ee2513-06db-491f-89de-ed4dfd27ca29" />
@@ -352,16 +312,6 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" name="SoundController" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="df7b3c9a-092e-4656-86c0-b147506b6a83" />
-        <ownedOperationsInternal>
-          <operation Id="baf32165-2161-4288-a95c-011dc2f9c804" name="lowLevelStuff" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="a34ceaf3-b51a-495e-a638-e1ae9c80a1e8" />
-          </operation>
-        </ownedOperationsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
       <class Id="461db0d2-3bd3-4132-a86d-49ab1498612f" name="AudioLibraryManager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5556734d-1776-4d4e-a956-d77991848de8" />
         <targetEnds>
@@ -389,16 +339,133 @@
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="d9fd1cfe-d690-4b46-a729-92b847386a1c" name="Visualizer" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="dc184f83-bf8e-4bbf-bb9b-8116a30a8110" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="9b0095fd-c0f5-4bfd-b151-8bb1f2df993b" name="Equalizer" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="4f196a3c-3cf6-4822-9e64-032fd8b74955" />
-      </class>
-    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="f0deb85b-35c7-476b-914c-f1e1dd652d48" name="ArrayList&lt;AudioFile&gt;" isAbstract="false" isLeaf="false" cachedFullName="ArrayList&lt;AudioFile&gt;">
+        <elementDefinition Id="dc0cd54c-cb0f-4ee0-8c86-692769f8d39a" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="7614c730-025f-46db-8b4e-dd334e366fec" name="AudioStream" isAbstract="false" isLeaf="false" cachedFullName="YAMP::Package1::AudioStream">
+        <elementDefinition Id="a48ac28d-42e3-461d-a99d-bdeaebdc523a" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="54bac253-04a2-41e1-87f6-611a7aa56d1a" name="Sound Management">
+        <ownedCommentsInternal>
+          <comment Id="3c01ebfb-b4c8-4d9c-a0ce-56f1ef7386d5">
+            <elementDefinition Id="78a5efc9-57f7-4cd7-a7a8-886ac9ebd8e5" />
+            <body>Plays Stream
+(Static)</body>
+            <annotatedElements>
+              <classMoniker Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" LastKnownName="SoundController" />
+            </annotatedElements>
+          </comment>
+          <comment Id="cd362452-d5eb-45e3-adc4-c332f46e9a8d">
+            <elementDefinition Id="9893c51a-715e-4cc7-a994-7631e33d1e17" />
+            <body>can be extended with additional modules
+</body>
+            <annotatedElements>
+              <classMoniker Id="d9fd1cfe-d690-4b46-a729-92b847386a1c" LastKnownName="Visualizer" />
+            </annotatedElements>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="b846d626-49af-4d44-9a87-36318c24bab5" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="d9fd1cfe-d690-4b46-a729-92b847386a1c" name="Visualizer" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="dc184f83-bf8e-4bbf-bb9b-8116a30a8110" />
+              <targetEnds>
+                <association Id="d02875bc-87bd-4d73-a707-b7413357de54" isDerived="false" sourceEndRoleName="Visualizer" targetEndRoleName="SoundController" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" LastKnownName="SoundController" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="9060d5ee-08fd-4c40-b492-b7b5c388539b" name="Visualizer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="736d6394-a1e4-466a-970d-5d75b63d98f9" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="93edb455-a090-406d-8f05-c97cc45cbd94" name="SoundController" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <elementDefinition Id="40e89919-3e67-44f1-8ada-9dd7047ed0fc" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="56d453ff-51c4-4384-9bb5-36bbccb9eecb" />
+                </association>
+              </targetEnds>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="531b4930-cb89-4b55-8d2b-21b179ee8ca2" name="AudioStream" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="a48ac28d-42e3-461d-a99d-bdeaebdc523a" />
+              <ownedAttributesInternal>
+                <property Id="eeaf739d-8298-496e-8c66-ae467e050d2d" name="source" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="cac2974a-64d7-4360-ae96-979c4715039e" />
+                </property>
+              </ownedAttributesInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="9b0095fd-c0f5-4bfd-b151-8bb1f2df993b" name="Equalizer" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="4f196a3c-3cf6-4822-9e64-032fd8b74955" />
+              <targetEnds>
+                <association Id="89999bb1-1f4c-49d5-99b9-f5fcba881536" isDerived="false" sourceEndRoleName="Equalizer" targetEndRoleName="SoundController" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" LastKnownName="SoundController" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="04b11426-4b9a-40cf-830f-e75a41341adf" name="Equalizer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="86fc2f6d-f1dc-4924-a163-797c1d782bc8" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="84e759c4-ef1e-4bb4-9b7a-6e1a5cfeb814" name="SoundController" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <elementDefinition Id="1b0750e8-1077-4d1e-b70d-aa1250bca2dd" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="0c9d8fe3-d6ca-47b6-9f69-ff647ad5e1ff" />
+                </association>
+              </targetEnds>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="bd04a017-e130-4ea5-8c94-a56b2a2712bf" name="SoundController" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="df7b3c9a-092e-4656-86c0-b147506b6a83" />
+              <targetEnds>
+                <association Id="aa4a07c0-8030-4450-bc66-518190f153a8" isDerived="false" sourceEndRoleName="SoundController" targetEndRoleName="AudioStream" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="531b4930-cb89-4b55-8d2b-21b179ee8ca2" LastKnownName="AudioStream" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="d95b444f-b858-42e6-b0f7-2449d54f4735" name="SoundController" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="113237ff-7989-4e17-849a-4e7a5f30344b" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="1529626a-7fdb-4198-9c00-363d185dfa08" name="AudioStream" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                        <elementDefinition Id="d4b1ddaa-5212-4a4c-b5c4-a0d6f2d0b62e" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="26d3e163-8e6f-464a-9e1c-e18426ec03e3" />
+                </association>
+              </targetEnds>
+              <ownedAttributesInternal>
+                <property Id="cf8fac91-dd30-429d-98c0-6f14c5135861" name="currentStream" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="36cd4de3-efe1-4247-9031-bd6eadf1d385" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="7614c730-025f-46db-8b4e-dd334e366fec" LastKnownName="AudioStream" />
+                  </type_NamedElement>
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="baf32165-2161-4288-a95c-011dc2f9c804" name="lowLevelPlayStuff" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="a34ceaf3-b51a-495e-a638-e1ae9c80a1e8" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
   </packagedElements>
   <package Id="b47d333a-0604-4417-8e36-36fde40660b3" name="YAMP">
     <elementDefinition Id="3bea73b9-73f9-4a3d-b9c7-17d8d02776f0" />
