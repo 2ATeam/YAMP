@@ -4,8 +4,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="E:\Projects\Univercity\QA\YAMP\YAMPProject" />
-        <option name="externalProjectPath" value="E:\Projects\Univercity\QA" />
+        <option name="externalProjectPath" value="E:\Projects\Univercity\QA\YAMP" />
       </GradleProjectSettings>
     </option>
   </component>
