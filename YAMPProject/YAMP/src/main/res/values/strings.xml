@@ -4,5 +4,6 @@
     <string name="app_name">YAMP</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="song_name">Some name</string><string name="song_info">Some info</string>
 
 </resources>
