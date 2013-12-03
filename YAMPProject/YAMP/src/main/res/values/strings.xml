@@ -4,6 +4,14 @@
     <string name="app_name">YAMP</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+<<<<<<< HEAD
     <string name="title_activity_audio_library">AudioLibraryActivity</string>
+=======
+    <string name="song_name">Some name</string>
+    <string name="song_info">Some info</string>
+    <string name="btnPrev_text"><![CDATA[<<]]></string>
+    <string name="btnPlay_text"><![CDATA[|>]]></string>
+    <string name="btnNext_text"><![CDATA[>>]]></string>
+>>>>>>> 13d83ccb63400b40fcf4f3db95fa467e8a797089
 
 </resources>

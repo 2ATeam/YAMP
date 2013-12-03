@@ -10,15 +10,17 @@ import com.yamp.library.PlayList;
 public class AudioManager {
   private boolean looped;
   private boolean shuffle;
-  private PlayList trackList; // traget playlist
+  private PlayList trackList; // target playlist
 
-//  public void play();
-//  public void pause();
-//  public void stop();
-//  public void next();
-//  public void prev();
-//
-// public void setVolume(float volume);
+///TODO: implementation needed!!!!
+
+  public void play(){}
+  public void pause(){}
+  public void stop(){}
+  public void next(){}
+  public void prev(){}
+
+  public void setVolum (float volume){}
 
   public void setPlayList(PlayList playlist){
       if (playlist != null && playlist.size() > 0)
