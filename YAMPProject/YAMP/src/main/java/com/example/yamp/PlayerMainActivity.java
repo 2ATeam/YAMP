@@ -9,7 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yamp.library.AudioLibraryManager;
+
 public class PlayerMainActivity extends ActionBarActivity {
+
+
+    ///testing section
+
+    private AudioLibraryManager manager;
+
+    ///
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +30,10 @@ public class PlayerMainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        /// testing
+        manager = new AudioLibraryManager(getContentResolver());
+        manager.scan();
+        ///
     }
 
 

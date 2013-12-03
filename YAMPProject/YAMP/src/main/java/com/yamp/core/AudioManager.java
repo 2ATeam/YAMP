@@ -12,13 +12,13 @@ public class AudioManager {
   private boolean shuffle;
   private PlayList trackList; // traget playlist
 
-  public void play();
-  public void pause();
-  public void stop();
-  public void next();
-  public void prev();
-
-  public void setVolume(float volume);
+//  public void play();
+//  public void pause();
+//  public void stop();
+//  public void next();
+//  public void prev();
+//
+// public void setVolume(float volume);
 
   public void setPlayList(PlayList playlist){
       if (playlist != null && playlist.size() > 0)
