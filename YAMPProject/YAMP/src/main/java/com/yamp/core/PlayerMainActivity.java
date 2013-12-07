@@ -37,9 +37,4 @@ public class PlayerMainActivity extends FragmentActivity {
     }
 
 
-
-
-
-
-
 }
