@@ -1,14 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
   dslVersion="1.0.0.0"
   Id="3bea73b9-73f9-4a3d-b9c7-17d8d02776f0"
   name="YAMP" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <ownedCommentsInternal>
-    <comment
-      Id="85233b77-8a26-4e2b-b5b2-a94ddc7db576">
-      <body>2A Team Presents
-</body>
-    </comment>
     <comment
       Id="70922c50-84cb-45fc-a64d-582d73373fda">
       <body>MediaStorage Wrapper</body>
@@ -1653,6 +1648,136 @@
       <undefinedType
         Id="d4ab450f-e748-4dc2-a4d8-e4911e56df07"
         name="SeekBar" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="94a5dca3-42ea-4eb7-b784-662e4d95a18b"
+        name="Navigation"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <opaqueAction
+            Id="90760cab-df8e-4236-85e2-de8f569e0f69"
+            name="Idle"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="bb310d3f-83af-4009-91e4-e9cbd3ade452"
+                guard="setTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+                  LastKnownName="Initialized"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="dbdd49d5-d2c8-4660-bbd0-1597e1046a19"
+                guard="playTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+            name="Initialized"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ff7983b8-9907-49f8-a8ae-73acad7d5b9d"
+                guard="play()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="af622b1c-79bf-403a-8200-1722fff93e61"
+            name="Playing"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b2732643-11d4-4b73-87e6-067457c45e87"
+                guard="pause()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ff1d3212-9665-49b2-b19a-e5c5ab75284e"
+                  LastKnownName="Paused"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="8a152971-6bfd-4e1a-9705-114d2e2c3bdf"
+                guard="stop()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+                  LastKnownName="Finished"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ff1d3212-9665-49b2-b19a-e5c5ab75284e"
+            name="Paused"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="dce0a673-aa17-45e1-981d-e5c0b262c0be"
+                guard="play()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="69e6b0cf-755d-43a0-aa76-00b376ce611a"
+                guard="stop()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+                  LastKnownName="Finished"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+            name="Finished"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="76d9aed7-f1ea-48ba-8682-e768370332d1"
+                guard="setTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+                  LastKnownName="Initialized"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="5280ce8f-e5ed-4332-ac63-bd4175c662a9"
+                guard="play() / playTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+        </nodes>
+      </activity>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

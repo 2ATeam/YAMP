@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="72748222-0653-42b4-90fa-dec94ce5577e" name="YAMP" linkedPackageId="b47d333a-0604-4417-8e36-36fde40660b3" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <ownedCommentsInternal>
-    <comment Id="fb47c2ad-a236-4eb8-b87b-0e3667c6ea41">
-      <elementDefinition Id="85233b77-8a26-4e2b-b5b2-a94ddc7db576" />
-      <body>2A Team Presents
-</body>
-    </comment>
     <comment Id="e058454a-1933-4fd8-983c-6d9b48e8bde4">
       <elementDefinition Id="70922c50-84cb-45fc-a64d-582d73373fda" />
       <body>MediaStorage Wrapper</body>
