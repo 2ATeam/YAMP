@@ -1,5 +1,7 @@
 package com.yamp.library;
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -7,27 +9,33 @@ import java.util.ArrayList;
  *
  * Global library stores all audio files and playlists.
  * We can't have more than one audio library.
- * It is a container for the all Media.
- * That's why, for the simplicity, it is implemented using singleton pattern.
  */
 
 public class AudioLibrary extends PlayList{
     private ArrayList<PlayList> playLists;
-    private static AudioLibrary instance;
 
-    private AudioLibrary() {
+    public AudioLibrary() {
         super();
         this.playLists = new ArrayList<PlayList>();
     }
 
-    public static AudioLibrary getInstance(){
-        if(instance == null){
-            instance = new AudioLibrary();
-        }
-        return instance;
+    public ArrayList<AudioFile> getTracks(){
+        return this.tracks;
+    }
+
+    public ArrayList<PlayList> getPlayLists() {
+        return playLists;
+    }
+
+    public AudioFile getTrack(int index) {
+        return tracks.get(index);
     }
 
     public void insertTrack(AudioFile track){
         this.tracks.add(track);
+    }
+
+    public void insertPlaylist(PlayList playList){
+        this.playLists.add(playList);
     }
 }

@@ -9,9 +9,17 @@ import java.util.ArrayList;
  */
 public class PlayList {
     protected ArrayList<AudioFile> tracks;
+    private String name;
+    private long ID;
 
     public PlayList() {
         this.tracks = new ArrayList<AudioFile>();
+    }
+
+    public PlayList(String name, long id){
+        this();
+        this.name = name;
+        this.ID = id;
     }
 
     public int size(){
