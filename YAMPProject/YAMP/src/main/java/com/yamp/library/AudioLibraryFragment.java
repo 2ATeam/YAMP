@@ -6,10 +6,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yamp.R;
 
@@ -48,6 +50,7 @@ public class AudioLibraryFragment extends Fragment {
         SongsListAdapter adapter = new SongsListAdapter();
         ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
         view.setAdapter(adapter);
+        registerTouchHandler();
     }
 
     @Override
@@ -55,6 +58,18 @@ public class AudioLibraryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity(); // we can get the reference to activity only then it was created. Not earlier!!
         populateSongsList();
+    }
+
+    private void registerTouchHandler(){
+        ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                AudioFile clickedTrack = AudioLibraryManager.getInstance().getTrack(pos);
+                //Toast.makeText(activity, clickedTrack.getName(), Toast.LENGTH_LONG).show(); // testing....
+                ///TODO: Initiate playing for this track. the "getPath()" accessor is the abs. path to the track. Use it.
+            }
+        });
     }
 
     public class SongsListAdapter extends ArrayAdapter<AudioFile> {
@@ -65,12 +80,23 @@ public class AudioLibraryFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
+
             if(view == null){
                 view = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, parent, false);
             }
+
             AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
+
             TextView songName = (TextView) view.findViewById(R.id.song_name);
-            songName.setText(track.getName());
+            TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
+            TextView duration = (TextView) view.findViewById(R.id.txtDuration);
+            TextView artist = (TextView) view.findViewById(R.id.txtArtist);
+
+            songName.setText(track.getName().trim());
+            albumName.setText(track.getAlbumn().trim());
+            duration.setText(String.valueOf(track.getDuration()));
+            artist.setText(track.getArtist().trim());
+
             return view;
         }
     }
