@@ -14,11 +14,14 @@ public class AudioFile {
     private String lyrics; // stores huge text :)
     private int year;
 
-    private float time; // Time??? :)
-    private String path; // Where is Path classs for this? :D
+    private int duration;
+    private String path; // There is a Path class for this? :D
     private int rank;
 
-
-
-
+    public AudioFile(String name, String artist, String album, int duration) {
+        this.name = name;
+        this.artist = artist;
+        this.albumn = album;
+        this.duration = duration;
+    }
 }
