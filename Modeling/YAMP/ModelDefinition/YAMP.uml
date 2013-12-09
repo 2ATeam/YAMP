@@ -1,14 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
   dslVersion="1.0.0.0"
   Id="3bea73b9-73f9-4a3d-b9c7-17d8d02776f0"
   name="YAMP" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <ownedCommentsInternal>
-    <comment
-      Id="85233b77-8a26-4e2b-b5b2-a94ddc7db576">
-      <body>2A Team Presents
-</body>
-    </comment>
     <comment
       Id="70922c50-84cb-45fc-a64d-582d73373fda">
       <body>MediaStorage Wrapper</body>
@@ -20,14 +15,58 @@
       </annotatedElements>
     </comment>
     <comment
-      Id="78a5efc9-57f7-4cd7-a7a8-886ac9ebd8e5">
-      <body>Plays Stream
-(Static)</body>
+      Id="f3e2f439-4b5e-4610-90db-22ff150d0287">
+      <body>Contains android."...".Equalizer</body>
       <annotatedElements>
+        <classMoniker
+          Id="822bba41-de65-4057-b29e-c22e9b2dece8"
+          LastKnownName="Equalizer"
+          LastKnownLocation="YAMP.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="b9ca1a16-fa6f-43a9-a111-2cfef13950ef">
+      <body>SoundController uses it for modifying output stream
+</body>
+      <annotatedElements>
+        <classMoniker
+          Id="822bba41-de65-4057-b29e-c22e9b2dece8"
+          LastKnownName="Equalizer"
+          LastKnownLocation="YAMP.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="f39512f7-d86b-4585-8acd-aea560521099">
+      <body>AudioManager is controlled through these two fragments 
+
+(communication through listeners)</body>
+      <annotatedElements>
+        <classMoniker
+          Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+          LastKnownName="AudioManager"
+          LastKnownLocation="YAMP.uml" />
+        <classMoniker
+          Id="d17e2280-1f1b-4e35-b358-7a9c45461a80"
+          LastKnownName="PlaybackControlFragment"
+          LastKnownLocation="YAMP.uml" />
+        <classMoniker
+          Id="bf00634b-2cb6-43c1-b515-221be0554b17"
+          LastKnownName="PlayerMainFragment"
+          LastKnownLocation="YAMP.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="abecbfdd-6e6a-4129-aa45-e78f980365e2">
+      <body>(communication through listeners)</body>
+      <annotatedElements>
+        <classMoniker
+          Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+          LastKnownName="AudioManager"
+          LastKnownLocation="YAMP.uml" />
         <classMoniker
           Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
           LastKnownName="SoundController"
-          LastKnownLocation="Package_0920.uml" />
+          LastKnownLocation="Package_0100.uml" />
       </annotatedElements>
     </comment>
   </ownedCommentsInternal>
@@ -62,7 +101,7 @@
             isLeaf="false"
             isAbstract="false">
             <classMoniker
-              Id="d17e2280-1f1b-4e35-b358-7a9c45461a80"
+              Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
               LastKnownName="AudioManager"
               LastKnownLocation="YAMP.uml" />
             <relationshipOwnedElementsInternal>
@@ -172,7 +211,7 @@
     <packageHasNamedElement>
       <class
         Id="d17e2280-1f1b-4e35-b358-7a9c45461a80"
-        name="AudioManager"
+        name="PlaybackControlFragment"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -185,9 +224,9 @@
             isLeaf="false"
             isAbstract="false">
             <classMoniker
-              Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
-              LastKnownName="SoundController"
-              LastKnownLocation="Package_0920.uml" />
+              Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+              LastKnownName="AudioManager"
+              LastKnownLocation="YAMP.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
@@ -219,8 +258,8 @@
         </targetEnds>
         <ownedAttributesInternal>
           <property
-            Id="4cd69172-fd1c-4ac4-a12b-7418b1af49a6"
-            name="shuffle"
+            Id="aefcbd11-22be-4237-a206-ea1da5a168b3"
+            name="bPrev"
             visibility="Private"
             isLeaf="false"
             isStatic="false"
@@ -231,15 +270,15 @@
             aggregation="None"
             isComposite="false">
             <type_NamedElement>
-              <primitiveTypeMoniker
-                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
-                LastKnownName="Boolean"
+              <undefinedTypeMoniker
+                Id="e675fc0b-4916-4e4e-abdc-61dda70bc0f7"
+                LastKnownName="Button"
                 LastKnownLocation="YAMP.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="afb8e7c2-e4e9-442a-9094-1b79da83851f"
-            name="looped"
+            Id="b816bc6c-d0a6-4b13-8c11-d63299635d93"
+            name="bPlay"
             visibility="Private"
             isLeaf="false"
             isStatic="false"
@@ -250,15 +289,15 @@
             aggregation="None"
             isComposite="false">
             <type_NamedElement>
-              <primitiveTypeMoniker
-                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
-                LastKnownName="Boolean"
+              <undefinedTypeMoniker
+                Id="e675fc0b-4916-4e4e-abdc-61dda70bc0f7"
+                LastKnownName="Button"
                 LastKnownLocation="YAMP.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="8c00656f-dc22-4612-b2b4-60ec8669f32a"
-            name="trackList"
+            Id="a6caab7e-81a4-488a-a459-58d5a82610f8"
+            name="bNext"
             visibility="Private"
             isLeaf="false"
             isStatic="false"
@@ -269,105 +308,51 @@
             aggregation="None"
             isComposite="false">
             <type_NamedElement>
-              <classMoniker
-                Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
-                LastKnownName="PlayList"
+              <undefinedTypeMoniker
+                Id="e675fc0b-4916-4e4e-abdc-61dda70bc0f7"
+                LastKnownName="Button"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="f9e8696e-c748-4503-b69f-341ac839bcb4"
+            name="sbProgress"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="d4ab450f-e748-4dc2-a4d8-e4911e56df07"
+                LastKnownName="SeekBar"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="529bc7b4-a465-4ecd-be0f-46e41b27dd01"
+            name="sbVolume"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="d4ab450f-e748-4dc2-a4d8-e4911e56df07"
+                LastKnownName="SeekBar"
                 LastKnownLocation="YAMP.uml" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
-        <ownedOperationsInternal>
-          <operation
-            Id="cf8e9372-539b-4aad-b612-22915bc4779c"
-            name="play"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="ef534ab7-fee9-428c-915c-25805447cccc"
-            name="next"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="8a91b250-0e75-4cf1-8e9c-f83bb3f666aa"
-            name="prev"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="76bd4f13-e996-404c-a85a-ce2f0925258a"
-            name="pause"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="ce6645df-9b0f-4bcb-a636-8e95a651b065"
-            name="stop"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="7e31f695-4802-435d-a879-a25fc7611e08"
-            name="setVolume"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="cf7896dc-202a-4378-a7d4-5be693295646"
-                  name="volume"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="11c7e84b-c40f-46fc-bc41-d9f51cc76481"
-                      LastKnownName="float"
-                      LastKnownLocation="YAMP.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="e650a636-2151-4484-bfc0-53cb3037a3d2"
-            name="setTrackList"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="215f2cc1-9248-4874-a1f9-ac08cde09346"
-                  name="list"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <classMoniker
-                      Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
-                      LastKnownName="PlayList"
-                      LastKnownLocation="YAMP.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -594,7 +579,70 @@
                 LastKnownLocation="YAMP.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="71710b3e-2e2e-41e7-ba92-172986f523cc"
+            name="instance"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <classMoniker
+                Id="5343060b-52d1-426b-9b4a-f749caa03242"
+                LastKnownName="AudioLibrary"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="c52027a7-9954-4559-a758-909ac285ae93"
+            name="getInstance"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bf8b59db-fe02-4154-85b6-d1263ddf830d"
+            name="AudioLibrary"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="45a41cf6-64e5-4a29-b17b-9fb35ec2976f"
+            name="insertTrack"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="56afc0ea-77db-44b1-8b5b-fab6254eb217"
+                  name="track"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="6d00cb68-0152-48ec-a18f-e4567e772bb5"
+                      LastKnownName="AudioFile"
+                      LastKnownLocation="YAMP.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -766,8 +814,970 @@
     <packageHasNamedElement>
       <packageMoniker
         Id="b846d626-49af-4d44-9a87-36318c24bab5"
-        LastKnownName="Sound Management"
+        LastKnownName="Sound Management Service"
         LastKnownLocation="Package_0920.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="21c32850-0a06-4eb7-9947-1bf4b40b602c"
+        name="LoopMode"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="7a745fc1-c414-4781-ace8-ffebc84dde08"
+            isDerived="false"
+            sourceEndRoleName="LoopMode"
+            targetEndRoleName="AudioManager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+              LastKnownName="AudioManager"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1ec9a17b-9cbb-49ae-bbae-1c815c2815e3"
+                  name="LoopMode"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="47b4e0bd-4bb7-4d35-b268-e1399c4d80d0"
+                  name="AudioManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="efdcea47-d31c-4fcc-ab8e-d2021978ffc7"
+            isDerived="false"
+            sourceEndRoleName="LoopMode"
+            targetEndRoleName="SoundController"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
+              LastKnownName="SoundController"
+              LastKnownLocation="Package_0100.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6bc26edb-3200-4f1f-acc9-4e09903a63c3"
+                  name="LoopMode"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="44e220d4-ab3e-4cb0-8f9b-3223a2a8aeb6"
+                  name="SoundController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="b7f79b0e-4fc0-48c6-b64d-11cae956eb3f"
+            name="NONE" />
+          <enumerationLiteral
+            Id="c933c6e1-bbf1-4c08-8a7c-4870a36788f6"
+            name="LOOP_ALL" />
+          <enumerationLiteral
+            Id="a0b678ed-ade9-4b18-bcb6-bedaa0cdf730"
+            name="LOOP_TRACK" />
+          <enumerationLiteral
+            Id="f4d3831d-fcba-45aa-82bd-209641eaf69b"
+            name="CROSS_LIST" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="a48fd491-7d30-4dec-a652-55a850a5a254"
+        name="Equalizer" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="975207b6-81d9-4437-82d6-008b1935329c"
+        name="AudioLibraryFragment"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="d67431e7-aac4-480b-9d60-6b78fba149a1"
+            isDerived="false"
+            sourceEndRoleName="AudioLibraryActivity"
+            targetEndRoleName="AudioLibrary"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5343060b-52d1-426b-9b4a-f749caa03242"
+              LastKnownName="AudioLibrary"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a9063cd7-cda2-45ff-b35f-ba09aff647e5"
+                  name="AudioLibraryActivity"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="362f7e96-482c-4806-a1dd-b70e774b8ff7"
+                  name="AudioLibrary"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="617935de-f33c-47a1-9621-db6d5d4d10b5"
+        name="EqualizerFragment"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="0416492f-c5b4-44ba-9d9a-aa68f477f8a2"
+            isDerived="false"
+            sourceEndRoleName="EqualizerActivity"
+            targetEndRoleName="Equalizer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="4f196a3c-3cf6-4822-9e64-032fd8b74955"
+              LastKnownName="Equalizer"
+              LastKnownLocation="Package_0920.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="be6ae0de-a1d7-4476-b287-90e1db05112f"
+                  name="EqualizerActivity"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5226ef43-b037-43ff-b004-2e079b861cfb"
+                  name="Equalizer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="3300acce-95f7-4a93-839f-6ce6c02ebe53"
+            isDerived="false"
+            sourceEndRoleName="EqualizerFragment"
+            targetEndRoleName="Equalizer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="822bba41-de65-4057-b29e-c22e9b2dece8"
+              LastKnownName="Equalizer"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="586613f3-bb45-43c5-9e55-e48135073eef"
+                  name="EqualizerFragment"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="47b73deb-bd96-4efc-9aab-6f3a8ba2b8b7"
+                  name="Equalizer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="8b3c4db5-0568-4db5-9b53-9e430c610c74"
+        name="VizualizerActivity"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="675dc461-c530-4271-9731-4811972ef411"
+        name="VisualizerFragment"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="423afe36-d8b1-473b-930c-5ca6e484dc90"
+            isDerived="false"
+            sourceEndRoleName="VisualizerFragment"
+            targetEndRoleName="Visualizer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="dc184f83-bf8e-4bbf-bb9b-8116a30a8110"
+              LastKnownName="Visualizer"
+              LastKnownLocation="Package_0100.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3f91ddf9-5c4b-442f-a5f1-4c54fd0894d3"
+                  name="VisualizerFragment"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e079b56e-4c51-4061-bbea-e13c987873b1"
+                  name="Visualizer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="f59afa9e-3145-43b7-b85a-f5430c5141e0"
+            isDerived="false"
+            sourceEndRoleName="VisualizerFragment"
+            targetEndRoleName="Visualizer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="1cff2b6b-f6ca-4321-91fb-6fc020de5465"
+              LastKnownName="Visualizer"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8086abd6-6e40-4cf1-9f31-1c08ee338160"
+                  name="VisualizerFragment"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2dcdafc4-4a37-41c6-8249-176ec787bdd9"
+                  name="Visualizer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+        name="AudioManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="4095e792-bb1c-4aaa-9072-c6d762546644"
+            isDerived="false"
+            sourceEndRoleName="AudioManager"
+            targetEndRoleName="SoundController"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
+              LastKnownName="SoundController"
+              LastKnownLocation="Package_0100.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3830f8ee-adb5-4ba9-a1d8-d130b18bd9d2"
+                  name="AudioManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="03e53991-5e13-4045-8ae6-caeb69cbce60"
+                  name="SoundController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="09529a07-d750-4ac9-921f-d27e0f872202"
+            name="trackList"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <classMoniker
+                Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
+                LastKnownName="PlayList"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="2437d495-6af7-4afe-9754-d62d72287dbe"
+            name="looped"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="3952653d-242e-4575-8e6d-553b0b73062b"
+            name="shuffle"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="57cedb93-070f-415d-bb2a-d4e29f5f5415"
+            name="next"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4f8db6a9-2348-434f-b56b-3cfce6882398"
+            name="pause"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4a93c414-fcd0-4aca-a918-2b19e4497232"
+            name="prev"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3782f25e-0a1e-4c4e-9d26-97d6bb4e6d5a"
+            name="play"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="6487b075-8708-4387-a1a1-14ca00e1c5e5"
+            name="stop"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="1f79ad53-db83-4cf6-a911-81bc9e8961ec"
+            name="setTrackList"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="85cac11a-72fa-49a2-98a5-997ecd0cb475"
+                  name="list"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="e8ee2513-06db-491f-89de-ed4dfd27ca29"
+                      LastKnownName="PlayList"
+                      LastKnownLocation="YAMP.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="06161185-cfc7-43cd-87a7-92a0083ff09c"
+            name="setLoopMode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d1f89e30-007f-45ea-a1f3-11864190cb02"
+                  name="mode"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <enumerationMoniker
+                      Id="21c32850-0a06-4eb7-9947-1bf4b40b602c"
+                      LastKnownName="LoopMode"
+                      LastKnownLocation="YAMP.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1068a598-effb-4089-b25f-3806d25c0172"
+            name="setVolume"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e24caf61-2167-488d-b395-504be1ddca3b"
+                  name="volume"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="11c7e84b-c40f-46fc-bc41-d9f51cc76481"
+                      LastKnownName="float"
+                      LastKnownLocation="YAMP.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="bf00634b-2cb6-43c1-b515-221be0554b17"
+        name="PlayerMainFragment"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="133937b8-c4c8-48d6-91cc-c1192b11a21c"
+            isDerived="false"
+            sourceEndRoleName="PlayerMainFragment"
+            targetEndRoleName="AudioManager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="35c4ff91-bf47-4848-82b7-d9da13bf7806"
+              LastKnownName="AudioManager"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7bacb92f-5167-408d-b3c8-b973b467a264"
+                  name="PlayerMainFragment"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fb193837-7ef5-41ce-9983-615a71884095"
+                  name="AudioManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="39477396-a448-462a-8ebc-d9baa05f5299"
+            name="ivCover"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="b1cb974e-ae8f-4cb7-b932-081f50ce5268"
+                LastKnownName="ImageView"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="5904edcb-65d6-4b58-ab4a-c07138af4739"
+            name="tvTitle"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="182e1c81-d996-4ef4-938e-71ed3c47ee0f"
+                LastKnownName="TextView"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="c9b3466b-eb76-4c68-8226-59089e95d4ff"
+            name="tvInfo"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="182e1c81-d996-4ef4-938e-71ed3c47ee0f"
+                LastKnownName="TextView"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="d67cd5b5-96e4-4d83-b5e8-1f5c3dce7351"
+            name="setTitle"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dc9203e6-f20f-49d4-9bcb-ab996e194ce6"
+                  name="String title"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4b08b9f1-1a20-40c9-b499-b2d6178a08e6"
+            name="setInfo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1f9f884e-b1e5-434e-8a12-91a4bd13aecb"
+                  name="String info"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="0e82f7c5-84e7-40c4-ab80-2530a388ce43"
+        LastKnownName="Sound Management Service"
+        LastKnownLocation="Package_0100.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1cff2b6b-f6ca-4321-91fb-6fc020de5465"
+        name="Visualizer"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="ecedbca4-f683-47c4-9243-3339859ee460"
+            isDerived="false"
+            sourceEndRoleName="Visualizer"
+            targetEndRoleName="SoundController"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="df7b3c9a-092e-4656-86c0-b147506b6a83"
+              LastKnownName="SoundController"
+              LastKnownLocation="Package_0100.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="90677b3c-3203-4626-9d19-5d35ea6466d2"
+                  name="Visualizer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ad2d1afa-feb6-489d-a691-11a72570a48e"
+                  name="SoundController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="0e91758e-719a-425e-9c53-6d66459104e5"
+            name="render"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="822bba41-de65-4057-b29e-c22e9b2dece8"
+        name="Equalizer"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="60adbe93-053d-492b-a533-8590fe8a77c0"
+            name="equalizer"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <classMoniker
+                Id="822bba41-de65-4057-b29e-c22e9b2dece8"
+                LastKnownName="Equalizer"
+                LastKnownLocation="YAMP.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="182e1c81-d996-4ef4-938e-71ed3c47ee0f"
+        name="TextView" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="b1cb974e-ae8f-4cb7-b932-081f50ce5268"
+        name="ImageView" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="e675fc0b-4916-4e4e-abdc-61dda70bc0f7"
+        name="Button" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="d4ab450f-e748-4dc2-a4d8-e4911e56df07"
+        name="SeekBar" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="94a5dca3-42ea-4eb7-b784-662e4d95a18b"
+        name="Navigation"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <opaqueAction
+            Id="90760cab-df8e-4236-85e2-de8f569e0f69"
+            name="Idle"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="bb310d3f-83af-4009-91e4-e9cbd3ade452"
+                guard="setTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+                  LastKnownName="Initialized"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="dbdd49d5-d2c8-4660-bbd0-1597e1046a19"
+                guard="playTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+            name="Initialized"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ff7983b8-9907-49f8-a8ae-73acad7d5b9d"
+                guard="play()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="af622b1c-79bf-403a-8200-1722fff93e61"
+            name="Playing"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b2732643-11d4-4b73-87e6-067457c45e87"
+                guard="pause()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ff1d3212-9665-49b2-b19a-e5c5ab75284e"
+                  LastKnownName="Paused"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="8a152971-6bfd-4e1a-9705-114d2e2c3bdf"
+                guard="stop()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+                  LastKnownName="Finished"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ff1d3212-9665-49b2-b19a-e5c5ab75284e"
+            name="Paused"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="dce0a673-aa17-45e1-981d-e5c0b262c0be"
+                guard="play()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="69e6b0cf-755d-43a0-aa76-00b376ce611a"
+                guard="stop()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+                  LastKnownName="Finished"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="54c6f142-b883-4c70-b16e-7ddd46eaeee8"
+            name="Finished"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="76d9aed7-f1ea-48ba-8682-e768370332d1"
+                guard="setTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ac14e7d9-d340-473c-86ab-0391d636b713"
+                  LastKnownName="Initialized"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="5280ce8f-e5ed-4332-ac63-bd4175c662a9"
+                guard="play() / playTrack()"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af622b1c-79bf-403a-8200-1722fff93e61"
+                  LastKnownName="Playing"
+                  LastKnownLocation="YAMP.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+        </nodes>
+      </activity>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

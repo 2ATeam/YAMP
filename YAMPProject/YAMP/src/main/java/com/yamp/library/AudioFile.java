@@ -15,13 +15,44 @@ public class AudioFile {
     private int year;
 
     private int duration;
-    private String path; // There is a Path class for this? :D
+    private String path;
     private int rank;
+    private long ID;
 
-    public AudioFile(String name, String artist, String album, int duration) {
+    public AudioFile(long id, String name, String artist, String album, int duration, String path) {
+        this.ID = id;
         this.name = name;
         this.artist = artist;
         this.albumn = album;
         this.duration = duration;
+        this.path = path;
+    }
+
+    public AudioFile(String path) {
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAlbumn() {
+        return albumn;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public long getID() {
+        return ID;
     }
 }

@@ -1,5 +1,7 @@
 package com.yamp.library;
 
+import com.yamp.utils.Utilities;
+
 import java.util.ArrayList;
 
 /**
@@ -9,12 +11,43 @@ import java.util.ArrayList;
  */
 public class PlayList {
     protected ArrayList<AudioFile> tracks;
+    private String name;
+    private long ID;
+
+    protected int current = 0;
 
     public PlayList() {
         this.tracks = new ArrayList<AudioFile>();
     }
 
+    public PlayList(String name, long id){
+        this();
+        this.name = name;
+        this.ID = id;
+    }
+
     public int size(){
         return tracks.size();
+    }
+
+    public void addTrack(AudioFile track){
+        tracks.add(track);
+    }
+
+    public AudioFile nextTrack(){
+        current++;
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
+    }
+
+    public AudioFile getCurrent(){
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
+    }
+    public AudioFile prevTrack(){
+        current--;
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
     }
 }
