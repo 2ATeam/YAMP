@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.yamp.R;
+import com.yamp.library.AudioLibraryManager;
 
 
 public class PlayerMainActivity extends FragmentActivity {
@@ -13,6 +16,12 @@ public class PlayerMainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AudioLibraryManager.getInstance().setResolver(getContentResolver());
+        AudioLibraryManager.getInstance().scanForAllSongs();
+        AudioLibraryManager.getInstance().scanForAlbums();
+        AudioLibraryManager.getInstance().scanForArtists();
+
         setContentView(R.layout.activity_main);
     }
 
@@ -35,6 +44,5 @@ public class PlayerMainActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

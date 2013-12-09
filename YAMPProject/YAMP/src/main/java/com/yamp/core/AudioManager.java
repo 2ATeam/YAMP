@@ -5,6 +5,7 @@ import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
+import com.yamp.library.AudioLibrary;
 import com.yamp.library.PlayList;
 import com.yamp.sound.SoundController;
 
@@ -44,7 +45,7 @@ public class AudioManager {
             }
         });
         trackList = new PlayList();
-        trackList.addTrack(current);
+        //trackList.addTrack(current);
     }
 
     private void setTrack(AudioFile track){
@@ -63,7 +64,7 @@ public class AudioManager {
 
     public void play() {
         if (!readyToPlay){
-            controller.play(current.getName()); ///TODO: Change getName() to getPath()
+            controller.play(current.getPath());
             readyToPlay = true;
         }
         else controller.play();
@@ -77,10 +78,10 @@ public class AudioManager {
     }
 
     public void next() {
-        setTrack(trackList.nextTrack());
+        //setTrack(trackList.nextTrack());
     }
     public void prev() {
-       setTrack(trackList.prevTrack());
+       //setTrack(trackList.prevTrack());
     }
 
     public void seekTo(int msec) {
