@@ -45,7 +45,8 @@ public class AudioManager {
                     public void onPlayingCompleted() {
                        if (!AudioManager.this.controller.isLooped()){
                            next();
-                           play();// if track is not looped play next track.
+                           if (readyToPlay) play();// if track is not looped play next track.
+                           ///TODO: kostil
                        }
                     }
                 });
