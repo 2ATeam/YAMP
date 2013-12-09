@@ -11,9 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
 
 /**
  * Created by Lux on 07.12.13.
@@ -65,7 +65,11 @@ public class AudioLibraryFragment extends Fragment {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                AudioFile clickedTrack = AudioLibraryManager.getInstance().getTrack(pos);
+                PlayList pl = AudioLibraryManager.getInstance().getLibrary();
+                pl.setCurrent(pos);
+                AudioManager.getInstance().setPlayList(pl);
+                AudioManager.getInstance().playTrack();
+
                 //Toast.makeText(activity, clickedTrack.getName(), Toast.LENGTH_LONG).show(); // testing....
                 ///TODO: Initiate playing for this track. the "getPath()" accessor is the abs. path to the track. Use it.
             }

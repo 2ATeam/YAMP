@@ -1,5 +1,7 @@
 package com.yamp.core;
 
+import android.support.v7.appcompat.R;
+
 import com.yamp.events.NewTrackLoadedListener;
 import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;
@@ -20,15 +22,12 @@ public class AudioManager {
 
     private boolean looped;
     private boolean shuffle;
+
+    private boolean readyToPlay = false;
     private PlayList trackList; // target playlist
-
-    /// TODO: TESTING THINGS....REPLACE IT WITH EXISTED TRACK
-    private AudioFile current = new AudioFile("/sdcard/Music/test.mp3");
-
 
     private SoundController controller;
     private static AudioManager instance;
-    private boolean readyToPlay = false;
 
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
@@ -41,33 +40,38 @@ public class AudioManager {
             @Override
             public void onSoundControllerBounded(SoundController controller) {
                AudioManager.this.controller = controller;
+                AudioManager.this.controller.setOnPlayingCompletedListener(new PlayingCompletedListener() {
+                    @Override
+                    public void onPlayingCompleted() {
+                       if (!AudioManager.this.controller.isLooped()) next(); // if track is not looped play next track.
+                    }
+                });
             }
         });
         trackList = new PlayList();
-        trackList.addTrack(current);
     }
 
     private void setTrack(AudioFile track){
-        String name = track.getName();
-        readyToPlay = true;
-        current = track;
+        String path = track.getPath();
         if (controller.isPlaying())
-            controller.play(name); ///TODO: Change getName() to getPath()
-        else if (controller.isPaused())
-            controller.setTrack(name);
+            controller.play(path); ///TODO: Change getName() to getPath()
         else
+            controller.setTrack(path);
 
         fireNewTrackLoaded(track);
     }
 
+    public void playTrack(){
+        controller.play(trackList.getCurrent().getPath());
+        fireNewTrackLoaded(trackList.getCurrent());
+    }
 
     public void play() {
         if (!readyToPlay){
-            controller.play(current.getName()); ///TODO: Change getName() to getPath()
             readyToPlay = true;
+            playTrack();
         }
-        else controller.play();
-        fireNewTrackLoaded(current);
+        controller.play();
     }
     public void pause() {
         controller.pause();

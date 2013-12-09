@@ -1,6 +1,6 @@
 package com.yamp.core;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,9 +13,11 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.yamp.R;
+import com.yamp.events.NewTrackLoadedListener;
 import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;
 import com.yamp.events.SoundControllerBoundedListener;
+import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
 
 /**
@@ -46,6 +48,9 @@ public class ControlFragment extends Fragment {
                 bPrev.setEnabled(true);
 
                 initialize();
+                try{
+                sbProgress.setProgress(controller.getProgress()); /// TODO: kostil for restoring progress
+                }catch (Exception e){}
 
             }
         });
@@ -55,11 +60,18 @@ public class ControlFragment extends Fragment {
 
 
     private void initialize(){
+
+        AudioManager.getInstance().setOnNewTrackLoadedListener(new NewTrackLoadedListener() {
+            @Override
+            public void onNewTrackLoaded(AudioFile track) {
+                sbProgress.setProgress(0);
+                sbProgress.setMax(AudioManager.getInstance().getDuration());
+            }
+        });
+
         AudioManager.getInstance().setOnPlayingStartedListener(new PlayingStartedListener() {
             @Override
             public void onPlayingStarted() {
-                sbProgress.setProgress(0);
-                sbProgress.setMax(AudioManager.getInstance().getDuration());
                 updaterHandler.post(progressUpdater);
             }
         });
@@ -69,7 +81,6 @@ public class ControlFragment extends Fragment {
             public void onPlayingCompleted() {
                 updaterHandler.removeCallbacks(progressUpdater);
                 sbProgress.setProgress(0);
-                 ///TODO:SeekBar doesn't want to reset its' progress :(((
             }
         });
 
@@ -128,7 +139,7 @@ public class ControlFragment extends Fragment {
             }
         });
 
-        bPlay.setEnabled(false);
+     //   bPlay.setEnabled(false);
 
         bNext = (Button) fragment.findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +149,7 @@ public class ControlFragment extends Fragment {
             }
         });
 
-        bNext.setEnabled(false);
+       // bNext.setEnabled(false);
 
         bPrev = (Button) fragment.findViewById(R.id.bPrev);
         bPrev.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +159,7 @@ public class ControlFragment extends Fragment {
             }
         });
 
-        bPrev.setEnabled(false);
+        //bPrev.setEnabled(false);
 
         CheckBox cbLooped = (CheckBox) fragment.findViewById(R.id.cbLoop);
         cbLooped.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -170,7 +181,7 @@ public class ControlFragment extends Fragment {
     private Runnable progressUpdater = new Runnable() {
         @Override
         public void run() {
-            sbProgress.setProgress(sbProgress.getProgress() + TRACK_PROGRESS_DELAY);
+            sbProgress.setProgress(YAMPApplication.getSoundController().getProgress());
             updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
         }
     };

@@ -4,14 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<Button
+    android:id="@+id/bSwitch"
+    android:layout_width="fill_parent"
+    android:text="SWITCH"
+    android:layout_height="wrap_content" />
 
-    <fragment class="com.yamp.core.PlayerFragment"
+    <FrameLayout
         android:id="@+id/player_fragment"
         android:layout_height="fill_parent"
         android:layout_width= "fill_parent"
         android:layout_weight="0.1" />
 
-    <fragment class="com.yamp.core.ControlFragment"
+    <FrameLayout
         android:id="@+id/control_fragment"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"

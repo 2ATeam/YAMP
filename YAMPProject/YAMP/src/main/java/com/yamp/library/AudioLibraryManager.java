@@ -131,7 +131,12 @@ public class AudioLibraryManager {
         return this.library.getTracks();
     }
 
+
     public AudioFile getTrack(int index){
         return library.getTrack(index);
+    }
+
+    public PlayList getLibrary(){
+        return library;
     }
 }

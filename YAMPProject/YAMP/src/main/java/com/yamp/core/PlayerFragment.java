@@ -1,6 +1,6 @@
 package com.yamp.core;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +22,6 @@ public class PlayerFragment extends Fragment {
     private TextView tvInfo;
     private ImageView ivCover;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
                 setTitle(track.getName());
-                setInfo(String.valueOf(track.getDuration()));
+                setInfo(String.valueOf(track.getDuration())); /// TODO: replace with getFormattedDuration()
             }
         });
     }
