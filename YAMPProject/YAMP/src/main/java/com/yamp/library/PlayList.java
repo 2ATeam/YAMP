@@ -25,4 +25,20 @@ public class PlayList {
     public int size(){
         return tracks.size();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public AudioFile getTrack(int index){
+        return tracks.get(index);
+    }
+
+    public void addTrack(AudioFile track){
+        this.tracks.add(track);
+    }
+
+    public long getID() {
+        return ID;
+    }
 }

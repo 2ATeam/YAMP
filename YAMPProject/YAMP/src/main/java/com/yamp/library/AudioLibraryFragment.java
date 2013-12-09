@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yamp.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lux on 07.12.13.
@@ -36,7 +39,7 @@ public class AudioLibraryFragment extends Fragment {
         addTab(host, "ALL", R.id.tabAll);
         addTab(host, "PLAYLISTS", R.id.tabPlaylists);
         addTab(host, "ALBUMS", R.id.tabAlbums);
-        addTab(host, "CUSTOM", R.id.tabCustom);
+        addTab(host, "ARTISTS", R.id.tabArtists);
     }
 
     private void addTab(TabHost host, String indicator, int resID){
@@ -46,10 +49,18 @@ public class AudioLibraryFragment extends Fragment {
         host.addTab(spec);
     }
 
-    private void populateSongsList() {
-        SongsListAdapter adapter = new SongsListAdapter();
+    private void populateLists() {
+        //get views
         ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
-        view.setAdapter(adapter);
+        ExpandableListView albumsListView = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
+        ExpandableListView artistListView = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+
+        //set adapters
+        view.setAdapter(new SongsListAdapter());
+        albumsListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getAlbums()));
+        artistListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getArtists()));
+
+        //awake controls
         registerTouchHandler();
     }
 
@@ -57,7 +68,7 @@ public class AudioLibraryFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity(); // we can get the reference to activity only then it was created. Not earlier!!
-        populateSongsList();
+        populateLists();
     }
 
     private void registerTouchHandler(){
@@ -66,13 +77,24 @@ public class AudioLibraryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 AudioFile clickedTrack = AudioLibraryManager.getInstance().getTrack(pos);
-                //Toast.makeText(activity, clickedTrack.getName(), Toast.LENGTH_LONG).show(); // testing....
                 ///TODO: Initiate playing for this track. the "getPath()" accessor is the abs. path to the track. Use it.
             }
         });
     }
 
-    public class SongsListAdapter extends ArrayAdapter<AudioFile> {
+    private View getSongView(AudioFile track, View view){
+        TextView songName = (TextView) view.findViewById(R.id.song_name);
+        TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
+        TextView duration = (TextView) view.findViewById(R.id.txtDuration);
+        TextView artist = (TextView) view.findViewById(R.id.txtArtist);
+        songName.setText(track.getName().trim());
+        albumName.setText(track.getAlbum().trim());
+        duration.setText(String.valueOf(track.getDuration()));
+        artist.setText(track.getArtist().trim());
+        return view;
+    }
+
+    private class SongsListAdapter extends ArrayAdapter<AudioFile> {
         public SongsListAdapter() {
             super(activity, R.layout.audio_library_list_entry, AudioLibraryManager.getInstance().getAllTracks());
         }
@@ -86,18 +108,79 @@ public class AudioLibraryFragment extends Fragment {
             }
 
             AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
+            return getSongView(track, view);
+        }
+    }
 
-            TextView songName = (TextView) view.findViewById(R.id.song_name);
-            TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
-            TextView duration = (TextView) view.findViewById(R.id.txtDuration);
-            TextView artist = (TextView) view.findViewById(R.id.txtArtist);
+    private class AlbumsArtistsListAdapter extends BaseExpandableListAdapter {
 
-            songName.setText(track.getName().trim());
-            albumName.setText(track.getAlbumn().trim());
-            duration.setText(String.valueOf(track.getDuration()));
-            artist.setText(track.getArtist().trim());
+        ArrayList<PlayList> albumArtists;
 
-            return view;
+        private AlbumsArtistsListAdapter(ArrayList<PlayList> albumArtists) {
+            this.albumArtists = albumArtists;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return albumArtists.size();
+        }
+
+        @Override
+        public int getChildrenCount(int i) {
+            return albumArtists.get(i).size();
+        }
+
+        @Override
+        public Object getGroup(int i) {
+            return albumArtists.get(i);
+        }
+
+        @Override
+        public Object getChild(int i, int i2) {
+            return albumArtists.get(i).getTrack(i2);
+        }
+
+        @Override
+        public long getGroupId(int i) {
+            return i;
+        }
+
+        @Override
+        public long getChildId(int i, int i2) {
+            return i2;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(int i, boolean b, View convertView, ViewGroup viewGroup) {
+            if(convertView == null){
+               convertView = activity.getLayoutInflater().inflate(R.layout.audio_library_albumartist_entry, viewGroup, false);
+            }
+
+            PlayList album = albumArtists.get(i);
+            TextView albumName = (TextView) convertView.findViewById(R.id.txtAlbumartistName);
+            TextView albumSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
+            albumName.setText(album.getName());
+            albumSongsAmount.setText(String.valueOf(album.size()));
+            return convertView;
+        }
+
+        @Override
+        public View getChildView(int i, int i2, boolean b, View convertView, ViewGroup viewGroup) {
+            if(convertView == null){
+                convertView = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, viewGroup, false);
+            }
+            AudioFile track = albumArtists.get(i).getTrack(i2);
+            return getSongView(track, convertView);
+        }
+
+        @Override
+        public boolean isChildSelectable(int i, int i2) {
+            return true;
         }
     }
 }

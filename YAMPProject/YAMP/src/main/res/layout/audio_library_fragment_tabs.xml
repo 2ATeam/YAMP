@@ -46,13 +46,25 @@
                     android:id="@+id/tabAlbums"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+
+                    <ExpandableListView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/list_all_albums" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tabCustom"></LinearLayout>
+                    android:id="@+id/tabArtists">
+
+                    <ExpandableListView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/list_all_artists" />
+                </LinearLayout>
 
             </FrameLayout>
         </LinearLayout>

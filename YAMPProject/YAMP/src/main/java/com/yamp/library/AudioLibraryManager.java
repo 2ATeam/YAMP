@@ -97,8 +97,50 @@ public class AudioLibraryManager {
         }
     }
 
-    public void scnaForAlbums(){
-        ///TODO: implement albums scanning logic.
+    public void scanForAlbums(){
+        Uri uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
+
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+
+        if(!validateCursor(cursor)){
+            return;
+        }
+        else{
+            int columnName = cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM);
+            int columnID = cursor.getColumnIndex(MediaStore.Audio.Albums._ID);
+            do{
+                String albumName = cursor.getString(columnName);
+                long albumID = cursor.getLong(columnID);
+                PlayList album = new PlayList(albumName, albumID);
+                for(AudioFile song : library.getTracks()){
+                    if(song.getAlbum().equals(albumName))
+                        album.addTrack(song);
+                }
+                library.insertAlbum(album);
+            }while (cursor.moveToNext());
+        }
+    }
+
+    public void scanForArtists(){
+        Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        if(!validateCursor(cursor)){
+            return;
+        }
+        else{
+            int columnName = cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST);
+            int columnID = cursor.getColumnIndex(MediaStore.Audio.Artists._ID);
+            do{
+                String artistName = cursor.getString(columnName);
+                long artistID = cursor.getLong(columnID);
+                PlayList artist = new PlayList(artistName, artistID);
+                for (AudioFile song : library.getTracks()){
+                    if(song.getArtist().equals(artistName))
+                        artist.addTrack(song);
+                }
+                library.insertArtist(artist);
+            }while (cursor.moveToNext());
+        }
     }
 
     public void addPlaylist(String name){
@@ -123,12 +165,29 @@ public class AudioLibraryManager {
         resolver.insert(uri, cValues);
     }
 
+
     public void setResolver(ContentResolver resolver) {
         this.resolver = resolver;
     }
 
     public ArrayList<AudioFile> getAllTracks(){
         return this.library.getTracks();
+    }
+
+    public ArrayList<String> getAlbumNames(){
+        ArrayList<String> names = new ArrayList<>();
+        for (PlayList album : library.getAlbums()) {
+            names.add(album.getName());
+        }
+        return names;
+    }
+
+    public ArrayList<PlayList> getAlbums(){
+        return library.getAlbums();
+    }
+
+    public ArrayList<PlayList> getArtists(){
+        return library.getArtists();
     }
 
     public AudioFile getTrack(int index){
