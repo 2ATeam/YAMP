@@ -43,7 +43,10 @@ public class AudioManager {
                 AudioManager.this.controller.setOnPlayingCompletedListener(new PlayingCompletedListener() {
                     @Override
                     public void onPlayingCompleted() {
-                       if (!AudioManager.this.controller.isLooped()) next(); // if track is not looped play next track.
+                       if (!AudioManager.this.controller.isLooped()){
+                           next();
+                           play();// if track is not looped play next track.
+                       }
                     }
                 });
             }
