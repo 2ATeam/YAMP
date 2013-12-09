@@ -78,7 +78,12 @@ public class AudioLibraryFragment extends Fragment {
     }
 
     private void registerTouchHandler(){
+        //find lists
         ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ExpandableListView exAlbumsList = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
+        ExpandableListView exArtistsList = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+
+        //setup controls
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
@@ -86,6 +91,29 @@ public class AudioLibraryFragment extends Fragment {
                 pl.setCurrent(pos);
                 AudioManager.getInstance().setPlayList(pl);
                 AudioManager.getInstance().playTrack();
+            }
+        });
+
+        exAlbumsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            PlayList pl = AudioLibraryManager.getInstance().getAlbums().get(groupPosition);
+            pl.setCurrent(childPosition);
+            AudioManager.getInstance().setPlayList(pl);
+            AudioManager.getInstance().playTrack();
+            return false;
+            }
+        });
+
+        exArtistsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            PlayList pl = AudioLibraryManager.getInstance().getArtists().get(groupPosition);
+            pl.setCurrent(childPosition);
+            AudioManager.getInstance().setPlayList(pl);
+            AudioManager.getInstance().playTrack();
+            return false;
             }
         });
     }
