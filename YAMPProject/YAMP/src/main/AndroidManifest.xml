@@ -13,7 +13,7 @@
     <application
         android:name = ".core.YAMPApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/yamp"
         android:label="@string/app_name"
 
         android:theme="@android:style/Theme.Holo" >
