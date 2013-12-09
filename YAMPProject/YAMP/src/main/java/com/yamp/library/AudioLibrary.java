@@ -1,4 +1,8 @@
 package com.yamp.library;
+
+
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -12,8 +16,6 @@ public class AudioLibrary extends PlayList{
     private ArrayList<PlayList> playLists;
     private  ArrayList<PlayList> artists;
     private  ArrayList<PlayList> albums;
-
-
 
     public AudioLibrary() {
         super();
@@ -56,4 +58,5 @@ public class AudioLibrary extends PlayList{
     public ArrayList<PlayList> getAlbums() {
         return albums;
     }
+
 }

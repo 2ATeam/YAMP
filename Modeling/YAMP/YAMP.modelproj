@@ -28,6 +28,13 @@
     <Content Include="ModelDefinition\Package_0920.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="PlayingProcess.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="PlayingProcess.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>PlayingProcess.activitydiagram</DependentUpon>
+    </Content>
     <Content Include="YAMP.classdiagram">
       <SubType>Content</SubType>
     </Content>

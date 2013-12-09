@@ -165,7 +165,6 @@ public class AudioLibraryManager {
         resolver.insert(uri, cValues);
     }
 
-
     public void setResolver(ContentResolver resolver) {
         this.resolver = resolver;
     }
@@ -192,5 +191,9 @@ public class AudioLibraryManager {
 
     public AudioFile getTrack(int index){
         return library.getTrack(index);
+    }
+
+    public PlayList getLibrary(){
+        return library;
     }
 }

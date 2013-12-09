@@ -43,7 +43,6 @@ public class SoundController extends Service{
             public void onCompletion(MediaPlayer mediaPlayer) {
                 firePlayingCompleted();
                 if (looped){
-                    firePlayingStarted();
                     seekTo(0);
                     play();
                 }
@@ -65,9 +64,13 @@ public class SoundController extends Service{
     }
 
 
-    public void stop(){
+    private void stopInternal(){
         paused = false;
         player.stop();
+    }
+
+    public void stop(){
+        stopInternal();
         firePlayingCompleted();
     }
     public void pause(){
@@ -80,13 +83,13 @@ public class SoundController extends Service{
         if (isPlaying()) return;
         paused = false;
         player.start();
+        firePlayingStarted();
     }
 
     // Sets new track and immediately starts it.
     public void play(String path){
-        if (isPlaying()) stop();
+        if (isPlaying()) stopInternal();
         setTrack(path);
-        firePlayingStarted();
         play();
     }
 
@@ -94,7 +97,7 @@ public class SoundController extends Service{
     // Note: it won't set the track if some other track has already been playing.
     public void setTrack(String path) {
         if (isPlaying()) return;
-        if (paused) stop();
+        if (paused) stopInternal();
         try {
             player.reset();
             player.setDataSource(path);

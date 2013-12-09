@@ -8,15 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.yamp.R;
 
+
 import java.util.ArrayList;
+
+import com.yamp.core.AudioManager;
 
 /**
  * Created by Lux on 07.12.13.
@@ -68,6 +73,7 @@ public class AudioLibraryFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity(); // we can get the reference to activity only then it was created. Not earlier!!
+
         populateLists();
     }
 
@@ -76,8 +82,10 @@ public class AudioLibraryFragment extends Fragment {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                AudioFile clickedTrack = AudioLibraryManager.getInstance().getTrack(pos);
-                ///TODO: Initiate playing for this track. the "getPath()" accessor is the abs. path to the track. Use it.
+                PlayList pl = AudioLibraryManager.getInstance().getLibrary();
+                pl.setCurrent(pos);
+                AudioManager.getInstance().setPlayList(pl);
+                AudioManager.getInstance().playTrack();
             }
         });
     }
@@ -95,6 +103,7 @@ public class AudioLibraryFragment extends Fragment {
     }
 
     private class SongsListAdapter extends ArrayAdapter<AudioFile> {
+
         public SongsListAdapter() {
             super(activity, R.layout.audio_library_list_entry, AudioLibraryManager.getInstance().getAllTracks());
         }
