@@ -7,4 +7,10 @@ public class Utilities {
     public static int clamp(int min, int max, int value){
         return (value < min ? min : (value > max ? max : value));
     }
+
+    public static String convertTime(int msec){
+        int m = msec / 60000;
+        int s = msec / 1000 - m * 60;
+        return String.valueOf(m) + ":" + (s<10 ? "0" : "") + String.valueOf(s);
+    }
 }

@@ -41,16 +41,14 @@ public class PlayList {
     }
 
     public AudioFile nextTrack(){
-        current++;
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, ++current));
     }
 
     public AudioFile getCurrent(){
         return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
     }
     public AudioFile prevTrack(){
-        current--;
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, --current));
     }
 
     public void setCurrent(int current) {

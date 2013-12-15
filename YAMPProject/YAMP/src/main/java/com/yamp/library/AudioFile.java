@@ -1,5 +1,7 @@
 package com.yamp.library;
 
+import com.yamp.utils.Utilities;
+
 /**
  * Created by AdYa on 24.11.13.
  *
@@ -47,6 +49,10 @@ public class AudioFile {
 
     public int getDuration() {
         return duration;
+    }
+
+    public String getFormattedDuration(){
+        return Utilities.convertTime(duration);
     }
 
     public String getPath() {

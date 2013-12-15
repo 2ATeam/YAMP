@@ -18,16 +18,26 @@ import com.yamp.library.AudioFile;
  */
 public class PlayerFragment extends Fragment {
 
+    private boolean initialized = false;
     private TextView tvTitle;
     private TextView tvInfo;
     private ImageView ivCover;
+
+
+    private void restoreState(){
+            setTitle(AudioManager.getInstance().getCurrent().getName());
+            setInfo(AudioManager.getInstance().getCurrent().getFormattedDuration());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View fragment = inflater.inflate(R.layout.player_fragment, container, false);
+
         awakeComponents(fragment);
+        restoreState();
         return fragment;
     }
 
@@ -40,7 +50,7 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
                 setTitle(track.getName());
-                setInfo(String.valueOf(track.getDuration())); /// TODO: replace with getFormattedDuration()
+                setInfo(String.valueOf(track.getFormattedDuration()));
             }
         });
     }
