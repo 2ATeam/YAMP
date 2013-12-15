@@ -113,8 +113,15 @@ public class AudioManager {
             this.trackList = playlist;
     }
 
+    public AudioFile getCurrent(){
+        return trackList.getCurrent();
+    }
+
     public boolean isPlaying() {
         return controller.isPlaying();
+    }
+    public boolean isLooped(){
+        return controller.isLooped();
     }
 
     public void setLooping(boolean looped) {
