@@ -42,6 +42,13 @@
       <SubType>Content</SubType>
       <DependentUpon>YAMP.classdiagram</DependentUpon>
     </Content>
+    <Content Include="YAMP.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="YAMP.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>YAMP.usecasediagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\YAMP.uml">
       <SubType>Content</SubType>

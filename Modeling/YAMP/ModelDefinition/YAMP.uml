@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel"
   dslVersion="1.0.0.0"
   Id="3bea73b9-73f9-4a3d-b9c7-17d8d02776f0"
   name="YAMP" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -1778,6 +1778,460 @@
           </opaqueAction>
         </nodes>
       </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="edd81ead-3d6a-49fc-a03d-14b29a46f66e"
+        name="Пользователь"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="8fd2fe20-1ecd-4c59-8521-398f08061c99"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Перейти к следующей/предыдущей композиции"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="2d352ba4-ec2f-40e7-87d2-3a3c9e9a945d"
+              LastKnownName="Перейти к следующей/предыдущей композиции"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c89eb0d0-e22d-4844-ad41-ef37bc900f6e"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="dc8b0aeb-c4fc-484c-afe3-2666ea964855"
+                  name="Перейти к следующей/предыдущей композиции"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="e3544a31-564b-405f-96b5-ba47203672da"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Проиграть"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ea8c2c2c-75f3-4368-9bf3-18facc528ae7"
+              LastKnownName="Проиграть"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="09689b8e-f528-482f-9334-f1b218671b7d"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d49a58f2-dbd1-42bb-8012-4003d0760467"
+                  name="Проиграть"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="f6b3d95e-490a-4d34-b543-ff9733af6fd5"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Остановить"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="e97efa36-8a27-45af-8f13-bc9768e1800a"
+              LastKnownName="Остановить"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b47c25c8-5d29-49fa-b487-43957b690df4"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="eafb3e25-1691-44b7-8c43-6fbe2f792211"
+                  name="Остановить"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="4d3b8b23-f2a3-4fbe-a0f7-ef0b54780a89"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Перемотать текущую композицию"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b60761ce-3e59-4fdd-b4df-ffcd87a93d4c"
+              LastKnownName="Перемотать текущую композицию"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a9e6e226-ef2e-44a2-9827-f65b76e3d615"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e09edb45-8517-4810-bfc8-3e63cc548b5a"
+                  name="Перемотать текущую композицию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="8f48c475-25ae-44f9-a6f8-850a8b79a4c8"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Выбрать композицию"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="fab65c1d-f55b-4d15-9fb2-deede3d4e596"
+              LastKnownName="Выбрать композицию"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bb6db149-975a-48e0-a683-d55d4396164b"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c2d38dc0-2cd2-4cd3-98f2-386c856de2f9"
+                  name="Выбрать композицию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="73f68f76-fe4a-4099-aafc-36e957dac7d7"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Сгруппировать композиции"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="155aa851-e2a5-4ae5-b938-34413dc5db6d"
+              LastKnownName="Сгруппировать композиции"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c9491a8a-88e7-4dcc-aec9-f0d2155aea1b"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="360eb5ca-643f-42e1-b55d-27ee0a8075cf"
+                  name="Сгруппировать композиции"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="1ef2698a-b229-4fb6-ab38-389e270b1505"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Изменить громкость"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f1ceddaf-1461-411e-bd6c-3b5477998869"
+              LastKnownName="Изменить громкость"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="390253b7-98a9-49c3-bf24-993683fd2c7b"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d138c177-cef8-40c5-a1dd-d397119406a7"
+                  name="Изменить громкость"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="ce9fc1b9-0755-4cfa-b2a7-6183cc072c6e"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Перейти в Библиотеку"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="bb860824-b73b-454c-aef4-55aa08c7f025"
+              LastKnownName="Перейти в Библиотеку"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="45f7cb72-2ba5-4baf-a614-5ab1bba0e54a"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="014e27dc-a357-419e-9f6f-56af5d5f49cb"
+                  name="Перейти в Библиотеку"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="1db73bcc-656b-4a3f-9d51-dfd17f275165"
+            isDerived="false"
+            sourceEndRoleName="Пользователь"
+            targetEndRoleName="Вернуться к главному окну"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ed09f5b2-35a4-4f2d-9405-0d5c8f9a845b"
+              LastKnownName="Вернуться к главному окну"
+              LastKnownLocation="YAMP.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7db05b4f-bacd-4058-b510-373bd2fe16ba"
+                  name="Пользователь"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1dede25f-18c9-4a3e-be7e-9e0713eb26ff"
+                  name="Вернуться к главному окну"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ea8c2c2c-75f3-4368-9bf3-18facc528ae7"
+        name="Проиграть"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="e97efa36-8a27-45af-8f13-bc9768e1800a"
+        name="Остановить"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="2d352ba4-ec2f-40e7-87d2-3a3c9e9a945d"
+        name="Перейти к следующей/предыдущей композиции"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="b60761ce-3e59-4fdd-b4df-ffcd87a93d4c"
+        name="Перемотать текущую композицию"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f1ceddaf-1461-411e-bd6c-3b5477998869"
+        name="Изменить громкость"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="bb860824-b73b-454c-aef4-55aa08c7f025"
+        name="Перейти в Библиотеку"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="fab65c1d-f55b-4d15-9fb2-deede3d4e596"
+        name="Выбрать композицию"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="9ba2f7fb-3cad-480c-ad2b-a46512260217">
+            <useCaseMoniker
+              Id="bb860824-b73b-454c-aef4-55aa08c7f025"
+              LastKnownName="Перейти в Библиотеку"
+              LastKnownLocation="YAMP.uml" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="155aa851-e2a5-4ae5-b938-34413dc5db6d"
+        name="Сгруппировать композиции"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="44064b1b-4bde-4c59-9bc0-5dd0cca4367d">
+            <useCaseMoniker
+              Id="bb860824-b73b-454c-aef4-55aa08c7f025"
+              LastKnownName="Перейти в Библиотеку"
+              LastKnownLocation="YAMP.uml" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ed09f5b2-35a4-4f2d-9405-0d5c8f9a845b"
+        name="Вернуться к главному окну"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="73aed4fc-302c-44eb-b808-d03d6c36a733">
+            <useCaseMoniker
+              Id="bb860824-b73b-454c-aef4-55aa08c7f025"
+              LastKnownName="Перейти в Библиотеку"
+              LastKnownLocation="YAMP.uml" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

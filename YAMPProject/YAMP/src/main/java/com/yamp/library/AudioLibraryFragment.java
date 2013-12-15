@@ -69,9 +69,6 @@ public class AudioLibraryFragment extends Fragment {
                 pl.setCurrent(pos);
                 AudioManager.getInstance().setPlayList(pl);
                 AudioManager.getInstance().playTrack();
-
-                //Toast.makeText(activity, clickedTrack.getName(), Toast.LENGTH_LONG).show(); // testing....
-                ///TODO: Initiate playing for this track. the "getPath()" accessor is the abs. path to the track. Use it.
             }
         });
     }
