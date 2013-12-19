@@ -11,6 +11,6 @@ public class Utilities {
     public static String convertTime(int msec){
         int m = msec / 60000;
         int s = msec / 1000 - m * 60;
-        return String.valueOf(m) + ":" + (s<10 ? "0" : "") + String.valueOf(s);
+        return (m < 10 ? "0" : "") + String.valueOf(m) + ":" + (s < 10 ? "0" : "") + String.valueOf(s);
     }
 }
