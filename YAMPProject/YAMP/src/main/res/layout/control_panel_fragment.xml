@@ -6,16 +6,38 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SeekBar
-        android:layout_width="fill_parent"
+     <RelativeLayout
         android:layout_height="wrap_content"
-        android:id="@+id/sbProgress"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:mirrorForRtl="false"
-        android:progress="25"
-        android:indeterminate="false"
-        android:max="1" />
+        android:layout_width="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+
+            android:id="@+id/tvTimeRemain" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tvTimeCurrent" />
+
+        <SeekBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sbProgress"
+            android:progress="0"
+            android:max="100"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/tvTimeRemain"
+            android:layout_toLeftOf="@+id/tvTimeCurrent" />
+    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
