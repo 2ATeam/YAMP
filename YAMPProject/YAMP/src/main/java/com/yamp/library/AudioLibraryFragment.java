@@ -106,10 +106,10 @@ public class AudioLibraryFragment extends Fragment {
 //        });
 
         btnAddOkayList.setOnClickListener(new View.OnClickListener() {
-            final String playlist = PromptDialog.showDialog(activity, "test");
+            //final String playlist = PromptDialog.showDialog(activity, "test");
             @Override
             public void onClick(View view) {
-                AudioLibraryManager.getInstance().addPlaylist(playlist);
+               // AudioLibraryManager.getInstance().addPlaylist(playlist);
             }
         });
 
