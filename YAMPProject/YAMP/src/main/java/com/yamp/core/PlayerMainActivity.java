@@ -27,25 +27,18 @@ public class PlayerMainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
-        AudioLibraryManager.getInstance().scanForAllSongs();
-        AudioLibraryManager.getInstance().scanForAlbums();
-        AudioLibraryManager.getInstance().scanForArtists();
+        AudioLibraryManager.getInstance().performFullScan();
 
         setContentView(R.layout.activity_main);
 
         playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
         audioLibraryFragment = new AudioLibraryFragment();
 
-
-            if (savedInstanceState != null) {
-                return;
-            }
-            getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
-
+        if (savedInstanceState != null) {
+            return;
+        }
+        getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
-
-
-
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().scanForAllSongs();

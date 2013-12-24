@@ -7,21 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
-import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.yamp.R;
 
 
-import java.util.ArrayList;
-
 import com.yamp.core.AudioManager;
+import com.yamp.library.Adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.Adapters.PlaylistsListAdapter;
+import com.yamp.library.Adapters.SongsListAdapter;
+import com.yamp.utils.PromptDialog;
 
 /**
  * Created by Lux on 07.12.13.
@@ -56,17 +57,19 @@ public class AudioLibraryFragment extends Fragment {
 
     private void populateLists() {
         //get views
-        ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ListView allTracksView = (ListView) activity.findViewById(R.id.list_all_tracks);
         ExpandableListView albumsListView = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
         ExpandableListView artistListView = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+        ExpandableListView playlistsListView = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
 
         //set adapters
-        view.setAdapter(new SongsListAdapter());
-        albumsListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getAlbums()));
-        artistListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getArtists()));
+        allTracksView.setAdapter(new SongsListAdapter(getActivity()));
+        albumsListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getAlbums(), getActivity()));
+        artistListView.setAdapter(new AlbumsArtistsListAdapter(AudioLibraryManager.getInstance().getArtists(), getActivity()));
+        playlistsListView.setAdapter(new PlaylistsListAdapter(AudioLibraryManager.getInstance().getPlaylists(), getActivity()));
 
         //awake controls
-        registerTouchHandler();
+        registerTouchHandlers();
     }
 
     @Override
@@ -77,20 +80,36 @@ public class AudioLibraryFragment extends Fragment {
         populateLists();
     }
 
-    private void registerTouchHandler(){
-        //find lists
+    private void registerTouchHandlers(){
+        //find components
         ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
         ExpandableListView exAlbumsList = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
         ExpandableListView exArtistsList = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+        ExpandableListView exPlaylistsList = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
+        ImageView imgRemovePlaylist = (ImageView) activity.findViewById(R.id.imgRemove);
+        Button btnAddOkayList = (Button) activity.findViewById(R.id.btn_add_playlist);
 
         //setup controls
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                PlayList pl = AudioLibraryManager.getInstance().getLibrary();
-                pl.setCurrent(pos);
-                AudioManager.getInstance().setPlayList(pl);
-                AudioManager.getInstance().playTrack();
+                playTrack(AudioLibraryManager.getInstance().getLibrary(), pos);
+            }
+        });
+
+        ///TODO: implement playlist removing mechanism.
+//        imgRemovePlaylist.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+        btnAddOkayList.setOnClickListener(new View.OnClickListener() {
+            final String playlist = PromptDialog.showDialog(activity, "test");
+            @Override
+            public void onClick(View view) {
+                AudioLibraryManager.getInstance().addPlaylist(playlist);
             }
         });
 
@@ -98,126 +117,32 @@ public class AudioLibraryFragment extends Fragment {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            PlayList pl = AudioLibraryManager.getInstance().getAlbums().get(groupPosition);
-            pl.setCurrent(childPosition);
-            AudioManager.getInstance().setPlayList(pl);
-            AudioManager.getInstance().playTrack();
-            return false;
+                playTrack(AudioLibraryManager.getInstance().getAlbums().get(groupPosition), childPosition);
+                return false;
             }
         });
 
         exArtistsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            PlayList pl = AudioLibraryManager.getInstance().getArtists().get(groupPosition);
-            pl.setCurrent(childPosition);
-            AudioManager.getInstance().setPlayList(pl);
-            AudioManager.getInstance().playTrack();
-            return false;
+                playTrack(AudioLibraryManager.getInstance().getArtists().get(groupPosition), childPosition);
+                return false;
+            }
+
+        });
+
+        exPlaylistsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                playTrack(AudioLibraryManager.getInstance().getPlaylists().get(groupPosition), childPosition);
+                return false;
             }
         });
     }
 
-    private View getSongView(AudioFile track, View view){
-        TextView songName = (TextView) view.findViewById(R.id.song_name);
-        TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
-        TextView duration = (TextView) view.findViewById(R.id.txtDuration);
-        TextView artist = (TextView) view.findViewById(R.id.txtArtist);
-        songName.setText(track.getName().trim());
-        albumName.setText(track.getAlbum().trim());
-        duration.setText(String.valueOf(track.getDuration()));
-        artist.setText(track.getArtist().trim());
-        return view;
-    }
-
-    private class SongsListAdapter extends ArrayAdapter<AudioFile> {
-
-        public SongsListAdapter() {
-            super(activity, R.layout.audio_library_list_entry, AudioLibraryManager.getInstance().getAllTracks());
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-
-            if(view == null){
-                view = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, parent, false);
-            }
-
-            AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
-            return getSongView(track, view);
-        }
-    }
-
-    private class AlbumsArtistsListAdapter extends BaseExpandableListAdapter {
-
-        ArrayList<PlayList> albumArtists;
-
-        private AlbumsArtistsListAdapter(ArrayList<PlayList> albumArtists) {
-            this.albumArtists = albumArtists;
-        }
-
-        @Override
-        public int getGroupCount() {
-            return albumArtists.size();
-        }
-
-        @Override
-        public int getChildrenCount(int i) {
-            return albumArtists.get(i).size();
-        }
-
-        @Override
-        public Object getGroup(int i) {
-            return albumArtists.get(i);
-        }
-
-        @Override
-        public Object getChild(int i, int i2) {
-            return albumArtists.get(i).getTrack(i2);
-        }
-
-        @Override
-        public long getGroupId(int i) {
-            return i;
-        }
-
-        @Override
-        public long getChildId(int i, int i2) {
-            return i2;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public View getGroupView(int i, boolean b, View convertView, ViewGroup viewGroup) {
-            if(convertView == null){
-               convertView = activity.getLayoutInflater().inflate(R.layout.audio_library_albumartist_entry, viewGroup, false);
-            }
-
-            PlayList album = albumArtists.get(i);
-            TextView albumName = (TextView) convertView.findViewById(R.id.txtAlbumartistName);
-            TextView albumSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
-            albumName.setText(album.getName());
-            albumSongsAmount.setText(String.valueOf(album.size()));
-            return convertView;
-        }
-
-        @Override
-        public View getChildView(int i, int i2, boolean b, View convertView, ViewGroup viewGroup) {
-            if(convertView == null){
-                convertView = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, viewGroup, false);
-            }
-            AudioFile track = albumArtists.get(i).getTrack(i2);
-            return getSongView(track, convertView);
-        }
-
-        @Override
-        public boolean isChildSelectable(int i, int i2) {
-            return true;
-        }
+    private void playTrack(PlayList playList, int trackIndex){
+        playList.setCurrent(trackIndex);
+        AudioManager.getInstance().setPlayList(playList);
+        AudioManager.getInstance().playTrack();
     }
 }

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 /**
  * Created by AdYa on 24.11.13.
- *
- * Host Playlist. Stores all audio files.
+ * Stores all audio files.
  */
 public class PlayList {
     protected ArrayList<AudioFile> tracks;
     private String name;
     private long ID;
     protected int current = 0;
+
     public PlayList() {
-        this.tracks = new ArrayList<AudioFile>();
+        this.tracks = new ArrayList<>();
     }
 
     public PlayList(String name, long id){

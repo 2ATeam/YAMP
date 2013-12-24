@@ -9,7 +9,6 @@ import java.util.ArrayList;
  * Created by AdYa on 24.11.13.
  *
  * Global library stores all audio files and playlists.
- * We can't have more than one audio library.
  */
 
 public class AudioLibrary extends PlayList{

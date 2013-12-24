@@ -7,12 +7,10 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
-import java.util.jar.Attributes;
 
 /**
  * Created by AdYa on 24.11.13.
- *
- *  Does something with AudioLibrary
+ * Controlling AudioLibrary content.
  */
 public class AudioLibraryManager {
 
@@ -34,10 +32,7 @@ public class AudioLibraryManager {
     public void scanForPlaylists(){
         Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
-        if (!validateCursor(cursor)) {
-            return;
-        }
-        else {
+        if (validateCursor(cursor)) {
             int idColumn = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
             int nameColumn = cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME);
             do {
@@ -48,13 +43,51 @@ public class AudioLibraryManager {
         }
     }
 
+    public void addPlaylist(String name){
+        if(name == null)
+            return;
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(MediaStore.Audio.Playlists.NAME, name);
+        resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, cValues);
+    }
+
+    public void removePlaylist(String name){
+        Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        if (validateCursor(cursor)) {
+            int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
+            String [] ID = { cursor.getString(columnID) };
+            resolver.delete(uri, MediaStore.Audio.Playlists._ID + "=?", ID);
+            scanForPlaylists(); // perform rescan;
+        }
+    }
+
+    public void scanSongsForPlaylist(long playlistID){
+        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        if (validateCursor(cursor)) {
+            ///TODO: implement this.
+        }
+    }
+
+    public void addSongToPlaylist(long playlistID, long songID){
+        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        if(!validateCursor(cursor)){
+            final int base = cursor.getInt(0);
+            cursor.close();
+            ContentValues cValues = new ContentValues();
+            cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + 1);
+            cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
+            resolver.insert(uri, cValues);
+        }
+    }
+
     public void scanForAllSongs(){
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
-        if(!validateCursor(cursor)){
-            return;
-        }
-        else{
+        if(validateCursor(cursor)){
             int columnTitle = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int columnArtist = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
@@ -86,22 +119,9 @@ public class AudioLibraryManager {
         return true;
     }
 
-    public void scanSongsForPlaylist(long playlistID){
-        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
-        Cursor cursor = resolver.query(uri, null, null, null, null);
-        if (!validateCursor(cursor)) {
-            return;
-        }
-        else{
-            ///TODO: implement playlist scanning logic.
-        }
-    }
-
     public void scanForAlbums(){
         Uri uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
-
         Cursor cursor = resolver.query(uri, null, null, null, null);
-
         if(!validateCursor(cursor)){
             return;
         }
@@ -124,10 +144,7 @@ public class AudioLibraryManager {
     public void scanForArtists(){
         Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
-        if(!validateCursor(cursor)){
-            return;
-        }
-        else{
+        if(validateCursor(cursor)){
             int columnName = cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST);
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Artists._ID);
             do{
@@ -143,26 +160,11 @@ public class AudioLibraryManager {
         }
     }
 
-    public void addPlaylist(String name){
-        ContentValues cValues = new ContentValues();
-        cValues.put(MediaStore.Audio.Playlists.NAME, name);
-        resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, cValues);
-        scanForPlaylists(); // perform rescanning.
-    }
-
-    public void addSongToPlaylist(long playlistID, long songID){
-        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
-        Cursor cursor = resolver.query(uri, null, null, null, null);
-        if(!validateCursor(cursor)){
-            return;
-        }
-
-        final int base = cursor.getInt(0);
-        cursor.close();
-        ContentValues cValues = new ContentValues();
-        cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + 1);
-        cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
-        resolver.insert(uri, cValues);
+    public void performFullScan(){
+        scanForAllSongs();
+        scanForAlbums();
+        scanForArtists();
+        scanForPlaylists();
     }
 
     public void setResolver(ContentResolver resolver) {
@@ -187,6 +189,10 @@ public class AudioLibraryManager {
 
     public ArrayList<PlayList> getArtists(){
         return library.getArtists();
+    }
+
+    public ArrayList<PlayList> getPlaylists(){
+        return library.getPlayLists();
     }
 
     public AudioFile getTrack(int index){
