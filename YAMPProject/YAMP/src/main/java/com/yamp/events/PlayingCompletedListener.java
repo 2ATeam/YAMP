@@ -6,3 +6,5 @@ package com.yamp.events;
 public interface PlayingCompletedListener {
     public void onPlayingCompleted();
 }
+
+/// TODO: Rewrite Listener interfaces. Group them by functionality.

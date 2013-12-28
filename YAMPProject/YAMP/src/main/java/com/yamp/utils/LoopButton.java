@@ -12,21 +12,18 @@ import com.yamp.R;
 public class LoopButton extends CompoundButton {
 
 
+    ///TODO: Move LoopButton constants to separated class LoopMode
     // a little bit scary code (not enum because of iterating throw this states is looped)
     public static final int STATE_NONE = 0;
-    public static final int STATE_SINGLE = 1;
-    public static final int STATE_ALL = 2;
+    public static final int STATE_ALL = 1;
+    public static final int STATE_SINGLE = 2;
 
     private static final int STATES_AMOUNT = 3;
     private static final int[] STATE_LOOPING_NONE_SET = {R.attr.state_looping_none};
-    private static final int[] STATE_LOOPING_SINGLE_SET = {R.attr.state_looping_single};
     private static final int[] STATE_LOOPING_ALL_SET = {R.attr.state_looping_all};
+    private static final int[] STATE_LOOPING_SINGLE_SET = {R.attr.state_looping_single};
 
     private int state = 0;
-
-    public int getState() {
-        return state;
-    }
 
     public LoopButton(Context context) {
         super(context);
@@ -36,10 +33,10 @@ public class LoopButton extends CompoundButton {
         super(context, attrs);
     }
 
-
     public LoopButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
@@ -67,5 +64,13 @@ public class LoopButton extends CompoundButton {
 
     private void switchState() {
         state = (state + 1) % STATES_AMOUNT;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state){
+        this.state = Utilities.clamp(STATE_NONE, STATES_AMOUNT - 1, state);
     }
 }

@@ -51,7 +51,7 @@ public class AudioFile {
     }
 
     public String getFormattedDuration(){
-        return Utilities.convertTime(duration);
+        return Utilities.formatTime(duration);
     }
 
     public String getPath() {

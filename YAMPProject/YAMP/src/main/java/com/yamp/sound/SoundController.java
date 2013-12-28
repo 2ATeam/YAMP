@@ -74,8 +74,10 @@ public class SoundController extends Service{
         firePlayingCompleted();
     }
     public void pause(){
-        player.pause();
-        paused = true;
+        if (isPlaying()){
+            player.pause();
+            paused = true;
+        }
     }
 
     public void play() {

@@ -8,7 +8,7 @@ public class Utilities {
         return (value < min ? min : (value > max ? max : value));
     }
 
-    public static String convertTime(int msec){
+    public static String formatTime(int msec){
         int m = msec / 60000;
         int s = msec / 1000 - m * 60;
         return (m < 10 ? "0" : "") + String.valueOf(m) + ":" + (s < 10 ? "0" : "") + String.valueOf(s);

@@ -9,6 +9,7 @@ import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.library.PlayList;
 import com.yamp.sound.SoundController;
+import com.yamp.utils.LoopButton;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class AudioManager {
     private void setTrack(AudioFile track){
         String path = track.getPath();
         if (controller.isPlaying())
-            controller.play(path); ///TODO: Change getName() to getPath()
+            controller.play(path);
         else
             controller.setTrack(path);
 
@@ -78,7 +79,8 @@ public class AudioManager {
         controller.play();
     }
     public void pause() {
-        controller.pause();
+        if (isPlaying())
+            controller.pause();
     }
     public void stop() {
         controller.stop();
@@ -91,23 +93,16 @@ public class AudioManager {
        setTrack(trackList.prevTrack());
     }
 
-    public void seekTo(int msec) {
-        controller.seekTo(msec);
-    }
-    public int getDuration() {
-        return controller.getDuration();
-    }
-
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
     }
+
     public int getVolume(){
         return controller.getVolume();
     }
     public void setVolume(int volume) {
         controller.setVolume(volume);
     }
-
     public void setPlayList(PlayList playlist) {
         if (playlist != null && playlist.size() > 0)
             this.trackList = playlist;
@@ -117,6 +112,18 @@ public class AudioManager {
         return trackList.getCurrent();
     }
 
+    public void seekTo(int msec) {
+        controller.seekTo(msec);
+    }
+
+    public int getCurrentProgress(){
+        return controller.getProgress();
+    }
+
+    public int getCurrentDuration(){
+        return controller.getDuration();
+    }
+
     public boolean isPlaying() {
         return controller.isPlaying();
     }
@@ -124,10 +131,24 @@ public class AudioManager {
         return controller.isLooped();
     }
 
-    public void setLooping(boolean looped) {
-        controller.setLooping(looped);
+    public void setLoopMode(int loopMode) {
+        switch (loopMode){
+            case LoopButton.STATE_NONE:
+                this.looped = false;
+            case LoopButton.STATE_SINGLE:
+                controller.setLooping(false);
+                break;
+            case LoopButton.STATE_ALL:
+                controller.setLooping(true);
+                this.looped = true;
+
+        }
+
     }
 
+    public int getLoopMode(){
+        return (this.looped ? LoopButton.STATE_ALL : (controller.isLooped() ? LoopButton.STATE_SINGLE : LoopButton.STATE_NONE));
+    }
 
     /**
      * Listeners ....
