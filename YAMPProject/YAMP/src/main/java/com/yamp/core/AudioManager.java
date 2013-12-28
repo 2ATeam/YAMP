@@ -1,7 +1,4 @@
 package com.yamp.core;
-
-import android.support.v7.appcompat.R;
-
 import com.yamp.events.NewTrackLoadedListener;
 import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;

@@ -8,7 +8,6 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-
 import com.yamp.R;
 import com.yamp.library.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
@@ -40,10 +39,6 @@ public class PlayerMainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
-        audioLibraryFragment = new AudioLibraryFragment();
 
         initializeGestures();
 
@@ -52,6 +47,20 @@ public class PlayerMainActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
+        AudioLibraryManager.getInstance().setResolver(getContentResolver());
+        AudioLibraryManager.getInstance().performFullScan();
+
+
+        setContentView(R.layout.activity_main);
+
+        playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
+        audioLibraryFragment = new AudioLibraryFragment();
+
+        if (savedInstanceState != null) {
+            return;
+        }
+        getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().scanForAllSongs();

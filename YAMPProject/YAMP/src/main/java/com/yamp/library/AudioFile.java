@@ -10,8 +10,9 @@ import com.yamp.utils.Utilities;
 public class AudioFile {
 
     private String name;
-    private String albumn;
+    private String album;
     private String artist;
+
     private String genre;
     private String lyrics; // stores huge text :)
     private int year;
@@ -25,7 +26,7 @@ public class AudioFile {
         this.ID = id;
         this.name = name;
         this.artist = artist;
-        this.albumn = album;
+        this.album = album;
         this.duration = duration;
         this.path = path;
     }
@@ -38,8 +39,8 @@ public class AudioFile {
         return name;
     }
 
-    public String getAlbumn() {
-        return albumn;
+    public String getAlbum() {
+        return album;
     }
 
     public String getArtist() {

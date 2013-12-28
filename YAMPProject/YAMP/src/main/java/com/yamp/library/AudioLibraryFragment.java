@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
@@ -36,7 +37,7 @@ public class AudioLibraryFragment extends Fragment {
         addTab(host, "ALL", R.id.tabAll);
         addTab(host, "PLAYLISTS", R.id.tabPlaylists);
         addTab(host, "ALBUMS", R.id.tabAlbums);
-        addTab(host, "CUSTOM", R.id.tabCustom);
+        addTab(host, "ARTISTS", R.id.tabArtists);
     }
 
     private void addTab(TabHost host, String indicator, int resID){
@@ -46,59 +47,83 @@ public class AudioLibraryFragment extends Fragment {
         host.addTab(spec);
     }
 
-    private void populateSongsList() {
-        SongsListAdapter adapter = new SongsListAdapter();
-        ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
-        view.setAdapter(adapter);
-        registerTouchHandler();
+    private void populateLists() {
+        //get views
+        ListView allTracksView = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ExpandableListView albumsListView = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
+        ExpandableListView artistListView = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+        ExpandableListView playlistsListView = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
+
+        //set data adapters
+        AudioLibraryManager.getInstance().initDataAdapters(activity);
+        allTracksView.setAdapter(AudioLibraryManager.getInstance().getSongsListAdapter());
+        albumsListView.setAdapter(AudioLibraryManager.getInstance().getAlbumsListAdapter());
+        artistListView.setAdapter(AudioLibraryManager.getInstance().getArtistsListAdapter());
+        playlistsListView.setAdapter(AudioLibraryManager.getInstance().getPlaylistsListAdapter());
+
+        //awake controls
+        registerTouchHandlers();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity(); // we can get the reference to activity only then it was created. Not earlier!!
-        populateSongsList();
+        populateLists();
     }
 
-    private void registerTouchHandler(){
+    private void registerTouchHandlers() {
+        //find components
         ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ExpandableListView exAlbumsList = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
+        ExpandableListView exArtistsList = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
+        ExpandableListView exPlaylistsList = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
+        Button btnAddPlaylist = (Button) activity.findViewById(R.id.btn_add_playlist);
+
+        //setup controls
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                PlayList pl = AudioLibraryManager.getInstance().getLibrary();
-                pl.setCurrent(pos);
-                AudioManager.getInstance().setPlayList(pl);
-                AudioManager.getInstance().playTrack();
+                playTrack(AudioLibraryManager.getInstance().getLibrary(), pos);
+            }
+        });
+
+        btnAddPlaylist.setOnClickListener(new View.OnClickListener() {
+            //final String playlist = PromptDialog.showDialog(activity, "test");
+            @Override
+            public void onClick(View view) {
+                // AudioLibraryManager.getInstance().addPlaylist(playlist);
+            }
+        });
+
+        exAlbumsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                playTrack(AudioLibraryManager.getInstance().getAlbums().get(groupPosition), childPosition);
+                return false;
+            }
+        });
+
+        exArtistsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                playTrack(AudioLibraryManager.getInstance().getArtists().get(groupPosition), childPosition);
+                return false;
+            }
+        });
+
+        exPlaylistsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                playTrack(AudioLibraryManager.getInstance().getPlaylists().get(groupPosition), childPosition);
+                return false;
             }
         });
     }
 
-    public class SongsListAdapter extends ArrayAdapter<AudioFile> {
-        public SongsListAdapter() {
-            super(activity, R.layout.audio_library_list_entry, AudioLibraryManager.getInstance().getAllTracks());
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-
-            if(view == null){
-                view = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, parent, false);
-            }
-
-            AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
-
-            TextView songName = (TextView) view.findViewById(R.id.song_name);
-            TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
-            TextView duration = (TextView) view.findViewById(R.id.txtDuration);
-            TextView artist = (TextView) view.findViewById(R.id.txtArtist);
-
-            songName.setText(track.getName().trim());
-            albumName.setText(track.getAlbumn().trim());
-            duration.setText(String.valueOf(track.getDuration()));
-            artist.setText(track.getArtist().trim());
-
-            return view;
-        }
+    private void playTrack(PlayList playList, int trackIndex){
+        playList.setCurrent(trackIndex);
+        AudioManager.getInstance().setPlayList(playList);
+        AudioManager.getInstance().playTrack();
     }
 }
