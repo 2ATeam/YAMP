@@ -26,19 +26,13 @@ import com.yamp.utils.Utilities;
  */
 public class ControlFragment extends Fragment {
 
-    private SeekBar sbProgress;
     private SeekBar sbVolume;
     private Button bPlay;
     private Button bNext;
     private Button bPrev;
 
-    private TextView tvRemain; ///TODO: make it clickable
-    private TextView tvCurrent;
-
     private LoopButton lbLooped;
     private CheckBox cbShuffled; ///TODO: change appearance for this checkbox
-
-    private final static int TRACK_PROGRESS_DELAY = 250;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,44 +58,14 @@ public class ControlFragment extends Fragment {
     }
 
     private void restoreState() {
-        updaterHandler.removeCallbacks(progressUpdater); // make sure that handler is clear.
         lbLooped.setState(AudioManager.getInstance().getLoopMode());
 
         sbVolume.setMax(AudioManager.getInstance().getVolumeMax());
         sbVolume.setProgress(AudioManager.getInstance().getVolume());
-
-        sbProgress.setProgress(0);
-        sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
-
-        updateTimers();
-
-        updaterHandler.post(progressUpdater);
     }
 
 
     private void initialize(){
-        AudioManager.getInstance().setOnNewTrackLoadedListener(new NewTrackLoadedListener() {
-            @Override
-            public void onNewTrackLoaded(AudioFile track) {
-                sbProgress.setProgress(0);
-                sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
-            }
-        });
-
-        AudioManager.getInstance().setOnPlayingStartedListener(new PlayingStartedListener() {
-            @Override
-            public void onPlayingStarted() {
-                updaterHandler.post(progressUpdater);
-            }
-        });
-
-        AudioManager.getInstance().setOnPlayingCompletedListener(new PlayingCompletedListener() {
-            @Override
-            public void onPlayingCompleted() {
-                updaterHandler.removeCallbacks(progressUpdater);
-            }
-        });
-
         sbVolume.setMax(AudioManager.getInstance().getVolumeMax());
         sbVolume.setProgress(AudioManager.getInstance().getVolume());
     }
@@ -142,39 +106,6 @@ public class ControlFragment extends Fragment {
             }
         });
 
-        sbProgress = (SeekBar) fragment.findViewById(R.id.sbProgress);
-        sbProgress.setProgress(0);
-        sbProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (!fromUser) return;
-
-
-
-                if (progress == sbProgress.getMax()){
-                    if (AudioManager.getInstance().isPlaying()){
-                        AudioManager.getInstance().stop();
-                    }
-                }
-
-                AudioManager.getInstance().seekTo(progress);
-                tvCurrent.setText(Utilities.formatTime(progress));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                updaterHandler.removeCallbacks(progressUpdater); // pause seek bar
-                AudioManager.getInstance().pause();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                updaterHandler.post(progressUpdater); // restore seek bar
-                AudioManager.getInstance().play();
-            }
-        });
-
-
         sbVolume = (SeekBar)fragment.findViewById(R.id.sbVolume);
         sbVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -194,21 +125,8 @@ public class ControlFragment extends Fragment {
 
             }
         });
-
-        tvRemain = (TextView) fragment.findViewById(R.id.tvTimeRemain);
-        tvCurrent = (TextView) fragment.findViewById(R.id.tvTimeCurrent);
     }
 
-
-    private Handler updaterHandler = new Handler();
-    private Runnable progressUpdater = new Runnable() {
-        @Override
-        public void run() {
-            sbProgress.setProgress(YAMPApplication.getSoundController().getProgress());
-            updateTimers();
-            updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
-        }
-    };
 
     private void loopedHandler(int loopMode) {
         AudioManager.getInstance().setLoopMode(loopMode); /// TODO: Replace simple boolean with LOOP_MODE enum.
@@ -225,15 +143,8 @@ public class ControlFragment extends Fragment {
     private void playHandler() {
         if (AudioManager.getInstance().isPlaying()){
             AudioManager.getInstance().pause();
-            updaterHandler.removeCallbacks(progressUpdater);
         } else {
             AudioManager.getInstance().play();
-            updaterHandler.post(progressUpdater);
         }
-    }
-
-    private void updateTimers(){
-        tvCurrent.setText(Utilities.formatTime(YAMPApplication.getSoundController().getProgress()));
-        tvRemain.setText(Utilities.formatTime(YAMPApplication.getSoundController().getDuration()));
     }
 }

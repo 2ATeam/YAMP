@@ -14,8 +14,15 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/timeline_fragment"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+
+        android:layout_weight="0.5" />
+
+    <FrameLayout
         android:id="@+id/control_fragment"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
 
         android:layout_weight="0.4" />
