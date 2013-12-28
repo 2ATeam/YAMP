@@ -13,7 +13,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.yamp.R;
-import com.yamp.core.AudioManager;
+import com.yamp.AudioManager;
 
 /**
  * Created by Lux on 07.12.13.

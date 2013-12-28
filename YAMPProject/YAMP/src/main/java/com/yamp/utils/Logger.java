@@ -1,12 +1,9 @@
 package com.yamp.utils;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
-import com.yamp.core.AudioManager;
-import com.yamp.core.YAMPApplication;
+import com.yamp.AudioManager;
+import com.yamp.YAMPApplication;
 import com.yamp.events.NewTrackLoadedListener;
 import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;
