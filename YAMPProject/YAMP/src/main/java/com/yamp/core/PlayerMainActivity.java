@@ -40,18 +40,11 @@ public class PlayerMainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initializeGestures();
 
         if (savedInstanceState != null) return;
 
-        getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
-
-        AudioLibraryManager.getInstance().setResolver(getContentResolver());
-        AudioLibraryManager.getInstance().performFullScan();
-
-
         setContentView(R.layout.activity_main);
+        initializeGestures();
 
         playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
         audioLibraryFragment = new AudioLibraryFragment();
