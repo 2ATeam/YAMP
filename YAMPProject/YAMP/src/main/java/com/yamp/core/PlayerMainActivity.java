@@ -26,8 +26,10 @@ public class PlayerMainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().performFullScan();
+
 
         setContentView(R.layout.activity_main);
 

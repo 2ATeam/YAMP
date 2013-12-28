@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 
 public class AudioLibrary extends PlayList{
-    private ArrayList<PlayList> playLists;
+    private  ArrayList<PlayList> playLists;
     private  ArrayList<PlayList> artists;
     private  ArrayList<PlayList> albums;
 
@@ -48,6 +48,24 @@ public class AudioLibrary extends PlayList{
     }
     public void insertArtist(PlayList artist) {
         this.artists.add(artist);
+    }
+
+    public void clearAll(){
+        this.playLists.clear();
+        this.albums.clear();
+        this.artists.clear();
+    }
+
+    public void clearPlaylists(){
+        this.playLists.clear();
+    }
+
+    public void clearAlbums(){
+        this.albums.clear();
+    }
+
+    public void clearArtists(){
+        this.artists.clear();
     }
 
     public ArrayList<PlayList> getArtists() {

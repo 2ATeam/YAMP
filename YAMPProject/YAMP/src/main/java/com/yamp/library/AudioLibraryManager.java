@@ -5,6 +5,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.widget.BaseAdapter;
+
+import com.yamp.library.adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.adapters.ISongsDisplayable;
+import com.yamp.library.adapters.PlaylistsListAdapter;
+import com.yamp.library.adapters.SongsListAdapter;
 
 import java.util.ArrayList;
 
@@ -16,6 +23,13 @@ public class AudioLibraryManager {
 
     private ContentResolver resolver;
     private AudioLibrary library;
+
+    //data adapters.
+    private SongsListAdapter songsListAdapter;
+    private AlbumsArtistsListAdapter albumsListAdapter;
+    private AlbumsArtistsListAdapter artistsListAdapter;
+    private PlaylistsListAdapter playlistsListAdapter;
+
     private static AudioLibraryManager instance;
 
     private AudioLibraryManager() {
@@ -29,7 +43,15 @@ public class AudioLibraryManager {
         return instance;
     }
 
+    public void initDataAdapters(FragmentActivity activity) {
+        this.songsListAdapter = new SongsListAdapter(activity);
+        this.albumsListAdapter = new AlbumsArtistsListAdapter(getAlbums(), activity);
+        this.artistsListAdapter = new AlbumsArtistsListAdapter(getArtists(), activity);
+        this.playlistsListAdapter = new PlaylistsListAdapter(getPlaylists(), activity);
+    }
+
     public void scanForPlaylists(){
+        library.clearPlaylists();
         Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
         if (validateCursor(cursor)) {
@@ -50,6 +72,7 @@ public class AudioLibraryManager {
         ContentValues cValues = new ContentValues();
         cValues.put(MediaStore.Audio.Playlists.NAME, name);
         resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, cValues);
+        playlistsListAdapter.notifyDataSetChanged();
     }
 
     public void removePlaylist(String name){
@@ -59,7 +82,9 @@ public class AudioLibraryManager {
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
             String [] ID = { cursor.getString(columnID) };
             resolver.delete(uri, MediaStore.Audio.Playlists._ID + "=?", ID);
-            scanForPlaylists(); // perform rescan;
+            scanForPlaylists(); // perform rescan.
+            if (playlistsListAdapter != null)
+                playlistsListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -81,6 +106,8 @@ public class AudioLibraryManager {
             cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + 1);
             cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
             resolver.insert(uri, cValues);
+            if (playlistsListAdapter != null)
+                playlistsListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -120,6 +147,7 @@ public class AudioLibraryManager {
     }
 
     public void scanForAlbums(){
+        library.clearAlbums();
         Uri uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
         if(!validateCursor(cursor)){
@@ -142,6 +170,7 @@ public class AudioLibraryManager {
     }
 
     public void scanForArtists(){
+        library.clearArtists();
         Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
         if(validateCursor(cursor)){
@@ -181,6 +210,27 @@ public class AudioLibraryManager {
             names.add(album.getName());
         }
         return names;
+    }
+
+    private void notifyDataSetChanged(BaseAdapter adapter){
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
+    }
+
+    public SongsListAdapter getSongsListAdapter() {
+        return songsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getAlbumsListAdapter() {
+        return albumsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getArtistsListAdapter() {
+        return artistsListAdapter;
+    }
+
+    public PlaylistsListAdapter getPlaylistsListAdapter() {
+        return playlistsListAdapter;
     }
 
     public ArrayList<PlayList> getAlbums(){

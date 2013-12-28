@@ -1,13 +1,16 @@
-package com.yamp.library.Adapters;
+package com.yamp.library.adapters;
 
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.library.AudioFile;
+import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 public class PlaylistsListAdapter extends BaseExpandableListAdapter implements ISongsDisplayable {
     private FragmentActivity activity;
     private ArrayList<PlayList> playLists;
+    private ImageView btnRemovePlaylist;
 
     public PlaylistsListAdapter(ArrayList<PlayList> playLists, FragmentActivity activity) {
         this.playLists = playLists;
@@ -73,6 +77,8 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         PlayList playList = playLists.get(i);
         TextView playlistName = (TextView) convertView.findViewById(R.id.txtPlaylistName);
         TextView playlistSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
+        btnRemovePlaylist = (ImageView) convertView.findViewById(R.id.btnRemove);
+        registerTouchHandlers();
         playlistName.setText(playList.getName());
         playlistSongsAmount.setText(String.valueOf(playList.size()));
         return convertView;
@@ -98,5 +104,16 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         duration.setText(String.valueOf(track.getDuration()));
         artist.setText(track.getArtist().trim());
         return view;
+    }
+
+    private void registerTouchHandlers(){
+        btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView text = (TextView) activity.findViewById(R.id.txtPlaylistName);
+                AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
+
+            }
+        });
     }
 }

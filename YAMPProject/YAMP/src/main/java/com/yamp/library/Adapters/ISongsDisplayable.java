@@ -1,4 +1,4 @@
-package com.yamp.library.Adapters;
+package com.yamp.library.adapters;
 
 import android.view.View;
 

@@ -29,7 +29,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="48dp" />
+        android:layout_marginLeft="48dp"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,12 +45,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imgRemove"
+        android:id="@+id/btnRemove"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:adjustViewBounds="true"
         android:src="@drawable/remove"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/txtAlbunartistAmount" />
+        android:adjustViewBounds="true"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount"
+        android:clickable="true" />
 
 </RelativeLayout>
