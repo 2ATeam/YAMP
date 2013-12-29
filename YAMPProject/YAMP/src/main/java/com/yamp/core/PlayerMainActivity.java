@@ -30,6 +30,8 @@ public class PlayerMainActivity extends FragmentActivity {
 
     private GestureDetectorCompat gestureDetector;
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
@@ -62,14 +64,14 @@ public class PlayerMainActivity extends FragmentActivity {
     }
 
     private void initializeGestures(){
-        GestureAdapter ga = new GestureAdapter();
-        gestureDetector = new GestureDetectorCompat(this, ga);
-        gestureDetector.setOnDoubleTapListener(ga);
+        GestureAdapter gestureAdapter = new GestureAdapter();
+        gestureDetector = new GestureDetectorCompat(this, gestureAdapter);
+        gestureDetector.setOnDoubleTapListener(gestureAdapter);
 
-        ga.setOnFlingListener(new GestureAdapter.FlingListener() {
+        gestureAdapter.setOnFlingListener(new GestureAdapter.FlingListener() {
             @Override
             public void onUpFling() {
-                if (!mainFragment){
+                if (!mainFragment) {
                     mainFragment = true;
                     getSupportFragmentManager().popBackStack();
                 }
@@ -77,7 +79,7 @@ public class PlayerMainActivity extends FragmentActivity {
 
             @Override
             public void onDownFling() {
-                if (mainFragment){
+                if (mainFragment) {
                     mainFragment = false;
                     replace(audioLibraryFragment);
                 }
@@ -85,16 +87,16 @@ public class PlayerMainActivity extends FragmentActivity {
 
             @Override
             public void onLeftFling() {
-
+                AudioManager.getInstance().prev();
             }
 
             @Override
             public void onRightFling() {
-
+                AudioManager.getInstance().next();
             }
         });
 
-        Logger.setGestureAdapter(ga);
+        Logger.setGestureAdapter(gestureAdapter);
     }
 
     private void replace(Fragment newFragment){

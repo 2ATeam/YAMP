@@ -10,9 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.yamp.R;
-import com.yamp.events.NewTrackLoadedListener;
-import com.yamp.events.PlayingCompletedListener;
-import com.yamp.events.PlayingStartedListener;
+import com.yamp.events.PlaybackListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
@@ -62,25 +61,43 @@ public class TimelineFragment extends Fragment{
 
 
     private void initialize(){
-        AudioManager.getInstance().setOnNewTrackLoadedListener(new NewTrackLoadedListener() {
+        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
                 sbProgress.setProgress(0);
                 sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
             }
-        });
 
-        AudioManager.getInstance().setOnPlayingStartedListener(new PlayingStartedListener() {
             @Override
-            public void onPlayingStarted() {
-                updaterHandler.post(progressUpdater);
+            public void onNextTrackLoaded(AudioFile nextTrack) {
+
+            }
+
+            @Override
+            public void onPrevTrackLoaded(AudioFile prevTrack) {
+
             }
         });
 
-        AudioManager.getInstance().setOnPlayingCompletedListener(new PlayingCompletedListener() {
+        AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
             @Override
-            public void onPlayingCompleted() {
+            public void onPlayingStarted(boolean causedByUser) {
+                updaterHandler.post(progressUpdater);
+            }
+
+            @Override
+            public void onPlayingCompleted(boolean causedByUser) {
                 updaterHandler.removeCallbacks(progressUpdater);
+            }
+
+            @Override
+            public void onPlayingPaused(int currentProgress) {
+
+            }
+
+            @Override
+            public void onPlayingResumed(int currentProgress) {
+
             }
         });
     }

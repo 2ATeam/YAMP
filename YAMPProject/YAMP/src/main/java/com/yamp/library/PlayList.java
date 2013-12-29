@@ -40,15 +40,23 @@ public class PlayList {
         tracks.add(track);
     }
 
+    // navigate through playlist
     public AudioFile nextTrack(){
         return tracks.get(Utilities.clamp(0, tracks.size()-1, ++current));
     }
-
-    public AudioFile getCurrent(){
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
-    }
     public AudioFile prevTrack(){
         return tracks.get(Utilities.clamp(0, tracks.size()-1, --current));
+    }
+
+    // simple access to relevant tracks (prev/cur/next)
+    public AudioFile getNextTrack(){
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current + 1));
+    }
+    public AudioFile getPrevTrack(){
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current - 1));
+    }
+    public AudioFile getCurrentTrack(){
+        return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
     }
 
     public void setCurrent(int current) {

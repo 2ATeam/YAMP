@@ -1,13 +1,11 @@
 package com.yamp.utils;
 
-import android.support.v7.appcompat.R;
 import android.util.Log;
 
 import com.yamp.core.AudioManager;
 import com.yamp.core.YAMPApplication;
-import com.yamp.events.NewTrackLoadedListener;
-import com.yamp.events.PlayingCompletedListener;
-import com.yamp.events.PlayingStartedListener;
+import com.yamp.events.PlaybackListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
@@ -48,23 +46,41 @@ public class Logger {
         });
     }
     private void setSoundControllerDependedClasses(){
-        AudioManager.getInstance().setOnNewTrackLoadedListener(new NewTrackLoadedListener() {
+        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
                 sendMessage("Audio Manager", "Track \"" + track.getName() + "\" was loaded.");
             }
-        });
-        YAMPApplication.getSoundController().setOnPlayingCompletedListener(new PlayingCompletedListener() {
+
             @Override
-            public void onPlayingCompleted() {
-                sendMessage("Sound Controller", "Track has been completed.");
+            public void onNextTrackLoaded(AudioFile nextTrack) {
+                sendMessage("Audio Manager", "Next track \"" + nextTrack.getName() + "\" was loaded.");
+            }
+
+            @Override
+            public void onPrevTrackLoaded(AudioFile prevTrack) {
+                sendMessage("Audio Manager", "Prev track \"" + prevTrack.getName() + "\" was loaded.");
             }
         });
-
-        YAMPApplication.getSoundController().setOnPlayingStartedListener(new PlayingStartedListener() {
+        YAMPApplication.getSoundController().setPlaybackListener(new PlaybackListener() {
             @Override
-            public void onPlayingStarted() {
+            public void onPlayingStarted(boolean causedByUser) {
                 sendMessage("Sound Controller", "Track has been started.");
+            }
+
+            @Override
+            public void onPlayingCompleted(boolean causedByUser) {
+                sendMessage("Sound Controller", "Track has been completed.");
+            }
+
+            @Override
+            public void onPlayingPaused(int currentProgress) {
+                sendMessage("Sound Controller", "Track has been paused (at " + Utilities.formatTime(currentProgress) + ").");
+            }
+
+            @Override
+            public void onPlayingResumed(int currentProgress) {
+                sendMessage("Sound Controller", "Track has been resumed (at " + Utilities.formatTime(currentProgress) + ").");
             }
         });
     }

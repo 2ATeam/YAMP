@@ -1,7 +1,6 @@
 package com.yamp.core;
-import com.yamp.events.NewTrackLoadedListener;
-import com.yamp.events.PlayingCompletedListener;
-import com.yamp.events.PlayingStartedListener;
+import com.yamp.events.PlaybackListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.library.PlayList;
@@ -38,14 +37,29 @@ public class AudioManager {
             @Override
             public void onSoundControllerBounded(SoundController controller) {
                AudioManager.this.controller = controller;
-                AudioManager.this.controller.setOnPlayingCompletedListener(new PlayingCompletedListener() {
+                AudioManager.this.controller.setPlaybackListener(new PlaybackListener() {
                     @Override
-                    public void onPlayingCompleted() {
-                       if (!AudioManager.this.controller.isLooped()){
-                           next();
-                           if (readyToPlay) play();// if track is not looped play next track.
-                           ///TODO: kostil
-                       }
+                    public void onPlayingStarted(boolean causedByUser) {
+
+                    }
+
+                    @Override
+                    public void onPlayingCompleted(boolean causedByUser) {
+                        if (!AudioManager.this.controller.isLooped()) {// if track is not looped play next track.
+                            next();
+                            if (readyToPlay) play();
+                            ///TODO: kostil
+                        }
+                    }
+
+                    @Override
+                    public void onPlayingPaused(int currentProgress) {
+
+                    }
+
+                    @Override
+                    public void onPlayingResumed(int currentProgress) {
+
                     }
                 });
             }
@@ -60,12 +74,12 @@ public class AudioManager {
         else
             controller.setTrack(path);
 
-        fireNewTrackLoaded(track);
+        notifyNewTrackLoaded(track);
     }
 
     public void playTrack(){
-        controller.play(trackList.getCurrent().getPath());
-        fireNewTrackLoaded(trackList.getCurrent());
+        controller.play(trackList.getCurrentTrack().getPath());
+        notifyNewTrackLoaded(trackList.getCurrentTrack());
     }
 
     public void play() {
@@ -84,10 +98,12 @@ public class AudioManager {
     }
 
     public void next() {
+        notifyNextTrackLoaded(trackList.getNextTrack());
         setTrack(trackList.nextTrack());
     }
     public void prev() {
-       setTrack(trackList.prevTrack());
+        noyifyPrevTrackLoaded(trackList.getPrevTrack());
+        setTrack(trackList.prevTrack());
     }
 
     public int getVolumeMax(){
@@ -106,7 +122,7 @@ public class AudioManager {
     }
 
     public AudioFile getCurrent(){
-        return trackList.getCurrent();
+        return trackList.getCurrentTrack();
     }
 
     public void seekTo(int msec) {
@@ -151,22 +167,30 @@ public class AudioManager {
      * Listeners ....
      **/
 
-    private ArrayList<NewTrackLoadedListener> newTrackLoadedListeners = new ArrayList<>();
-    private void fireNewTrackLoaded(AudioFile track){
-        for (NewTrackLoadedListener listener : newTrackLoadedListeners){
+    private ArrayList<TrackLoadedListener> trackLoadedListeners = new ArrayList<>();
+    public void setTrackLoadedListener(TrackLoadedListener listener){
+        trackLoadedListeners.add(listener);
+    }
+
+    private void notifyNewTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onNewTrackLoaded(track);
         }
     }
-    public void setOnNewTrackLoadedListener(NewTrackLoadedListener listener){
-        newTrackLoadedListeners.add(listener);
+    private void notifyNextTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
+            listener.onNextTrackLoaded(track);
+        }
+    }
+    private void noyifyPrevTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
+            listener.onPrevTrackLoaded(track);
+        }
     }
 
     // SoundController redirection
-    public void setOnPlayingStartedListener(PlayingStartedListener listener) {
-        controller.setOnPlayingStartedListener(listener);
-    }
-    public void setOnPlayingCompletedListener(PlayingCompletedListener listener) {
-        controller.setOnPlayingCompletedListener(listener);
+    public void setPlaybackListener(PlaybackListener listener) {
+        controller.setPlaybackListener(listener);
     }
 
 }
