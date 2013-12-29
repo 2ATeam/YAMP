@@ -133,6 +133,7 @@ public class AudioLibraryManager {
     }
 
     public void scanForAllSongs(){
+        library.clearSongs();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
         if(validateCursor(cursor)){
@@ -261,18 +262,6 @@ public class AudioLibraryManager {
         playlistsListAdapter.notifyDataSetChanged();
     }
 
-    public SongsListAdapter getSongsListAdapter() {
-        return songsListAdapter;
-    }
-
-    public AlbumsArtistsListAdapter getAlbumsListAdapter() {
-        return albumsListAdapter;
-    }
-
-    public AlbumsArtistsListAdapter getArtistsListAdapter() {
-        return artistsListAdapter;
-    }
-
     public PlaylistsListAdapter getPlaylistsListAdapter() {
         return playlistsListAdapter;
     }
@@ -291,6 +280,18 @@ public class AudioLibraryManager {
 
     public AudioFile getTrack(int index){
         return library.getTrack(index);
+    }
+
+    public SongsListAdapter getSongsListAdapter() {
+        return songsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getAlbumsListAdapter() {
+        return albumsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getArtistsListAdapter() {
+        return artistsListAdapter;
     }
 
     public PlayList getLibrary(){
