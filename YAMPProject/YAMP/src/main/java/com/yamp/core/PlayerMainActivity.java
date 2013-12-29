@@ -3,67 +3,101 @@ package com.yamp.core;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GestureDetectorCompat;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
+import android.view.MotionEvent;
+import android.support.v4.app.FragmentTransaction;
 import com.yamp.R;
 import com.yamp.library.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
+import com.yamp.utils.GestureAdapter;
+import com.yamp.utils.Logger;
 
 
 public class PlayerMainActivity extends FragmentActivity {
 
-    private Button bSwitch;
     private boolean mainFragment = true;
+
+    @Override
+    public void onBackPressed() {
+        mainFragment=true;
+        super.onBackPressed();
+    }
 
     private PlayerFragment playerFragment;
     private AudioLibraryFragment audioLibraryFragment;
+
+    private GestureDetectorCompat gestureDetector;
+
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AudioLibraryManager.getInstance().setResolver(getContentResolver());
-        AudioLibraryManager.getInstance().performFullScan();
 
         setContentView(R.layout.activity_main);
+        initializeGestures();
 
         playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
         audioLibraryFragment = new AudioLibraryFragment();
 
-        if (savedInstanceState != null) {
-            return;
-        }
+        if (savedInstanceState != null) return;
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.timeline_fragment, new TimelineFragment()).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().scanForAllSongs();
         AudioManager.getInstance().setPlayList(AudioLibraryManager.getInstance().getLibrary());
+    }
 
-        bSwitch = (Button)findViewById(R.id.bSwitch);
-        bSwitch.setOnClickListener(new View.OnClickListener() {
+    private void initializeGestures(){
+        GestureAdapter gestureAdapter = new GestureAdapter();
+        gestureDetector = new GestureDetectorCompat(this, gestureAdapter);
+        gestureDetector.setOnDoubleTapListener(gestureAdapter);
+
+        gestureAdapter.setOnFlingListener(new GestureAdapter.FlingListener() {
             @Override
-            public void onClick(View view) {
-
-                if (mainFragment){
-                    mainFragment = false;
-                    replace(audioLibraryFragment);
-                }
-                else{
+            public void onUpFling() {
+                if (!mainFragment) {
                     mainFragment = true;
                     getSupportFragmentManager().popBackStack();
                 }
             }
+
+            @Override
+            public void onDownFling() {
+                if (mainFragment) {
+                    mainFragment = false;
+                    replace(audioLibraryFragment);
+                }
+            }
+
+            @Override
+            public void onLeftFling() {
+                AudioManager.getInstance().prev();
+            }
+
+            @Override
+            public void onRightFling() {
+                AudioManager.getInstance().next();
+            }
         });
+
+        Logger.setGestureAdapter(gestureAdapter);
     }
 
     private void replace(Fragment newFragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.setCustomAnimations(R.animator.slide_in_top, R.animator.slide_out_bottom, R.animator.slide_in_bottom, R.animator.slide_out_top);
         ft.addToBackStack(null);
         ft.replace(R.id.player_fragment, newFragment);
         ft.commit();

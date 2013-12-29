@@ -1,13 +1,12 @@
 package com.yamp.core;
-
-import com.yamp.events.NewTrackLoadedListener;
-import com.yamp.events.PlayingCompletedListener;
-import com.yamp.events.PlayingStartedListener;
+import com.yamp.events.PlaybackListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 import com.yamp.sound.SoundController;
+import com.yamp.utils.LoopButton;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class AudioManager {
 
     private SoundController controller;
     private static AudioManager instance;
-    private AudioFile trackToPlay;
+    private AudioFile trackToPlay; /// TODO: old thing... use trackList.getCurrentTrack()
 
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
@@ -40,14 +39,29 @@ public class AudioManager {
             @Override
             public void onSoundControllerBounded(SoundController controller) {
                AudioManager.this.controller = controller;
-                AudioManager.this.controller.setOnPlayingCompletedListener(new PlayingCompletedListener() {
+                AudioManager.this.controller.setPlaybackListener(new PlaybackListener() {
                     @Override
-                    public void onPlayingCompleted() {
-                       if (!AudioManager.this.controller.isLooped()){
-                           next();
-                           if (readyToPlay) play();// if track is not looped play next track.
-                           ///TODO: kostil
-                       }
+                    public void onPlayingStarted(boolean causedByUser) {
+
+                    }
+
+                    @Override
+                    public void onPlayingCompleted(boolean causedByUser) {
+                        if (!AudioManager.this.controller.isLooped()) {// if track is not looped play next track.
+                            next();
+                            if (readyToPlay) play();
+                            ///TODO: kostil
+                        }
+                    }
+
+                    @Override
+                    public void onPlayingPaused(int currentProgress) {
+
+                    }
+
+                    @Override
+                    public void onPlayingResumed(int currentProgress) {
+
                     }
                 });
             }
@@ -57,7 +71,7 @@ public class AudioManager {
 
     private void enablePlayingIndicator(){
         trackToPlay.setPlaying(false);
-        trackToPlay = trackList.getCurrent();
+        trackToPlay = trackList.getCurrentTrack();
         trackToPlay.setPlaying(true);
         AudioLibraryManager.getInstance().notifyAllAdapters(); // TODO: such calls should be moved into one place.
     }
@@ -66,19 +80,17 @@ public class AudioManager {
         String path = track.getPath();
         if (controller.isPlaying())
             controller.play(path);
-
-        else{
+        else
             controller.setTrack(path);
-            trackToPlay = track;
-        }
-        enablePlayingIndicator();
-        fireNewTrackLoaded(track);
+
+       // enablePlayingIndicator();
+        notifyNewTrackLoaded(track);
     }
 
     public void playTrack(){
-        enablePlayingIndicator();
-        controller.play(trackList.getCurrent().getPath());
-        fireNewTrackLoaded(trackList.getCurrent());
+      //  enablePlayingIndicator();
+        controller.play(trackList.getCurrentTrack().getPath());
+        notifyNewTrackLoaded(trackList.getCurrentTrack());
     }
 
     public void play() {
@@ -89,32 +101,25 @@ public class AudioManager {
         controller.play();
     }
     public void pause() {
-        controller.pause();
+        if (isPlaying())
+            controller.pause();
     }
-
     public void stop() {
         controller.stop();
     }
 
     public void next() {
+        notifyNextTrackLoaded(trackList.getNextTrack());
         setTrack(trackList.nextTrack());
     }
-
     public void prev() {
+        noyifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
-    }
-
-    public void seekTo(int msec) {
-        controller.seekTo(msec);
-    }
-    public int getDuration() {
-        return controller.getDuration();
     }
 
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
     }
-
     public int getVolume(){
         return controller.getVolume();
     }
@@ -128,7 +133,18 @@ public class AudioManager {
     }
 
     public AudioFile getCurrent(){
-        return trackList.getCurrent();
+        return trackList.getCurrentTrack();
+    }
+
+    public void seekTo(int msec) {
+        controller.seekTo(msec);
+    }
+    public int getCurrentProgress(){
+        return controller.getProgress();
+    }
+
+    public int getCurrentDuration(){
+        return controller.getDuration();
     }
 
     public boolean isPlaying() {
@@ -138,32 +154,56 @@ public class AudioManager {
         return controller.isLooped();
     }
 
-    public void setLooping(boolean looped) {
-        controller.setLooping(looped);
+    public void setLoopMode(int loopMode) {
+        switch (loopMode){
+            case LoopButton.STATE_NONE:
+                this.looped = false;
+            case LoopButton.STATE_SINGLE:
+                controller.setLooping(false);
+                break;
+            case LoopButton.STATE_ALL:
+                controller.setLooping(true);
+                this.looped = true;
+
+        }
+
     }
 
+    public int getLoopMode(){
+        return (this.looped ? LoopButton.STATE_ALL : (controller.isLooped() ? LoopButton.STATE_SINGLE : LoopButton.STATE_NONE));
+    }
 
     /**
      * Listeners ....
      **/
 
-    private ArrayList<NewTrackLoadedListener> newTrackLoadedListeners = new ArrayList<>();
+    private ArrayList<TrackLoadedListener> trackLoadedListeners = new ArrayList<>();
+    public void setTrackLoadedListener(TrackLoadedListener listener){
+        trackLoadedListeners.add(listener);
+    }
 
-    private void fireNewTrackLoaded(AudioFile track){
-        for (NewTrackLoadedListener listener : newTrackLoadedListeners){
+    private void notifyNewTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onNewTrackLoaded(track);
         }
     }
-    public void setOnNewTrackLoadedListener(NewTrackLoadedListener listener){
-        newTrackLoadedListeners.add(listener);
+    private void notifyNextTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
+            listener.onNextTrackLoaded(track);
+        }
+    }
+    private void noyifyPrevTrackLoaded(AudioFile track){
+        for (TrackLoadedListener listener : trackLoadedListeners){
+            listener.onPrevTrackLoaded(track);
+        }
     }
 
     // SoundController redirection
-    public void setOnPlayingStartedListener(PlayingStartedListener listener) {
-        controller.setOnPlayingStartedListener(listener);
+    public void setOnPlayingStartedListener(PlaybackListener listener) {
+        controller.setPlaybackListener(listener);
+    }
+    public void setOnPlayingCompletedListener(PlaybackListener listener) {
+        controller.setPlaybackListener(listener);
     }
 
-    public void setOnPlayingCompletedListener(PlayingCompletedListener listener) {
-        controller.setOnPlayingCompletedListener(listener);
-    }
 }

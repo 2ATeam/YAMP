@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
-import com.yamp.events.NewTrackLoadedListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AudioFile;
 
 /**
@@ -46,11 +46,21 @@ public class PlayerFragment extends Fragment {
         tvTitle = (TextView) fragment.findViewById(R.id.tvTitle);
         ivCover = (ImageView) fragment.findViewById(R.id.ivCover);
 
-        AudioManager.getInstance().setOnNewTrackLoadedListener(new NewTrackLoadedListener() {
+        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
                 setTitle(track.getName());
                 setInfo(String.valueOf(track.getFormattedDuration()));
+            }
+
+            @Override
+            public void onNextTrackLoaded(AudioFile nextTrack) {
+                ///TODO: add swipe animation to the album cover image
+            }
+
+            @Override
+            public void onPrevTrackLoaded(AudioFile prevTrack) {
+                ///TODO: add swipe animation to the album cover image
             }
         });
     }

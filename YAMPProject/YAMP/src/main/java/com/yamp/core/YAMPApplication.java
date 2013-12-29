@@ -9,6 +9,7 @@ import android.os.IBinder;
 
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.sound.SoundController;
+import com.yamp.utils.GestureAdapter;
 import com.yamp.utils.Logger;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class YAMPApplication extends Application {
     @Override
     public void onCreate() {
         instance = this;
-        new Logger(); ///TODO: enable/disable Logging here
+        Logger.enable();///TODO: enable/disable Logging here
         bindSoundController();
     }
 
