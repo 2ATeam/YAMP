@@ -199,10 +199,7 @@ public class AudioManager {
     }
 
     // SoundController redirection
-    public void setOnPlayingStartedListener(PlaybackListener listener) {
-        controller.setPlaybackListener(listener);
-    }
-    public void setOnPlayingCompletedListener(PlaybackListener listener) {
+    public void setPlaybackListener(PlaybackListener listener) {
         controller.setPlaybackListener(listener);
     }
 
