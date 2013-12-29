@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v7.appcompat.R;
-import android.util.Log;
 
 import com.yamp.events.PlayingCompletedListener;
 import com.yamp.events.PlayingStartedListener;

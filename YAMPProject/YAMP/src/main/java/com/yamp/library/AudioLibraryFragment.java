@@ -1,17 +1,20 @@
 package com.yamp.library;
 
-import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
@@ -89,10 +92,27 @@ public class AudioLibraryFragment extends Fragment {
         });
 
         btnAddPlaylist.setOnClickListener(new View.OnClickListener() {
-            //final String playlist = PromptDialog.showDialog(activity, "test");
             @Override
             public void onClick(View view) {
-                // AudioLibraryManager.getInstance().addPlaylist(playlist);
+                final EditText txt = new EditText(activity);
+                new AlertDialog.Builder(activity) /// TODO: should be refactored later. (put this code into separate class)
+                        .setTitle("Enter Playlist Name:")
+                        .setView(txt)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                String reply = txt.getText().toString().trim();
+                                if (reply.length() <= 0)
+                                    reply = "empty";
+                                if (!AudioLibraryManager.getInstance().addPlaylist(reply)) {
+                                    Toast.makeText(activity, "Same Playlist names are not allowed.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        }).show();
             }
         });
 

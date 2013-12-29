@@ -1,14 +1,14 @@
 package com.yamp.core;
 
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.widget.Button;
+
 import com.yamp.R;
 import com.yamp.library.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
@@ -26,10 +26,8 @@ public class PlayerMainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().performFullScan();
-
 
         setContentView(R.layout.activity_main);
 

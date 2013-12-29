@@ -21,6 +21,15 @@ public class AudioFile {
     private String path;
     private int rank;
     private long ID;
+    private boolean isPlaying;
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean isPlaying) {
+        this.isPlaying = isPlaying;
+    }
 
     public AudioFile(long id, String name, String artist, String album, int duration, String path) {
         this.ID = id;
@@ -29,6 +38,7 @@ public class AudioFile {
         this.album = album;
         this.duration = duration;
         this.path = path;
+        this.isPlaying = false;
     }
 
     public AudioFile(String path) {

@@ -4,11 +4,13 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.library.AudioFile;
 import com.yamp.library.PlayList;
+import com.yamp.utils.Utilities;
 
 import java.util.ArrayList;
 
@@ -96,8 +98,15 @@ public class AlbumsArtistsListAdapter extends BaseExpandableListAdapter implemen
         TextView artist = (TextView) view.findViewById(R.id.txtArtist);
         songName.setText(track.getName().trim());
         albumName.setText(track.getAlbum().trim());
-        duration.setText(String.valueOf(track.getDuration()));
+        duration.setText(String.valueOf(Utilities.convertTime(track.getDuration())));
         artist.setText(track.getArtist().trim());
+
+        ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
+        if(track.isPlaying())
+            playingIndicator.setVisibility(View.VISIBLE);
+        else
+            playingIndicator.setVisibility(View.INVISIBLE);
+
         return view;
     }
 }
