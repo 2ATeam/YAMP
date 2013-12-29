@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
+import com.yamp.core.PlayerMainActivity;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
@@ -18,13 +20,14 @@ import java.util.ArrayList;
  * Created by Lux on 23.12.13.
  */
 public class PlaylistsListAdapter extends BaseExpandableListAdapter implements ISongsDisplayable {
-    private FragmentActivity activity;
+    private PlayerMainActivity activity;
     private ArrayList<PlayList> playLists;
     private ImageView btnRemovePlaylist;
+    private ImageView btnEditPlaylist;
 
     public PlaylistsListAdapter(ArrayList<PlayList> playLists, FragmentActivity activity) {
         this.playLists = playLists;
-        this.activity = activity;
+        this.activity = (PlayerMainActivity)activity;
     }
 
     @Override
@@ -77,6 +80,7 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         TextView playlistName = (TextView) convertView.findViewById(R.id.txtPlaylistName);
         TextView playlistSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
         btnRemovePlaylist = (ImageView) convertView.findViewById(R.id.btnRemove);
+        btnEditPlaylist = (ImageView) convertView.findViewById(R.id.imgEditPlaylist);
         registerTouchHandlers(convertView);
         playlistName.setText(playList.getName());
         playlistSongsAmount.setText(String.valueOf(playList.size()));
@@ -104,7 +108,8 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         artist.setText(track.getArtist().trim());
 
         ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
-        if(track.isPlaying())
+        AudioFile playingNow = AudioManager.getInstance().getCurrent();
+        if(track.getID() == playingNow.getID())
             playingIndicator.setVisibility(View.VISIBLE);
         else
             playingIndicator.setVisibility(View.INVISIBLE);
@@ -113,13 +118,22 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
     }
 
     private void registerTouchHandlers(View cv){
-        final View convertView = cv;
+        final TextView text = (TextView) cv.findViewById(R.id.txtPlaylistName);
         btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ///TODO: fix playlists name.
-                TextView text = (TextView) convertView.findViewById(R.id.txtPlaylistName);
                 AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
+            }
+        });
+
+        btnEditPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AudioLibraryManager.getInstance().setCurrentlyEditedPlaylist(text.getText().toString());
+                activity.replace(activity.getPlaylistEditorFragment(), new int[]{R.animator.slide_in_top,
+                                                                                 R.animator.slide_out_bottom,
+                                                                                 R.animator.slide_in_bottom,
+                                                                                 R.animator.slide_out_top});
             }
         });
     }

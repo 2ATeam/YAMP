@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 
 import com.yamp.library.adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.adapters.PlaylistEditorAdapter;
 import com.yamp.library.adapters.PlaylistsListAdapter;
 import com.yamp.library.adapters.SongsListAdapter;
 
@@ -22,11 +23,14 @@ public class AudioLibraryManager {
     private ContentResolver resolver;
     private AudioLibrary library;
 
+    private PlayList currentlyEditedPlaylist;
+
     //data adapters.
     private SongsListAdapter songsListAdapter;
     private AlbumsArtistsListAdapter albumsListAdapter;
     private AlbumsArtistsListAdapter artistsListAdapter;
     private PlaylistsListAdapter playlistsListAdapter;
+    private PlaylistEditorAdapter playlistEditorAdapter;
 
     private static AudioLibraryManager instance;
 
@@ -47,6 +51,7 @@ public class AudioLibraryManager {
         this.albumsListAdapter = new AlbumsArtistsListAdapter(getAlbums(), activity);
         this.artistsListAdapter = new AlbumsArtistsListAdapter(getArtists(), activity);
         this.playlistsListAdapter = new PlaylistsListAdapter(getPlaylists(), activity);
+        this.playlistEditorAdapter = new PlaylistEditorAdapter(activity);
     }
 
     public void scanForPlaylists(){
@@ -63,6 +68,14 @@ public class AudioLibraryManager {
                 scanSongsForPlaylist(ID);
             } while (cursor.moveToNext());
         }
+    }
+
+    public long getPlaylistID(String playlistName){
+        for (PlayList playList : library.getPlayLists()) {
+            if (playList.getName() == playlistName)
+                return playList.getID();
+        }
+        return -1;
     }
 
     public boolean isPlaylistExists(String name){
@@ -294,7 +307,22 @@ public class AudioLibraryManager {
         return artistsListAdapter;
     }
 
+    public PlaylistEditorAdapter getPlaylistEditorAdapter() {
+        return playlistEditorAdapter;
+    }
+
     public PlayList getLibrary(){
         return library;
+    }
+
+    public PlayList getCurrentlyEditedPlaylist() {
+        return currentlyEditedPlaylist;
+    }
+
+    public void setCurrentlyEditedPlaylist(String currentlyEditedPlaylist) {
+        for (PlayList playList : library.getPlayLists()) {
+            if (playList.getName() == currentlyEditedPlaylist)
+                this.currentlyEditedPlaylist = playList;
+        }
     }
 }
