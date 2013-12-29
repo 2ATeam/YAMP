@@ -45,7 +45,7 @@ public class SongsListAdapter extends ArrayAdapter<AudioFile> implements ISongsD
         TextView artist = (TextView) view.findViewById(R.id.txtArtist);
         songName.setText(track.getName().trim());
         albumName.setText(track.getAlbum().trim());
-        duration.setText(String.valueOf(Utilities.convertTime(track.getDuration())));
+        duration.setText(String.valueOf(Utilities.formatTime(track.getDuration())));
         artist.setText(track.getArtist().trim());
 
         ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
