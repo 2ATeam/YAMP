@@ -1,7 +1,8 @@
 package com.yamp.core;
+
 import com.yamp.events.PlaybackListener;
-import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
@@ -26,7 +27,6 @@ public class AudioManager {
 
     private SoundController controller;
     private static AudioManager instance;
-    private AudioFile trackToPlay; /// TODO: old thing... use trackList.getCurrentTrack()
 
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
@@ -69,26 +69,16 @@ public class AudioManager {
         trackList = new PlayList();
     }
 
-    private void enablePlayingIndicator(){
-        trackToPlay.setPlaying(false);
-        trackToPlay = trackList.getCurrentTrack();
-        trackToPlay.setPlaying(true);
-        AudioLibraryManager.getInstance().notifyAllAdapters(); // TODO: such calls should be moved into one place.
-    }
-
     private void setTrack(AudioFile track){
         String path = track.getPath();
         if (controller.isPlaying())
             controller.play(path);
         else
             controller.setTrack(path);
-
-       // enablePlayingIndicator();
         notifyNewTrackLoaded(track);
     }
 
     public void playTrack(){
-      //  enablePlayingIndicator();
         controller.play(trackList.getCurrentTrack().getPath());
         notifyNewTrackLoaded(trackList.getCurrentTrack());
     }
@@ -113,7 +103,7 @@ public class AudioManager {
         setTrack(trackList.nextTrack());
     }
     public void prev() {
-        noyifyPrevTrackLoaded(trackList.getPrevTrack());
+        notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
     }
 
@@ -164,9 +154,7 @@ public class AudioManager {
             case LoopButton.STATE_ALL:
                 controller.setLooping(true);
                 this.looped = true;
-
         }
-
     }
 
     public int getLoopMode(){
@@ -183,6 +171,7 @@ public class AudioManager {
     }
 
     private void notifyNewTrackLoaded(AudioFile track){
+        AudioLibraryManager.getInstance().notifyAllAdapters();
         for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onNewTrackLoaded(track);
         }
@@ -192,18 +181,13 @@ public class AudioManager {
             listener.onNextTrackLoaded(track);
         }
     }
-    private void noyifyPrevTrackLoaded(AudioFile track){
+    private void notifyPrevTrackLoaded(AudioFile track){
         for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onPrevTrackLoaded(track);
         }
     }
 
-    // SoundController redirection
-    public void setOnPlayingStartedListener(PlaybackListener listener) {
+    public void setPlaybackListener(PlaybackListener listener) {
         controller.setPlaybackListener(listener);
     }
-    public void setOnPlayingCompletedListener(PlaybackListener listener) {
-        controller.setPlaybackListener(listener);
-    }
-
 }
