@@ -77,7 +77,7 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         TextView playlistName = (TextView) convertView.findViewById(R.id.txtPlaylistName);
         TextView playlistSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
         btnRemovePlaylist = (ImageView) convertView.findViewById(R.id.btnRemove);
-        registerTouchHandlers();
+        registerTouchHandlers(convertView);
         playlistName.setText(playList.getName());
         playlistSongsAmount.setText(String.valueOf(playList.size()));
         return convertView;
@@ -112,12 +112,13 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         return view;
     }
 
-    private void registerTouchHandlers(){
+    private void registerTouchHandlers(View cv){
+        final View convertView = cv;
         btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ///TODO: fix playlists name.
-                TextView text = (TextView) activity.findViewById(R.id.txtPlaylistName);
+                TextView text = (TextView) convertView.findViewById(R.id.txtPlaylistName);
                 AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
             }
         });

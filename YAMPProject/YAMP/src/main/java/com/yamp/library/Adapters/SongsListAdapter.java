@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.utils.Utilities;
