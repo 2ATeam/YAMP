@@ -1,7 +1,6 @@
 package com.yamp.core;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,17 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.yamp.R;
-import com.yamp.events.NewTrackLoadedListener;
-import com.yamp.events.PlayingCompletedListener;
-import com.yamp.events.PlayingStartedListener;
 import com.yamp.events.SoundControllerBoundedListener;
-import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.LoopButton;
-import com.yamp.utils.Utilities;
 
 /**
  * Created by AdYa on 01.12.13.

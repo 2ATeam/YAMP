@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,13 +16,12 @@ import com.yamp.events.PlayingStartedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
-import com.yamp.utils.LoopButton;
 import com.yamp.utils.Utilities;
 
 /**
  * Created by AdYa on 28.12.13.
  */
-public class TimiLineFragment extends Fragment{
+public class TimelineFragment extends Fragment{
 
     private SeekBar sbProgress;
 
@@ -37,7 +34,7 @@ public class TimiLineFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragment = inflater.inflate(R.layout.control_panel_fragment, container, false);
+        View fragment = inflater.inflate(R.layout.timeline_fragment, container, false);
         awakeComponents(fragment);
         if (YAMPApplication.getInstance().isPlayerReady())
             restoreState();
@@ -126,6 +123,7 @@ public class TimiLineFragment extends Fragment{
         tvCurrent = (TextView) fragment.findViewById(R.id.tvTimeCurrent);
     }
 
+    ///TODO: Setup playing listeners here for managing callbacks
 
     private Handler updaterHandler = new Handler();
     private Runnable progressUpdater = new Runnable() {
@@ -136,16 +134,6 @@ public class TimiLineFragment extends Fragment{
             updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
         }
     };
-
-    private void playHandler() {
-        if (AudioManager.getInstance().isPlaying()){
-            AudioManager.getInstance().pause();
-            updaterHandler.removeCallbacks(progressUpdater);
-        } else {
-            AudioManager.getInstance().play();
-            updaterHandler.post(progressUpdater);
-        }
-    }
 
     private void updateTimers(){
         tvCurrent.setText(Utilities.formatTime(YAMPApplication.getSoundController().getProgress()));

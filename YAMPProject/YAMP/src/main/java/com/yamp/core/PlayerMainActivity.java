@@ -53,6 +53,7 @@ public class PlayerMainActivity extends FragmentActivity {
             return;
         }
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.timeline_fragment, new TimelineFragment()).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
