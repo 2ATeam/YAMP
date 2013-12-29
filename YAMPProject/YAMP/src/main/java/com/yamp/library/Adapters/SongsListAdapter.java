@@ -4,11 +4,13 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
+import com.yamp.utils.Utilities;
 
 /**
  * Created by Lux on 23.12.13.
@@ -27,12 +29,11 @@ public class SongsListAdapter extends ArrayAdapter<AudioFile> implements ISongsD
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if(view == null){
+        if(view == null)
             view = activity.getLayoutInflater().inflate(R.layout.audio_library_list_entry, parent, false);
-        }
 
         AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
-            return getSongView(track, view);
+        return getSongView(track, view);
     }
 
     @Override
@@ -43,8 +44,15 @@ public class SongsListAdapter extends ArrayAdapter<AudioFile> implements ISongsD
         TextView artist = (TextView) view.findViewById(R.id.txtArtist);
         songName.setText(track.getName().trim());
         albumName.setText(track.getAlbum().trim());
-        duration.setText(String.valueOf(track.getDuration()));
+        duration.setText(String.valueOf(Utilities.convertTime(track.getDuration())));
         artist.setText(track.getArtist().trim());
+
+        ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
+        if(track.isPlaying())
+            playingIndicator.setVisibility(View.VISIBLE);
+        else
+            playingIndicator.setVisibility(View.INVISIBLE);
+
         return view;
     }
 }

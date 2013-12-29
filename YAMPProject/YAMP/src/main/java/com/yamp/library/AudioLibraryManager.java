@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.widget.BaseAdapter;
 
 import com.yamp.library.adapters.AlbumsArtistsListAdapter;
-import com.yamp.library.adapters.ISongsDisplayable;
 import com.yamp.library.adapters.PlaylistsListAdapter;
 import com.yamp.library.adapters.SongsListAdapter;
 
@@ -43,6 +41,7 @@ public class AudioLibraryManager {
         return instance;
     }
 
+    //binds data adapters to specified activity.
     public void initDataAdapters(FragmentActivity activity) {
         this.songsListAdapter = new SongsListAdapter(activity);
         this.albumsListAdapter = new AlbumsArtistsListAdapter(getAlbums(), activity);
@@ -61,23 +60,45 @@ public class AudioLibraryManager {
                 long ID = cursor.getLong(idColumn);
                 String name = cursor.getString(nameColumn);
                 library.insertPlaylist(new PlayList(name, ID));
+                scanSongsForPlaylist(ID);
             } while (cursor.moveToNext());
         }
     }
 
-    public void addPlaylist(String name){
-        if(name == null)
-            return;
+    public boolean isPlaylistExists(String name){
+        Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        if (validateCursor(cursor)) {
+            int nameColumn = cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME);
+            do {
+                String playlistsName = cursor.getString(nameColumn);
+                if (name.equals(playlistsName))
+                    return true;
+            } while (cursor.moveToNext());
+        }
+        return false;
+    }
+
+    public boolean addPlaylist(String name){
+        if(name == null || isPlaylistExists(name))
+            return false;
 
         ContentValues cValues = new ContentValues();
         cValues.put(MediaStore.Audio.Playlists.NAME, name);
         resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, cValues);
-        playlistsListAdapter.notifyDataSetChanged();
+        scanForPlaylists();
+
+        if (playlistsListAdapter != null)
+            playlistsListAdapter.notifyDataSetChanged();
+
+        return true;
     }
 
     public void removePlaylist(String name){
         Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
-        Cursor cursor = resolver.query(uri, null, null, null, null);
+        final String [] playlistID = { MediaStore.Audio.Playlists._ID };
+        final String[] playlistName = { name };
+        Cursor cursor = resolver.query(uri, playlistID, MediaStore.Audio.Playlists.NAME + "=?", playlistName, null);
         if (validateCursor(cursor)) {
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
             String [] ID = { cursor.getString(columnID) };
@@ -92,22 +113,22 @@ public class AudioLibraryManager {
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
         Cursor cursor = resolver.query(uri, null, null, null, null);
         if (validateCursor(cursor)) {
-            ///TODO: implement this.
-        }
-    }
+            int columnTitle = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            int columnID = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
+            int columnArtist = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            int columnAlbum = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+            int columnDuration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            int columnData = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
 
-    public void addSongToPlaylist(long playlistID, long songID){
-        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
-        Cursor cursor = resolver.query(uri, null, null, null, null);
-        if(!validateCursor(cursor)){
-            final int base = cursor.getInt(0);
-            cursor.close();
-            ContentValues cValues = new ContentValues();
-            cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + 1);
-            cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
-            resolver.insert(uri, cValues);
-            if (playlistsListAdapter != null)
-                playlistsListAdapter.notifyDataSetChanged();
+            do {
+                long id = cursor.getLong(columnID);
+                String title = cursor.getString(columnTitle);
+                String artist = cursor.getString(columnArtist);
+                String album = cursor.getString(columnAlbum);
+                int duration = cursor.getInt(columnDuration);
+                String data = cursor.getString(columnData);
+                library.insertTrackIntoPlaylist(playlistID, new AudioFile(id, title, artist, album, duration, data));
+            } while (cursor.moveToNext());
         }
     }
 
@@ -132,6 +153,16 @@ public class AudioLibraryManager {
                 library.insertTrack(new AudioFile(id, title, artist, album, duration, data));
             } while(cursor.moveToNext());
         }
+    }
+
+    public void addSongToPlaylist(long playlistID, long songID){
+        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
+        ContentValues cValues = new ContentValues();
+        cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, 0);
+        cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
+        resolver.insert(uri, cValues);
+        if (playlistsListAdapter != null)
+            playlistsListAdapter.notifyDataSetChanged();
     }
 
     private boolean validateCursor(Cursor cursor){
@@ -212,9 +243,22 @@ public class AudioLibraryManager {
         return names;
     }
 
-    private void notifyDataSetChanged(BaseAdapter adapter){
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
+    private boolean adaptersAreReady(){
+        if (songsListAdapter     == null ||
+            albumsListAdapter    == null ||
+            artistsListAdapter   == null ||
+            playlistsListAdapter == null)
+            return false;
+        return true;
+    }
+
+    public void notifyAllAdapters(){
+        if (!adaptersAreReady())
+            return;
+        songsListAdapter.notifyDataSetChanged();
+        albumsListAdapter.notifyDataSetChanged();
+        artistsListAdapter.notifyDataSetChanged();
+        playlistsListAdapter.notifyDataSetChanged();
     }
 
     public SongsListAdapter getSongsListAdapter() {

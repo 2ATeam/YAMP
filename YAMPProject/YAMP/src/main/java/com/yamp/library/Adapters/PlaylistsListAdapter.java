@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -103,6 +102,13 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         albumName.setText(track.getAlbum().trim());
         duration.setText(String.valueOf(track.getDuration()));
         artist.setText(track.getArtist().trim());
+
+        ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
+        if(track.isPlaying())
+            playingIndicator.setVisibility(View.VISIBLE);
+        else
+            playingIndicator.setVisibility(View.INVISIBLE);
+
         return view;
     }
 
@@ -110,9 +116,9 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ///TODO: fix playlists name.
                 TextView text = (TextView) activity.findViewById(R.id.txtPlaylistName);
                 AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
-
             }
         });
     }

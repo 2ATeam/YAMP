@@ -57,4 +57,21 @@
         android:id="@+id/txtArtist"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/txtDuration" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgIsPlaing"
+        android:src="@drawable/isplaing"
+        android:adjustViewBounds="true"
+        android:maxWidth="50dp"
+        android:visibility="invisible"
+        android:layout_alignEnd="@+id/txtArtist"
+        android:layout_alignStart="@+id/txtArtist"
+        android:minWidth="50dp"
+        android:layout_below="@+id/txtArtist"
+        android:layout_above="@+id/txtDuration"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp" />
 </RelativeLayout>

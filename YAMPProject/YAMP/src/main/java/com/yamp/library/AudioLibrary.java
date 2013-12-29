@@ -1,8 +1,5 @@
 package com.yamp.library;
 
-
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 
 /**
@@ -21,6 +18,14 @@ public class AudioLibrary extends PlayList{
         this.playLists = new ArrayList<>();
         this.artists = new ArrayList<>();
         this.albums = new ArrayList<>();
+    }
+
+    public void insertTrackIntoPlaylist(long playlistID, AudioFile track){
+        for (PlayList playList : playLists) {
+            if (playList.getID() == playlistID) {
+                playList.addTrack(track);
+            }
+        }
     }
 
     public ArrayList<AudioFile> getTracks(){

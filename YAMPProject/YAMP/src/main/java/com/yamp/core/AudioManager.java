@@ -3,6 +3,7 @@ import com.yamp.events.PlaybackListener;
 import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
+import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.LoopButton;
@@ -25,6 +26,7 @@ public class AudioManager {
 
     private SoundController controller;
     private static AudioManager instance;
+    private AudioFile trackToPlay; /// TODO: old thing... use trackList.getCurrentTrack()
 
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
@@ -67,6 +69,13 @@ public class AudioManager {
         trackList = new PlayList();
     }
 
+    private void enablePlayingIndicator(){
+        trackToPlay.setPlaying(false);
+        trackToPlay = trackList.getCurrentTrack();
+        trackToPlay.setPlaying(true);
+        AudioLibraryManager.getInstance().notifyAllAdapters(); // TODO: such calls should be moved into one place.
+    }
+
     private void setTrack(AudioFile track){
         String path = track.getPath();
         if (controller.isPlaying())
@@ -74,10 +83,12 @@ public class AudioManager {
         else
             controller.setTrack(path);
 
+       // enablePlayingIndicator();
         notifyNewTrackLoaded(track);
     }
 
     public void playTrack(){
+      //  enablePlayingIndicator();
         controller.play(trackList.getCurrentTrack().getPath());
         notifyNewTrackLoaded(trackList.getCurrentTrack());
     }
@@ -109,13 +120,13 @@ public class AudioManager {
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
     }
-
     public int getVolume(){
         return controller.getVolume();
     }
     public void setVolume(int volume) {
         controller.setVolume(volume);
     }
+
     public void setPlayList(PlayList playlist) {
         if (playlist != null && playlist.size() > 0)
             this.trackList = playlist;
@@ -128,7 +139,6 @@ public class AudioManager {
     public void seekTo(int msec) {
         controller.seekTo(msec);
     }
-
     public int getCurrentProgress(){
         return controller.getProgress();
     }
@@ -189,7 +199,10 @@ public class AudioManager {
     }
 
     // SoundController redirection
-    public void setPlaybackListener(PlaybackListener listener) {
+    public void setOnPlayingStartedListener(PlaybackListener listener) {
+        controller.setPlaybackListener(listener);
+    }
+    public void setOnPlayingCompletedListener(PlaybackListener listener) {
         controller.setPlaybackListener(listener);
     }
 

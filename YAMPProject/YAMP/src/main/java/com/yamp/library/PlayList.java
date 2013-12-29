@@ -24,6 +24,10 @@ public class PlayList {
         this.ID = id;
     }
 
+    public long getID() {
+        return ID;
+    }
+
     public int size(){
         return tracks.size();
     }
