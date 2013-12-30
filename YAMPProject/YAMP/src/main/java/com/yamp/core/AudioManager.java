@@ -38,11 +38,10 @@ public class AudioManager {
         YAMPApplication.setOnSoundControllerBoundedListener(new SoundControllerBoundedListener() {
             @Override
             public void onSoundControllerBounded(SoundController controller) {
-               AudioManager.this.controller = controller;
+                AudioManager.this.controller = controller;
                 AudioManager.this.controller.setPlaybackListener(new PlaybackListener() {
                     @Override
                     public void onPlayingStarted(boolean causedByUser) {
-                        notifyNewTrackLoaded(getCurrent());
                     }
 
                     @Override
@@ -55,12 +54,10 @@ public class AudioManager {
 
                     @Override
                     public void onPlayingPaused(int currentProgress) {
-
                     }
 
                     @Override
                     public void onPlayingResumed(int currentProgress) {
-
                     }
                 });
             }
@@ -106,6 +103,14 @@ public class AudioManager {
             }
             trackList.setCurrent(rnd);
         }
+        if (!looped){
+            if (trackList.getNext() == 0){
+                pause();
+                return;
+            }
+
+        }
+
         notifyNextTrackLoaded(trackList.getNextTrack());
         setTrack(trackList.nextTrack());
     }
@@ -114,10 +119,19 @@ public class AudioManager {
         if (shuffle) {
             int rnd = trackList.getCurrent();
             while(rnd == trackList.getCurrent()){
-                rnd =  Utilities.randomInt(0, trackList.size() - 1) + 1;
+                rnd =  Utilities.randomInt(0, trackList.size() - 2) + 1;
             }
             trackList.setCurrent(rnd);
         }
+
+        if (!looped){
+            if (trackList.getPrev() == trackList.size() - 1){
+                pause();
+                return;
+            }
+
+        }
+
         notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
     }

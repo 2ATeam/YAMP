@@ -1,18 +1,20 @@
 package com.yamp.fragments;
 
-import android.app.ActionBar;
 import android.content.Context;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.sound.AFXManager;
+import com.yamp.sound.VisualManager;
 import com.yamp.utils.VerticalSeekBar;
 
 /**
@@ -26,11 +28,31 @@ public class AFXFragment extends Fragment {
         View fragment = inflater.inflate(R.layout.afx_fragment, container, false);
 
         createBandFragment(fragment);
+        createVisualizer(fragment);
         return fragment;
     }
 
+    ///TODO: Unstable visualizer
+    private void createVisualizer(View parent){
+      //  View v = parent.findViewById(R.id.visualizer_fragment);
+        final VisualizerView mVisualizerView = new VisualizerView(getActivity());
+        mVisualizerView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+      //  ((ViewGroup)v).addView(mVisualizerView);
+        // Create the VisualManager object and attach it to our media player.
+        VisualManager.getInstance().setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+        VisualManager.getInstance().setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes,
+                                              int samplingRate) {
+                mVisualizerView.updateVisualizer(bytes);
+            }
+
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+            }
+        }, Visualizer.getMaxCaptureRate() / 2, true, false);
+    }
     private void createBandFragment(View parent){
-        Context context = getActivity(); /// TODO: if won't work try app context.
+        Context context = getActivity();
 
         LinearLayout fragment = (LinearLayout)parent.findViewById(R.id.band_fragment);
 

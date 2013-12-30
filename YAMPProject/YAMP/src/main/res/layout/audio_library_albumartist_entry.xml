@@ -23,7 +23,7 @@
         android:minHeight="80dp"
         android:minWidth="80dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/album" />
+        android:src="@drawable/album_normal" />
 
     <TextView
         android:layout_width="wrap_content"

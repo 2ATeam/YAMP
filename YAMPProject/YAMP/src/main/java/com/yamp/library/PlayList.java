@@ -46,20 +46,22 @@ public class PlayList {
 
     // navigate through playlist
     public AudioFile nextTrack(){
-        if (Utilities.isWithin(0, tracks.size()-1, current + 1)) ++current;
+        current = getNext();
         return tracks.get(current);
     }
     public AudioFile prevTrack(){
-        if (Utilities.isWithin(0, tracks.size()-1, current - 1)) --current;
+        current = getPrev();
         return tracks.get(current);
     }
 
     // simple access to relevant tracks (prev/cur/next)
     public AudioFile getNextTrack(){
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, current + 1));
+        int next = getNext();
+        return tracks.get(next);
     }
     public AudioFile getPrevTrack(){
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, current - 1));
+        int prev = getPrev();
+        return tracks.get(prev);
     }
     public AudioFile getCurrentTrack(){
         return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
@@ -71,5 +73,11 @@ public class PlayList {
 
     public int getCurrent() {
         return current;
+    }
+    public int getNext(){
+        return  (current + 1) % (size());
+    }
+    public int getPrev(){
+        return ((current <= 0) ? size() - 1 : (current - 1) % (size()));
     }
 }
