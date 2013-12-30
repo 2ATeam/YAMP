@@ -1,4 +1,4 @@
-package com.yamp.library;
+package com.yamp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
+import com.yamp.library.AudioLibraryManager;
+import com.yamp.library.PlayList;
 
 /**
  * Created by Lux on 07.12.13.
