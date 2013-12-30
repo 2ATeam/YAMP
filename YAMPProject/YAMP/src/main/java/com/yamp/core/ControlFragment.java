@@ -20,9 +20,10 @@ import com.yamp.utils.LoopButton;
 public class ControlFragment extends Fragment {
 
     private SeekBar sbVolume;
-    private Button bPlay;
-    private Button bNext;
-    private Button bPrev;
+    ///TODO: make private after tests
+    public Button bPlay;
+    public Button bNext;
+    public Button bPrev;
 
     private LoopButton lbLooped;
     private CheckBox cbShuffled; ///TODO: change appearance for this checkbox
@@ -44,9 +45,6 @@ public class ControlFragment extends Fragment {
                 }
             });
         }
-
-
-
         return fragment;
     }
 
@@ -63,7 +61,8 @@ public class ControlFragment extends Fragment {
         sbVolume.setProgress(AudioManager.getInstance().getVolume());
     }
 
-    private void awakeComponents(View fragment) {
+    ///TODO: make private after tests
+    public void awakeComponents(View fragment) {
         bPlay = (Button) fragment.findViewById(R.id.bPlay);
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
