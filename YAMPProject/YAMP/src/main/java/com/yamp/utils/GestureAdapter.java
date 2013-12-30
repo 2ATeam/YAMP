@@ -1,6 +1,5 @@
 package com.yamp.utils;
 
-import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 

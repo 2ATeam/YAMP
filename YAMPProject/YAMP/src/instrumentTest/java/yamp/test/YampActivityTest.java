@@ -1,6 +1,7 @@
 package yamp.test;
 
 import android.test.AndroidTestCase;
+
 import com.yamp.core.PlayerMainActivity;
 
 /**

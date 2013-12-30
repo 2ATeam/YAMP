@@ -5,8 +5,8 @@ import android.util.Log;
 import com.yamp.core.AudioManager;
 import com.yamp.core.YAMPApplication;
 import com.yamp.events.PlaybackListener;
-import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
+import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.sound.SoundController;
 

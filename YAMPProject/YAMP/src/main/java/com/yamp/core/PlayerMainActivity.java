@@ -14,9 +14,9 @@ import com.yamp.fragments.AFXFragment;
 import com.yamp.fragments.ControlFragment;
 import com.yamp.fragments.PlayerFragment;
 import com.yamp.fragments.TimelineFragment;
-import com.yamp.library.AudioLibraryFragment;
+import com.yamp.fragments.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
-import com.yamp.library.PlaylistEditorFragment;
+import com.yamp.fragments.PlaylistEditorFragment;
 import com.yamp.utils.GestureAdapter;
 import com.yamp.utils.Logger;
 

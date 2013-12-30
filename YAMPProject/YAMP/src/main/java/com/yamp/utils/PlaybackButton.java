@@ -3,7 +3,6 @@ package com.yamp.utils;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
-import android.widget.CompoundButton;
 
 import com.yamp.R;
 
