@@ -3,13 +3,14 @@ package com.yamp.library;
 import com.yamp.utils.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AdYa on 24.11.13.
  * Stores all audio files.
  */
 public class PlayList {
-    protected ArrayList<AudioFile> tracks;
+    protected List<AudioFile> tracks;
     private String name;
     private long ID;
     protected int current = 0;
@@ -42,6 +43,12 @@ public class PlayList {
 
     public void addTrack(AudioFile track){
         tracks.add(track);
+    }
+
+    public boolean contains(AudioFile track){
+        if (tracks.contains(track))
+            return true;
+        return false;
     }
 
     // navigate through playlist

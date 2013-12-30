@@ -1,13 +1,13 @@
 package com.yamp.library.adapters;
-import android.support.v4.app.FragmentActivity;
 
-import com.yamp.R;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yamp.R;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.utils.Utilities;
@@ -43,6 +43,11 @@ public class PlaylistEditorAdapter extends ArrayAdapter<AudioFile> implements IS
         TextView albumName = (TextView) view.findViewById(R.id.txtAlbum);
         TextView duration = (TextView) view.findViewById(R.id.txtDuration);
         TextView artist = (TextView) view.findViewById(R.id.txtArtist);
+        ImageView img = (ImageView) view.findViewById(R.id.imgMoveToPlaylist);
+        if (AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().contains(track)) /// TODO: fix this. it is not working.
+            img.setVisibility(View.INVISIBLE);
+        else
+            img.setVisibility(View.VISIBLE);
         songName.setText(track.getName().trim());
         albumName.setText(track.getAlbum().trim());
         duration.setText(String.valueOf(Utilities.formatTime(track.getDuration())));

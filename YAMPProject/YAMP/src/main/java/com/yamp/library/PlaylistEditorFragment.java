@@ -61,7 +61,8 @@ public class PlaylistEditorFragment extends Fragment {
             public void onClick(View view) {
                 for (AudioFile audioFile : songsToAddToPlaylist) {
                     AudioLibraryManager.getInstance().
-                            addSongToPlaylist(AudioLibraryManager.getInstance().getPlaylistID(playlistName.getText().toString()), audioFile.getID());
+                            addSongToPlaylist(AudioLibraryManager.getInstance().
+                                    getPlaylistID(playlistName.getText().toString()), audioFile.getID());
                 }
                 songsToAddToPlaylist.clear();
                 AudioLibraryManager.getInstance().scanForPlaylists(); // perform rescanning.

@@ -1,6 +1,7 @@
 package com.yamp.library;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AdYa on 24.11.13.
@@ -28,7 +29,7 @@ public class AudioLibrary extends PlayList{
         }
     }
 
-    public ArrayList<AudioFile> getTracks(){
+    public List<AudioFile> getTracks(){
         return this.tracks;
     }
 

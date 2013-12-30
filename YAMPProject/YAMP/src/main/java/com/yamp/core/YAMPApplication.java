@@ -9,7 +9,6 @@ import android.os.IBinder;
 
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.sound.SoundController;
-import com.yamp.utils.GestureAdapter;
 import com.yamp.utils.Logger;
 
 import java.util.ArrayList;

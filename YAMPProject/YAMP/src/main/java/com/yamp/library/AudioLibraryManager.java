@@ -13,6 +13,7 @@ import com.yamp.library.adapters.PlaylistsListAdapter;
 import com.yamp.library.adapters.SongsListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AdYa on 24.11.13.
@@ -155,7 +156,6 @@ public class AudioLibraryManager {
             int columnAlbum = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
             int columnDuration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             int columnData = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-
             do{
                 long id = cursor.getLong(columnID);
                 String title = cursor.getString(columnTitle);
@@ -244,7 +244,7 @@ public class AudioLibraryManager {
         this.resolver = resolver;
     }
 
-    public ArrayList<AudioFile> getAllTracks(){
+    public List<AudioFile> getAllTracks(){
         return this.library.getTracks();
     }
 
