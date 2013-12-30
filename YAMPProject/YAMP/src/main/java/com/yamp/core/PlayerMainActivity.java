@@ -133,7 +133,7 @@ public class PlayerMainActivity extends FragmentActivity {
      *                              new_out}.
      *
      */
-    private void replace(Fragment newFragment, int[] animation){
+    public void replace(Fragment newFragment, int[] animation){
         if (animation.length != 4) return;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(animation[0], animation[1], animation[2], animation[3]);
