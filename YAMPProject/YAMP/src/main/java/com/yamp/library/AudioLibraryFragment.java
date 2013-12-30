@@ -64,8 +64,6 @@ public class AudioLibraryFragment extends Fragment {
         artistListView.setAdapter(AudioLibraryManager.getInstance().getArtistsListAdapter());
         playlistsListView.setAdapter(AudioLibraryManager.getInstance().getPlaylistsListAdapter());
 
-        //awake controls
-        registerTouchHandlers();
     }
 
     @Override
@@ -73,6 +71,9 @@ public class AudioLibraryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity(); // we can get the reference to activity only then it was created. Not earlier!!
         populateLists();
+
+        //awake controls
+        registerTouchHandlers();
     }
 
     private void registerTouchHandlers() {

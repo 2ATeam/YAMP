@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.webkit.MimeTypeMap;
 
 import com.yamp.library.adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.adapters.PlaylistEditorAdapter;
 import com.yamp.library.adapters.PlaylistsListAdapter;
 import com.yamp.library.adapters.SongsListAdapter;
 
@@ -22,12 +23,14 @@ public class AudioLibraryManager {
 
     private ContentResolver resolver;
     private AudioLibrary library;
+    private PlayList currentlyEditedPlaylist;
 
     //data adapters.
     private SongsListAdapter songsListAdapter;
     private AlbumsArtistsListAdapter albumsListAdapter;
     private AlbumsArtistsListAdapter artistsListAdapter;
     private PlaylistsListAdapter playlistsListAdapter;
+    private PlaylistEditorAdapter playlistEditorAdapter;
 
     private static AudioLibraryManager instance;
 
@@ -48,6 +51,7 @@ public class AudioLibraryManager {
         this.albumsListAdapter = new AlbumsArtistsListAdapter(getAlbums(), activity);
         this.artistsListAdapter = new AlbumsArtistsListAdapter(getArtists(), activity);
         this.playlistsListAdapter = new PlaylistsListAdapter(getPlaylists(), activity);
+        this.playlistEditorAdapter = new PlaylistEditorAdapter(activity);
     }
 
     public void scanForPlaylists(){
@@ -64,6 +68,14 @@ public class AudioLibraryManager {
                 scanSongsForPlaylist(ID);
             } while (cursor.moveToNext());
         }
+    }
+
+    public long getPlaylistID(String playlistName){
+        for (PlayList playList : library.getPlayLists()) {
+            if (playList.getName() == playlistName)
+                return playList.getID();
+        }
+        return -1;
     }
 
     public boolean isPlaylistExists(String name){
@@ -134,6 +146,7 @@ public class AudioLibraryManager {
     }
 
     public void scanForAllSongs(){
+        library.clearSongs();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
 
@@ -246,10 +259,11 @@ public class AudioLibraryManager {
     }
 
     private boolean adaptersAreReady(){
-        if (songsListAdapter     == null ||
-            albumsListAdapter    == null ||
-            artistsListAdapter   == null ||
-            playlistsListAdapter == null)
+        if (songsListAdapter      == null ||
+            albumsListAdapter     == null ||
+            artistsListAdapter    == null ||
+            playlistsListAdapter  == null ||
+            playlistEditorAdapter == null)
             return false;
         return true;
     }
@@ -261,18 +275,7 @@ public class AudioLibraryManager {
         albumsListAdapter.notifyDataSetChanged();
         artistsListAdapter.notifyDataSetChanged();
         playlistsListAdapter.notifyDataSetChanged();
-    }
-
-    public SongsListAdapter getSongsListAdapter() {
-        return songsListAdapter;
-    }
-
-    public AlbumsArtistsListAdapter getAlbumsListAdapter() {
-        return albumsListAdapter;
-    }
-
-    public AlbumsArtistsListAdapter getArtistsListAdapter() {
-        return artistsListAdapter;
+        playlistEditorAdapter.notifyDataSetChanged();
     }
 
     public PlaylistsListAdapter getPlaylistsListAdapter() {
@@ -295,7 +298,34 @@ public class AudioLibraryManager {
         return library.getTrack(index);
     }
 
+    public SongsListAdapter getSongsListAdapter() {
+        return songsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getAlbumsListAdapter() {
+        return albumsListAdapter;
+    }
+
+    public AlbumsArtistsListAdapter getArtistsListAdapter() {
+        return artistsListAdapter;
+    }
+
+    public PlaylistEditorAdapter getPlaylistEditorAdapter() {
+        return playlistEditorAdapter;
+    }
+
     public PlayList getLibrary(){
         return library;
+    }
+
+    public PlayList getCurrentlyEditedPlaylist() {
+        return currentlyEditedPlaylist;
+    }
+
+    public void setCurrentlyEditedPlaylist(String currentlyEditedPlaylist) {
+        for (PlayList playList : library.getPlayLists()) {
+            if (playList.getName() == currentlyEditedPlaylist)
+                this.currentlyEditedPlaylist = playList;
+        }
     }
 }

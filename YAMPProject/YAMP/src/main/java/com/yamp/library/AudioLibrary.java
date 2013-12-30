@@ -56,9 +56,14 @@ public class AudioLibrary extends PlayList{
     }
 
     public void clearAll(){
+        super.tracks.clear();
         this.playLists.clear();
         this.albums.clear();
         this.artists.clear();
+    }
+
+    public void clearSongs(){
+        super.tracks.clear();
     }
 
     public void clearPlaylists(){

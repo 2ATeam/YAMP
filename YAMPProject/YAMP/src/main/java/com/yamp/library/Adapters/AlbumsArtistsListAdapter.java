@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
 import com.yamp.library.AudioFile;
 import com.yamp.library.PlayList;
 import com.yamp.utils.Utilities;
@@ -102,7 +103,8 @@ public class AlbumsArtistsListAdapter extends BaseExpandableListAdapter implemen
         artist.setText(track.getArtist().trim());
 
         ImageView playingIndicator = (ImageView)view.findViewById(R.id.imgIsPlaing);
-        if(track.isPlaying())
+        AudioFile playingNow = AudioManager.getInstance().getCurrent();
+        if(track.getID() == playingNow.getID())
             playingIndicator.setVisibility(View.VISIBLE);
         else
             playingIndicator.setVisibility(View.INVISIBLE);

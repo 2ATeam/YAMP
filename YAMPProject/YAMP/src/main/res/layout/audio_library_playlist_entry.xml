@@ -56,4 +56,15 @@
         android:maxWidth="50dp"
         android:maxHeight="50dp" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgEditPlaylist"
+        android:src="@drawable/add"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount"
+        android:layout_toLeftOf="@+id/btnRemove"
+        android:maxWidth="50dp"
+        android:adjustViewBounds="true"
+        android:clickable="true" />
+
 </RelativeLayout>

@@ -3,11 +3,12 @@ package com.yamp.core;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.support.v4.app.FragmentTransaction;
+
 import com.yamp.R;
 import com.yamp.fragments.AFXFragment;
 import com.yamp.fragments.ControlFragment;
@@ -15,6 +16,7 @@ import com.yamp.fragments.PlayerFragment;
 import com.yamp.fragments.TimelineFragment;
 import com.yamp.library.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
+import com.yamp.library.PlaylistEditorFragment;
 import com.yamp.utils.GestureAdapter;
 import com.yamp.utils.Logger;
 
@@ -33,14 +35,21 @@ public class PlayerMainActivity extends FragmentActivity {
     private AudioLibraryFragment audioLibraryFragment;
     private AFXFragment afxFragment;
 
+    private PlaylistEditorFragment playlistEditorFragment;
     private GestureDetectorCompat gestureDetector;
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
+    }
+
+    public AudioLibraryFragment getAudioLibraryFragment() {
+        return audioLibraryFragment;
+    }
+
+    public PlaylistEditorFragment getPlaylistEditorFragment() {
+        return playlistEditorFragment;
     }
 
     @Override
@@ -53,6 +62,7 @@ public class PlayerMainActivity extends FragmentActivity {
         playerFragment = new PlayerFragment();
         audioLibraryFragment = new AudioLibraryFragment();
         afxFragment = new AFXFragment();
+        playlistEditorFragment = new PlaylistEditorFragment();
 
         if (savedInstanceState != null) return;
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
@@ -88,7 +98,10 @@ public class PlayerMainActivity extends FragmentActivity {
             public void onDownFling() {
                 if (mainFragment) {
                     mainFragment = false;
-                    replace(audioLibraryFragment, new int[]{R.animator.slide_in_top, R.animator.slide_out_bottom, R.animator.slide_in_bottom, R.animator.slide_out_top});
+                    replace(audioLibraryFragment, new int[]{R.animator.slide_in_top,
+                                                            R.animator.slide_out_bottom,
+                                                            R.animator.slide_in_bottom,
+                                                            R.animator.slide_out_top});
                 }
                 else{
                     mainFragment = true;

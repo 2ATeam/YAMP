@@ -27,7 +27,6 @@ public class AudioManager {
     private PlayList trackList; // target playlist
     private SoundController controller;
     private static AudioManager instance;
-    private AudioFile trackToPlay; /// TODO: old thing... use trackList.getCurrentTrack()
 
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
@@ -69,27 +68,16 @@ public class AudioManager {
         trackList = new PlayList();
     }
 
-    private void enablePlayingIndicator(){
-        trackToPlay.setPlaying(false);
-        trackToPlay = trackList.getCurrentTrack();
-        trackToPlay.setPlaying(true);
-        AudioLibraryManager.getInstance().notifyAllAdapters(); // TODO: such calls should be moved into one place.
-    }
-
     private void setTrack(AudioFile track){
         String path = track.getPath();
         if (controller.isPlaying())
             controller.play(path);
         else
             controller.setTrack(path);
-
-       // enablePlayingIndicator();
         notifyNewTrackLoaded(track);
     }
 
-    ///TODO: solve this extra function
     public void playTrack(){
-      //  enablePlayingIndicator();
         controller.play(trackList.getCurrentTrack().getPath());
         notifyNewTrackLoaded(trackList.getCurrentTrack());
     }
@@ -122,6 +110,7 @@ public class AudioManager {
         setTrack(trackList.nextTrack());
     }
     public void prev() {
+        notifyPrevTrackLoaded(trackList.getPrevTrack());
         if (shuffle) {
             int rnd = trackList.getCurrent();
             while(rnd == trackList.getCurrent()){
@@ -129,7 +118,7 @@ public class AudioManager {
             }
             trackList.setCurrent(rnd);
         }
-        noyifyPrevTrackLoaded(trackList.getPrevTrack());
+        notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
     }
 
@@ -166,6 +155,9 @@ public class AudioManager {
     public boolean isPlaying() {
         return controller.isPlaying();
     }
+    public boolean isLooped(){
+        return controller.isLooped();
+    }
 
     public void setLoopMode(int loopMode) {
         switch (loopMode){
@@ -177,9 +169,7 @@ public class AudioManager {
             case LoopButton.STATE_ALL:
                 controller.setLooping(false);
                 this.looped = true;
-
         }
-
     }
 
     public int getLoopMode(){
@@ -196,6 +186,7 @@ public class AudioManager {
     }
 
     private void notifyNewTrackLoaded(AudioFile track){
+        AudioLibraryManager.getInstance().notifyAllAdapters();
         for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onNewTrackLoaded(track);
         }
@@ -205,7 +196,7 @@ public class AudioManager {
             listener.onNextTrackLoaded(track);
         }
     }
-    private void noyifyPrevTrackLoaded(AudioFile track){
+    private void notifyPrevTrackLoaded(AudioFile track){
         for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onPrevTrackLoaded(track);
         }
