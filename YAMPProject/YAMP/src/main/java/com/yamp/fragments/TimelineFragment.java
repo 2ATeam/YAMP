@@ -64,40 +64,19 @@ public class TimelineFragment extends Fragment{
 
 
     private void initialize(){
-        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
-            @Override
-            public void onNewTrackLoaded(AudioFile track) {
-                updaterHandler.removeCallbacks(progressUpdater);
-                sbProgress.setProgress(0);
-                sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
-                tvCurrent.setText(Utilities.formatTime(0));
-                tvRemain.setText(Utilities.formatTime(track.getDuration()));
-
-                updaterHandler.post(progressUpdater);
-            }
-
-            @Override
-            public void onNextTrackLoaded(AudioFile nextTrack) {
-
-            }
-
-            @Override
-            public void onPrevTrackLoaded(AudioFile prevTrack) {
-
-            }
-        });
 
         AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
             @Override
             public void onPlayingStarted(boolean causedByUser) {
-                updaterHandler.removeCallbacks(progressUpdater);
-                updaterHandler.post(progressUpdater);
+                sbProgress.setProgress(0);
+                sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
+                updateTimers();
+                updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
             }
 
             @Override
             public void onPlayingCompleted(boolean causedByUser) {
                 updaterHandler.removeCallbacks(progressUpdater);
-
             }
 
             @Override
@@ -107,7 +86,7 @@ public class TimelineFragment extends Fragment{
 
             @Override
             public void onPlayingResumed(int currentProgress) {
-                updaterHandler.post(progressUpdater);
+                updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
             }
         });
     }

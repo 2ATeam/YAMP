@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import com.yamp.R;
 import com.yamp.core.AudioManager;
 import com.yamp.core.YAMPApplication;
+import com.yamp.events.PlaybackListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.LoopButton;
@@ -29,7 +30,7 @@ public class ControlFragment extends Fragment {
     private Button bPrev;
 
     private LoopButton lbLooped;
-    private CheckBox cbShuffled; ///TODO: change appearance for this checkbox
+    private CheckBox cbShuffled;
     private CheckBox cbVolume;
 
     @Override
@@ -46,6 +47,31 @@ public class ControlFragment extends Fragment {
                 public void onSoundControllerBounded(SoundController controller) {
                     initialize();
                     controller.setVolume(sbVolume.getProgress());
+                    AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
+                        @Override
+                        public void onPlayingStarted(boolean causedByUser) {
+                            if (bPlay.getState() == PlaybackButton.STATE_PAUSED)
+                                bPlay.performClick();
+                        }
+
+                        @Override
+                        public void onPlayingCompleted(boolean causedByUser) {
+                            if (bPlay.getState() == PlaybackButton.STATE_PLAYING)
+                                bPlay.performClick();
+                        }
+
+                        @Override
+                        public void onPlayingPaused(int currentProgress) {
+                            if (bPlay.getState() == PlaybackButton.STATE_PLAYING)
+                                bPlay.performClick();
+                        }
+
+                        @Override
+                        public void onPlayingResumed(int currentProgress) {
+                            if (bPlay.getState() == PlaybackButton.STATE_PAUSED)
+                                bPlay.performClick();
+                        }
+                    });
                 }
             });
         }
@@ -56,12 +82,10 @@ public class ControlFragment extends Fragment {
     }
 
     private void restoreState() {
+        initialize();
         lbLooped.setState(AudioManager.getInstance().getLoopMode());
-
-        sbVolume.setMax(AudioManager.getInstance().getVolumeMax());
-        sbVolume.setProgress(AudioManager.getInstance().getVolume());
-
         cbVolume.setChecked(AudioManager.getInstance().getVolume() != 0);
+        bPlay.setState((AudioManager.getInstance().isPlaying()) ? PlaybackButton.STATE_PAUSED: PlaybackButton.STATE_PLAYING);
     }
 
 

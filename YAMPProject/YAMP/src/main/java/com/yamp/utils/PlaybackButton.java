@@ -41,10 +41,10 @@ public class PlaybackButton extends Button {
 
         switch (state) {
             case STATE_PAUSED:
-                mergeDrawableStates(drawableState, STATE_PLAYING_SET);
+                mergeDrawableStates(drawableState, STATE_PAUSED_SET);
                 break;
             case STATE_PLAYING:
-                mergeDrawableStates(drawableState, STATE_PAUSED_SET);
+                mergeDrawableStates(drawableState, STATE_PLAYING_SET);
                 break;
         }
         return drawableState;
