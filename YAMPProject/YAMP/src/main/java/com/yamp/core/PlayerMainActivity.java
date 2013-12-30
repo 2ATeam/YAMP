@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.support.v4.app.FragmentTransaction;
 import com.yamp.R;
+import com.yamp.fragments.AFXFragment;
+import com.yamp.fragments.ControlFragment;
+import com.yamp.fragments.PlayerFragment;
+import com.yamp.fragments.TimelineFragment;
 import com.yamp.library.AudioLibraryFragment;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.utils.GestureAdapter;
@@ -27,6 +31,7 @@ public class PlayerMainActivity extends FragmentActivity {
 
     private PlayerFragment playerFragment;
     private AudioLibraryFragment audioLibraryFragment;
+    private AFXFragment afxFragment;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -42,20 +47,22 @@ public class PlayerMainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setVolumeControlStream(android.media.AudioManager.STREAM_MUSIC);
         setContentView(R.layout.activity_main);
-        initializeGestures();
 
-        playerFragment = new PlayerFragment();// (PlayerFragment)getSupportFragmentManager().findFragmentById(R.id.player_fragment);
+        playerFragment = new PlayerFragment();
         audioLibraryFragment = new AudioLibraryFragment();
+        afxFragment = new AFXFragment();
 
         if (savedInstanceState != null) return;
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.timeline_fragment, new TimelineFragment()).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
+        initializeGestures();
+
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
-        AudioLibraryManager.getInstance().scanForAllSongs();
+        AudioLibraryManager.getInstance().performFullScan();
         AudioManager.getInstance().setPlayList(AudioLibraryManager.getInstance().getLibrary());
     }
 
@@ -67,7 +74,11 @@ public class PlayerMainActivity extends FragmentActivity {
         gestureAdapter.setOnFlingListener(new GestureAdapter.FlingListener() {
             @Override
             public void onUpFling() {
-                if (!mainFragment) {
+                if (mainFragment) {
+                    mainFragment = false;
+                    replace(afxFragment, new int[]{R.animator.slide_in_bottom, R.animator.slide_out_top, R.animator.slide_in_top, R.animator.slide_out_bottom});
+                }
+                else{
                     mainFragment = true;
                     getSupportFragmentManager().popBackStack();
                 }
@@ -77,7 +88,11 @@ public class PlayerMainActivity extends FragmentActivity {
             public void onDownFling() {
                 if (mainFragment) {
                     mainFragment = false;
-                    replace(audioLibraryFragment);
+                    replace(audioLibraryFragment, new int[]{R.animator.slide_in_top, R.animator.slide_out_bottom, R.animator.slide_in_bottom, R.animator.slide_out_top});
+                }
+                else{
+                    mainFragment = true;
+                    getSupportFragmentManager().popBackStack();
                 }
             }
 
@@ -95,9 +110,20 @@ public class PlayerMainActivity extends FragmentActivity {
         Logger.setGestureAdapter(gestureAdapter);
     }
 
-    private void replace(Fragment newFragment){
+    /**
+     * Replaces main fragment with another specified in newFragment
+     * @param newFragment Fragment to be set on the screen
+     * @param animation Set of 4 animation resources IDs. May cause Exceptions if wrong values will be passed.
+     *                  structure: {new_in,
+     *                              old_out,
+     *                              old_in,
+     *                              new_out}.
+     *
+     */
+    private void replace(Fragment newFragment, int[] animation){
+        if (animation.length != 4) return;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.animator.slide_in_top, R.animator.slide_out_bottom, R.animator.slide_in_bottom, R.animator.slide_out_top);
+        ft.setCustomAnimations(animation[0], animation[1], animation[2], animation[3]);
         ft.addToBackStack(null);
         ft.replace(R.id.player_fragment, newFragment);
         ft.commit();

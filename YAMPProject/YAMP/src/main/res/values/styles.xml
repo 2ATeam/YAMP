@@ -1,8 +1,55 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo">
         <!-- Customize your theme here. -->
+        <item name="android:background">#000000</item>
+    </style>
+
+
+    <style name="CheckBox">
+        <item name="android:soundEffectsEnabled">false</item>
+    </style>
+
+    <style name="CheckBoxLoop" parent="CheckBox">
+        <item name="android:button">@drawable/button_loop</item>
+    </style>
+
+    <style name="CheckBoxShuffle" parent="CheckBox">
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/button_shuffle</item>
+    </style>
+
+    <style name="CheckBoxVolume" parent="CheckBox">
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/button_volume</item>
+    </style>
+
+    <style name="ButtonNext">
+        <item name="android:background">@drawable/button_next</item>
+    </style>
+
+    <style name="ButtonPlay">
+        <item name="android:background">@drawable/button_playback</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+    <style name="ButtonPrev">
+        <item name="android:background">@drawable/button_prev</item>
+    </style>
+
+    <style name="SeekBar">
+        <item name="android:progressDrawable">@drawable/seekbar_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/seek_total</item>
+        <item name="android:minHeight">3dp</item>
+        <item name="android:maxHeight">3dp</item>
+        <item name="android:thumb">@drawable/seek_point</item>
+        <item name="android:thumbOffset">0dp</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="ButtonRemove">
+        <item name="android:src">@drawable/button_remove</item>
     </style>
 
 </resources>

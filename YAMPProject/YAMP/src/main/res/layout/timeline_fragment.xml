@@ -11,6 +11,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:id="@+id/tvTimeRemain" />
 
     <TextView
@@ -23,6 +24,7 @@
         android:id="@+id/tvTimeCurrent" />
 
     <SeekBar
+        style="@style/SeekBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sbProgress"

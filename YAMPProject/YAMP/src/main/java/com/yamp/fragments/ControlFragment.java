@@ -1,4 +1,4 @@
-package com.yamp.core;
+package com.yamp.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
+import com.yamp.core.YAMPApplication;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.LoopButton;
+import com.yamp.utils.PlaybackButton;
 
 /**
  * Created by AdYa on 01.12.13.
@@ -20,12 +24,13 @@ import com.yamp.utils.LoopButton;
 public class ControlFragment extends Fragment {
 
     private SeekBar sbVolume;
-    private Button bPlay;
+    private PlaybackButton bPlay;
     private Button bNext;
     private Button bPrev;
 
     private LoopButton lbLooped;
     private CheckBox cbShuffled; ///TODO: change appearance for this checkbox
+    private CheckBox cbVolume;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +60,8 @@ public class ControlFragment extends Fragment {
 
         sbVolume.setMax(AudioManager.getInstance().getVolumeMax());
         sbVolume.setProgress(AudioManager.getInstance().getVolume());
+
+        cbVolume.setChecked(AudioManager.getInstance().getVolume() != 0);
     }
 
 
@@ -64,7 +71,7 @@ public class ControlFragment extends Fragment {
     }
 
     private void awakeComponents(View fragment) {
-        bPlay = (Button) fragment.findViewById(R.id.bPlay);
+        bPlay = (PlaybackButton) fragment.findViewById(R.id.bPlay);
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +111,8 @@ public class ControlFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(!fromUser) return;
+
+                cbVolume.setChecked(progress!=0);
                 AudioManager.getInstance().setVolume(progress);
 
             }
@@ -116,6 +125,31 @@ public class ControlFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        cbVolume = (CheckBox)fragment.findViewById(R.id.cbVolume);
+        cbVolume.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            private int lastVolume;
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    AudioManager.getInstance().setVolume(lastVolume);
+                    sbVolume.setProgress(lastVolume);
+                }
+                else{
+                    lastVolume = AudioManager.getInstance().getVolume();
+                    AudioManager.getInstance().setVolume(0);
+                    sbVolume.setProgress(0);
+                }
+            }
+        });
+
+        cbShuffled = (CheckBox)fragment.findViewById(R.id.cbShuffle);
+        cbShuffled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    AudioManager.getInstance().setShuffle(isChecked);
             }
         });
     }
