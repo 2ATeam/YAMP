@@ -41,13 +41,19 @@ public class PlayList {
         return tracks.get(index);
     }
 
+    public List<AudioFile> getTracks(){
+        return tracks;
+    }
+
     public void addTrack(AudioFile track){
         tracks.add(track);
     }
 
     public boolean contains(AudioFile track){
-        if (tracks.contains(track))
-            return true;
+        for (AudioFile audioFile : tracks) {
+            if (audioFile.getName().equals(track.getName()))
+                return true;
+        }
         return false;
     }
 

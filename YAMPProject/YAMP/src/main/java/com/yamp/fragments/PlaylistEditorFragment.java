@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.yamp.R;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
+import com.yamp.library.PlayList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,14 @@ public class PlaylistEditorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.audio_library_fragment_playlist_editing, container, false);
         songsToAddToPlaylist.clear();
+        loadAlreadyAddedSongs();
         return view;
+    }
+
+    private void loadAlreadyAddedSongs(){
+        for (AudioFile track : AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().getTracks()) {
+            songsToAddToPlaylist.add(track);
+        }
     }
 
     private void populateContent() {
@@ -57,14 +65,14 @@ public class PlaylistEditorFragment extends Fragment {
         final Button btnSave = (Button) activity.findViewById(R.id.btnSavePlaylist);
         final ListView list = (ListView) activity.findViewById(R.id.lstEdAllSongs);
         final TextView playlistName = (TextView) activity.findViewById(R.id.txtEdPlaylistName);
+        final long playlistID = AudioLibraryManager.getInstance().getPlaylistID(playlistName.getText().toString());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 for (AudioFile audioFile : songsToAddToPlaylist) {
                     AudioLibraryManager.getInstance().
-                            addSongToPlaylist(AudioLibraryManager.getInstance().
-                                    getPlaylistID(playlistName.getText().toString()), audioFile.getID());
+                            addSongToPlaylist(playlistID, audioFile.getID());
                 }
                 songsToAddToPlaylist.clear();
                 AudioLibraryManager.getInstance().scanForPlaylists(); // perform rescanning.
@@ -77,11 +85,11 @@ public class PlaylistEditorFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 AudioFile track = AudioLibraryManager.getInstance().getTrack(pos);
-                if (songsToAddToPlaylist.contains(track))
+                if (AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().contains(track)){
                     songsToAddToPlaylist.remove(track);
+                }
                 else
                     songsToAddToPlaylist.add(track);
-                AudioLibraryManager.getInstance().notifyAllAdapters();
             }
         });
     }

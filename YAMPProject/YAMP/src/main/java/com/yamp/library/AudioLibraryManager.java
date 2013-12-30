@@ -107,21 +107,6 @@ public class AudioLibraryManager {
         return true;
     }
 
-    public void removePlaylist(String name){
-        Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
-        final String [] playlistID = { MediaStore.Audio.Playlists._ID };
-        final String[] playlistName = { name };
-        Cursor cursor = resolver.query(uri, playlistID, MediaStore.Audio.Playlists.NAME + "=?", playlistName, null);
-        if (validateCursor(cursor)) {
-            int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
-            String [] ID = { cursor.getString(columnID) };
-            resolver.delete(uri, MediaStore.Audio.Playlists._ID + "=?", ID);
-            scanForPlaylists(); // perform rescan.
-            if (playlistsListAdapter != null)
-                playlistsListAdapter.notifyDataSetChanged();
-        }
-    }
-
     public void scanSongsForPlaylist(long playlistID){
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
         Cursor cursor = resolver.query(uri, null, null, null, null);
@@ -169,12 +154,35 @@ public class AudioLibraryManager {
         }
     }
 
+    public void removePlaylist(String name){
+        Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
+        final String [] playlistID = { MediaStore.Audio.Playlists._ID };
+        final String[] playlistName = { name };
+        Cursor cursor = resolver.query(uri, playlistID, MediaStore.Audio.Playlists.NAME + "=?", playlistName, null);
+        if (validateCursor(cursor)) {
+            int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
+            String [] ID = { cursor.getString(columnID) };
+            resolver.delete(uri, MediaStore.Audio.Playlists._ID + "=?", ID);
+            scanForPlaylists(); // perform rescan.
+            if (playlistsListAdapter != null)
+                playlistsListAdapter.notifyDataSetChanged();
+        }
+    }
+
     public void addSongToPlaylist(long playlistID, long songID){
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
         ContentValues cValues = new ContentValues();
         cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, 0);
         cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
         resolver.insert(uri, cValues);
+        if (playlistsListAdapter != null)
+            playlistsListAdapter.notifyDataSetChanged();
+    }
+
+    public void removeSongFromPlaylist(long playlistID, long songID){
+        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
+        String[] args = { String.valueOf(songID) };
+        resolver.delete(uri, MediaStore.Audio.Playlists.Members._ID + "=?", args);
         if (playlistsListAdapter != null)
             playlistsListAdapter.notifyDataSetChanged();
     }
@@ -247,14 +255,6 @@ public class AudioLibraryManager {
 
     public List<AudioFile> getAllTracks(){
         return this.library.getTracks();
-    }
-
-    public ArrayList<String> getAlbumNames(){
-        ArrayList<String> names = new ArrayList<>();
-        for (PlayList album : library.getAlbums()) {
-            names.add(album.getName());
-        }
-        return names;
     }
 
     private boolean adaptersAreReady(){
