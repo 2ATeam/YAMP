@@ -44,17 +44,17 @@
         android:layout_marginLeft="15dp" />
 
     <ImageView
+        android:id="@+id/btnRemove"
+        style="@style/ButtonRemove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnRemove"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/remove"
         android:adjustViewBounds="true"
         android:layout_alignBottom="@+id/txtAlbunartistAmount"
         android:clickable="true"
-        android:maxWidth="50dp" />
+        android:maxWidth="50dp"
+        android:maxHeight="50dp" />
 
     <ImageView
         android:layout_width="wrap_content"

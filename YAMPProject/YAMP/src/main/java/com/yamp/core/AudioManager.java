@@ -1,13 +1,13 @@
 package com.yamp.core;
-
 import com.yamp.events.PlaybackListener;
-import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.events.TrackLoadedListener;
+import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.LoopButton;
+import com.yamp.utils.Utilities;
 
 import java.util.ArrayList;
 
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class AudioManager {
 
 
-    private boolean looped;
-    private boolean shuffle;
+    private boolean looped = false;
+    private boolean shuffle = false;
 
     private boolean readyToPlay = false;
-    private PlayList trackList; // target playlist
 
+    private PlayList trackList; // target playlist
     private SoundController controller;
     private static AudioManager instance;
 
@@ -42,15 +42,14 @@ public class AudioManager {
                 AudioManager.this.controller.setPlaybackListener(new PlaybackListener() {
                     @Override
                     public void onPlayingStarted(boolean causedByUser) {
-
+                        notifyNewTrackLoaded(getCurrent());
                     }
 
                     @Override
                     public void onPlayingCompleted(boolean causedByUser) {
                         if (!AudioManager.this.controller.isLooped()) {// if track is not looped play next track.
                             next();
-                            if (readyToPlay) play();
-                            ///TODO: kostil
+                            if (readyToPlay) playTrack();
                         }
                     }
 
@@ -88,7 +87,7 @@ public class AudioManager {
             readyToPlay = true;
             playTrack();
         }
-        controller.play();
+        controller.play(); // resume
     }
     public void pause() {
         if (isPlaying())
@@ -96,13 +95,29 @@ public class AudioManager {
     }
     public void stop() {
         controller.stop();
+        readyToPlay = false;
     }
 
     public void next() {
+        if (shuffle) {
+            int rnd = trackList.getCurrent();
+            while(rnd == trackList.getCurrent()){
+                rnd =  Utilities.randomInt(0, trackList.size()-1) - 1;
+            }
+            trackList.setCurrent(rnd);
+        }
         notifyNextTrackLoaded(trackList.getNextTrack());
         setTrack(trackList.nextTrack());
     }
     public void prev() {
+        notifyPrevTrackLoaded(trackList.getPrevTrack());
+        if (shuffle) {
+            int rnd = trackList.getCurrent();
+            while(rnd == trackList.getCurrent()){
+                rnd =  Utilities.randomInt(0, trackList.size() - 1) + 1;
+            }
+            trackList.setCurrent(rnd);
+        }
         notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
     }
@@ -149,10 +164,10 @@ public class AudioManager {
             case LoopButton.STATE_NONE:
                 this.looped = false;
             case LoopButton.STATE_SINGLE:
-                controller.setLooping(false);
+                controller.setLooping(true);
                 break;
             case LoopButton.STATE_ALL:
-                controller.setLooping(true);
+                controller.setLooping(false);
                 this.looped = true;
         }
     }
@@ -187,7 +202,16 @@ public class AudioManager {
         }
     }
 
+    // SoundController redirection
     public void setPlaybackListener(PlaybackListener listener) {
         controller.setPlaybackListener(listener);
+    }
+
+    public boolean isPaused() {
+        return controller.isPaused();
+    }
+
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
     }
 }

@@ -53,10 +53,12 @@ public class PlayList {
 
     // navigate through playlist
     public AudioFile nextTrack(){
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, ++current));
+        if (Utilities.isWithin(0, tracks.size()-1, current + 1)) ++current;
+        return tracks.get(current);
     }
     public AudioFile prevTrack(){
-        return tracks.get(Utilities.clamp(0, tracks.size()-1, --current));
+        if (Utilities.isWithin(0, tracks.size()-1, current - 1)) --current;
+        return tracks.get(current);
     }
 
     // simple access to relevant tracks (prev/cur/next)
@@ -72,5 +74,9 @@ public class PlayList {
 
     public void setCurrent(int current) {
         this.current = current;
+    }
+
+    public int getCurrent() {
+        return current;
     }
 }

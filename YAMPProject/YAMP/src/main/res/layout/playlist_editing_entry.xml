@@ -25,7 +25,7 @@
         android:minWidth="80dp"
         android:layout_alignParentTop="true"
         android:focusableInTouchMode="false"
-        android:src="@drawable/play"
+        android:src="@drawable/logo"
         android:adjustViewBounds="true" />
 
     <TextView

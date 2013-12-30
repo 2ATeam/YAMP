@@ -61,7 +61,7 @@ public class YAMPApplication extends Application {
             // We've bound to SoundController, cast the IBinder and get SoundController instance
             SoundController.SoundControllerBinder binder = (SoundController.SoundControllerBinder) service;
             soundController = binder.getService();
-            fireSoundControllerBounded();
+            notifySoundControllerBounded();
         }
 
         @Override
@@ -77,7 +77,7 @@ public class YAMPApplication extends Application {
         instance.soundControllerBoundedListeners.add(listener);
     }
 
-    private void fireSoundControllerBounded() {
+    private void notifySoundControllerBounded() {
         for (SoundControllerBoundedListener listener : soundControllerBoundedListeners) {
             listener.onSoundControllerBounded(soundController);
         }

@@ -82,21 +82,29 @@ public class SoundController extends Service{
         if (isPlaying()) return;
 
         if (paused) notifyPlayingResumed(getProgress());
-        else notifyPlayingStarted(true); /// TODO: not exactly) here we must separate external play and internal play like stop :)
+        else notifyPlayingStarted(true); /// TODO: not exactly 'true') here we must separate external play and internal play like stop :)
         paused = false;
         player.start();
 
     }
 
-    // Sets new track and immediately starts it.
+    /**
+     * Sets new track and immediately starts it.
+     * @param path Full path to the audio file
+     */
     public void play(String path){
         if (isPlaying()) stopInternal();
         setTrack(path);
         play();
     }
 
-    // Sets new track, but won't play it.
-    // Note: it won't set the track if some other track has already been playing.
+
+
+    /**
+     * Sets new track, but won't play it.
+     * Note: it won't set the track if some other track has already been playing.
+     * @param path Full path to the audio file
+     */
     public void setTrack(String path) {
         if (isPlaying()) return;
         if (paused) stopInternal();
@@ -113,21 +121,22 @@ public class SoundController extends Service{
     public void setLooping(boolean looping){
         this.looped = looping;
     }
+
     public void seekTo(int msec){
         player.seekTo(Utilities.clamp(0, getDuration(), msec));
+        if (paused)
+            pause();
     }
-
     public int getDuration(){
         return player.getDuration();
     }
-
     public int getProgress(){
         return player.getCurrentPosition();
     }
-
     public float getProgressPercent(){
         return (float)getProgress() / (float)getDuration() * 100.f;
     }
+
     private float scaleVolume(int nonScaledVolume){
         return 1f - (float)(Math.log(MAX_VOLUME - nonScaledVolume)/Math.log(MAX_VOLUME)); // V = 1 - ln(max - x) / ln(max)
     }
@@ -136,11 +145,12 @@ public class SoundController extends Service{
         float scaledVolume = scaleVolume(currentVolume);
         player.setVolume(scaledVolume, scaledVolume);
     }
-
-
-
     public int getVolume(){
         return currentVolume;
+    }
+
+    public int getAudioSessionId() {
+        return player.getAudioSessionId();
     }
 
     /**
