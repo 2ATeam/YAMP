@@ -1,8 +1,10 @@
 package com.yamp.sound;
 
 import android.annotation.TargetApi;
-import android.media.AudioManager;
-import android.media.audiofx.*;
+import android.media.audiofx.BassBoost;
+import android.media.audiofx.Equalizer;
+import android.media.audiofx.PresetReverb;
+import android.media.audiofx.Virtualizer;
 
 import com.yamp.core.YAMPApplication;
 import com.yamp.events.SoundControllerBoundedListener;

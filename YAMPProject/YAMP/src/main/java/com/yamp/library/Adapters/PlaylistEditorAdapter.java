@@ -1,4 +1,4 @@
-package com.yamp.library.adapters;
+package com.yamp.library.Adapters;
 
 import android.support.v4.app.FragmentActivity;
 import android.view.View;

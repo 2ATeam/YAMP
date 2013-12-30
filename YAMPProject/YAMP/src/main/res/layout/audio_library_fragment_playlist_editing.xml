@@ -15,7 +15,8 @@
         android:src="@drawable/playlist"
         android:adjustViewBounds="true"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginLeft="15dp"
+        android:maxWidth="50dp" />
 
     <TextView
         android:layout_width="wrap_content"

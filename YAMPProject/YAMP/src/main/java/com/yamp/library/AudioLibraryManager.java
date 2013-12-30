@@ -6,15 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.webkit.MimeTypeMap;
-
-import com.yamp.library.adapters.AlbumsArtistsListAdapter;
-import com.yamp.library.adapters.PlaylistEditorAdapter;
-import com.yamp.library.adapters.PlaylistsListAdapter;
-import com.yamp.library.adapters.SongsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.yamp.library.Adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.Adapters.PlaylistEditorAdapter;
+import com.yamp.library.Adapters.PlaylistsListAdapter;
+import com.yamp.library.Adapters.SongsListAdapter;
 
 /**
  * Created by AdYa on 24.11.13.

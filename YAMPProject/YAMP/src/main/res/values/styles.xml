@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo">
         <!-- Customize your theme here. -->
-        <item name="android:background">#000000</item>
+        <!--<item name="android:background">#000000</item>-->
     </style>
 
 
