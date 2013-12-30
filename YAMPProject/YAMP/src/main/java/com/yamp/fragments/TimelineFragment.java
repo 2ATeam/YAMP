@@ -1,4 +1,4 @@
-package com.yamp.core;
+package com.yamp.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
+import com.yamp.core.YAMPApplication;
 import com.yamp.events.PlaybackListener;
 import com.yamp.events.TrackLoadedListener;
 import com.yamp.events.SoundControllerBoundedListener;
@@ -24,9 +26,10 @@ public class TimelineFragment extends Fragment{
 
     private SeekBar sbProgress;
 
-    private TextView tvRemain; ///TODO: make it clickable
+    private TextView tvRemain;
     private TextView tvCurrent;
 
+    private boolean remain = false; // indicates what time should be shown in tvRemain (total or remain)
     private final static int TRACK_PROGRESS_DELAY = 250;
 
     @Override
@@ -64,8 +67,13 @@ public class TimelineFragment extends Fragment{
         AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
+                updaterHandler.removeCallbacks(progressUpdater);
                 sbProgress.setProgress(0);
                 sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
+                tvCurrent.setText(Utilities.formatTime(0));
+                tvRemain.setText(Utilities.formatTime(track.getDuration()));
+
+                updaterHandler.post(progressUpdater);
             }
 
             @Override
@@ -82,22 +90,24 @@ public class TimelineFragment extends Fragment{
         AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
             @Override
             public void onPlayingStarted(boolean causedByUser) {
+                updaterHandler.removeCallbacks(progressUpdater);
                 updaterHandler.post(progressUpdater);
             }
 
             @Override
             public void onPlayingCompleted(boolean causedByUser) {
                 updaterHandler.removeCallbacks(progressUpdater);
+
             }
 
             @Override
             public void onPlayingPaused(int currentProgress) {
-
+                updaterHandler.removeCallbacks(progressUpdater);
             }
 
             @Override
             public void onPlayingResumed(int currentProgress) {
-
+                updaterHandler.post(progressUpdater);
             }
         });
     }
@@ -107,6 +117,8 @@ public class TimelineFragment extends Fragment{
         sbProgress = (SeekBar) fragment.findViewById(R.id.sbProgress);
         sbProgress.setProgress(0);
         sbProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            private boolean pause; // used for determining state before start seeking.
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (!fromUser) return;
@@ -126,17 +138,27 @@ public class TimelineFragment extends Fragment{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 updaterHandler.removeCallbacks(progressUpdater); // pause seek bar
+                pause = AudioManager.getInstance().isPaused();
                 AudioManager.getInstance().pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 updaterHandler.post(progressUpdater); // restore seek bar
-                AudioManager.getInstance().play();
+                if (!pause)
+                    AudioManager.getInstance().play();
             }
         });
 
         tvRemain = (TextView) fragment.findViewById(R.id.tvTimeRemain);
+        tvRemain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remain = !remain;
+                updateTimers();
+            }
+        });
+
         tvCurrent = (TextView) fragment.findViewById(R.id.tvTimeCurrent);
     }
 
@@ -146,7 +168,7 @@ public class TimelineFragment extends Fragment{
     private Runnable progressUpdater = new Runnable() {
         @Override
         public void run() {
-            sbProgress.setProgress(YAMPApplication.getSoundController().getProgress());
+            sbProgress.setProgress(AudioManager.getInstance().getCurrentProgress());
             updateTimers();
             updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
         }
@@ -154,7 +176,10 @@ public class TimelineFragment extends Fragment{
 
     private void updateTimers(){
         tvCurrent.setText(Utilities.formatTime(YAMPApplication.getSoundController().getProgress()));
-        tvRemain.setText(Utilities.formatTime(YAMPApplication.getSoundController().getDuration()));
+        if (remain)
+            tvRemain.setText("-" + Utilities.formatTime(YAMPApplication.getSoundController().getDuration() - YAMPApplication.getSoundController().getProgress()));
+        else
+            tvRemain.setText(Utilities.formatTime(YAMPApplication.getSoundController().getDuration()));
     }
 }
 

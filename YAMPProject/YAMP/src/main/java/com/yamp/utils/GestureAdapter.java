@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class GestureAdapter implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
 
+    private static final float GESTURE_SENSIVITY = 30;
+
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         return true;
@@ -55,22 +57,25 @@ public class GestureAdapter implements GestureDetector.OnGestureListener, Gestur
     @Override
     public boolean onFling(MotionEvent downMotionEvent, MotionEvent moveMotionEvent, float velocityX, float velocityY) {
 
-        if (Math.abs(velocityX) - Math.abs(velocityY) < 0){
-            if (moveMotionEvent.getY() > downMotionEvent.getY()){
-                notifyDownFling();
-            }
-            else {
-                notifyUpFling();
-            }
+        float startX = downMotionEvent.getX();
+        float startY = downMotionEvent.getY();
+        float endX = moveMotionEvent.getX();
+        float endY = moveMotionEvent.getY();
 
+
+        if (Math.abs(velocityX) - Math.abs(velocityY) < 0){
+            if (Math.abs(startY - endY) < GESTURE_SENSIVITY)  return true;
+            if (endY> startY)
+                notifyDownFling();
+            else
+                notifyUpFling();
         }
         else{
-            if (moveMotionEvent.getX() > downMotionEvent.getX()){
+            if (Math.abs(startX - endX) < GESTURE_SENSIVITY)  return true;
+            if (endX > startX)
                 notifyRightFling();
-            }
-            else {
+            else
                 notifyLeftFling();
-            }
         }
 
         return true;

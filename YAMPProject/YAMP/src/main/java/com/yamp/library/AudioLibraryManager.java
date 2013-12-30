@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.webkit.MimeTypeMap;
 
 import com.yamp.library.adapters.AlbumsArtistsListAdapter;
 import com.yamp.library.adapters.PlaylistEditorAdapter;
@@ -148,6 +149,7 @@ public class AudioLibraryManager {
         library.clearSongs();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor cursor = resolver.query(uri, null, null, null, null);
+
         if(validateCursor(cursor)){
             int columnTitle = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Media._ID);

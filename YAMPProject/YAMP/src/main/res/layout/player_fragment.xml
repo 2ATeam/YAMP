@@ -4,14 +4,14 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RatingBar
+  <!--  <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rbRate"
         android:layout_gravity="center_horizontal"
         android:rating="2.5"
         android:stepSize="0.5"
-        android:numStars="5" />
+        android:numStars="5" />-->
 
     <ImageView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/play" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="fill_parent"

@@ -5,4 +5,9 @@
         <attr name="state_looping_all" format="boolean" />
         <attr name="state_looping_single" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PlaybackState">
+        <attr name="state_paused" format="boolean" />
+        <attr name="state_playing" format="boolean" />
+    </declare-styleable>
 </resources>

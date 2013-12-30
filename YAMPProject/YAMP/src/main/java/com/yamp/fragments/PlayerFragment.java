@@ -1,4 +1,4 @@
-package com.yamp.core;
+package com.yamp.fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yamp.R;
+import com.yamp.core.AudioManager;
 import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AudioFile;
 
@@ -18,15 +19,13 @@ import com.yamp.library.AudioFile;
  */
 public class PlayerFragment extends Fragment {
 
-    private boolean initialized = false;
     private TextView tvTitle;
     private TextView tvInfo;
     private ImageView ivCover;
 
 
     private void restoreState(){
-            setTitle(AudioManager.getInstance().getCurrent().getName());
-            setInfo(AudioManager.getInstance().getCurrent().getFormattedDuration());
+          updateText(AudioManager.getInstance().getCurrent());
     }
 
     @Override
@@ -49,8 +48,7 @@ public class PlayerFragment extends Fragment {
         AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
-                setTitle(track.getName());
-                setInfo(String.valueOf(track.getFormattedDuration()));
+              updateText(track);
             }
 
             @Override
@@ -66,14 +64,16 @@ public class PlayerFragment extends Fragment {
     }
 
 
+    private void updateText(AudioFile track){
+        setTitle(track.getName());
+        setInfo(String.valueOf(track.getArtist() + " : " + track.getAlbum()));
+    }
     public void setTitle(String title) {
         tvTitle.setText(title);
     }
-
     public void setInfo(String info) {
         tvInfo.setText(info);
     }
-
     public void setCover(Bitmap bitmap) {
         ivCover.setImageBitmap(bitmap);
     }
