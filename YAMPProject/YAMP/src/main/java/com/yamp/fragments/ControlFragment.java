@@ -62,14 +62,10 @@ public class ControlFragment extends Fragment {
 
                         @Override
                         public void onPlayingPaused(int currentProgress) {
-                            if (bPlay.getState() == PlaybackButton.STATE_PLAYING)
-                                bPlay.performClick();
                         }
 
                         @Override
                         public void onPlayingResumed(int currentProgress) {
-                            if (bPlay.getState() == PlaybackButton.STATE_PAUSED)
-                                bPlay.performClick();
                         }
                     });
                 }
