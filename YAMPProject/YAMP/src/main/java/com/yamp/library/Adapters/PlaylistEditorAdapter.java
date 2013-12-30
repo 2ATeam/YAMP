@@ -33,6 +33,7 @@ public class PlaylistEditorAdapter extends ArrayAdapter<AudioFile> implements IS
             view = activity.getLayoutInflater().inflate(R.layout.playlist_editing_entry, parent, false);
 
         AudioFile track = AudioLibraryManager.getInstance().getTrack(position);
+
         return getSongView(track, view);
     }
 

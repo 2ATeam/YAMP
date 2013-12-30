@@ -22,7 +22,6 @@ public class AudioLibraryManager {
 
     private ContentResolver resolver;
     private AudioLibrary library;
-
     private PlayList currentlyEditedPlaylist;
 
     //data adapters.
@@ -258,10 +257,11 @@ public class AudioLibraryManager {
     }
 
     private boolean adaptersAreReady(){
-        if (songsListAdapter     == null ||
-            albumsListAdapter    == null ||
-            artistsListAdapter   == null ||
-            playlistsListAdapter == null)
+        if (songsListAdapter      == null ||
+            albumsListAdapter     == null ||
+            artistsListAdapter    == null ||
+            playlistsListAdapter  == null ||
+            playlistEditorAdapter == null)
             return false;
         return true;
     }
@@ -273,6 +273,7 @@ public class AudioLibraryManager {
         albumsListAdapter.notifyDataSetChanged();
         artistsListAdapter.notifyDataSetChanged();
         playlistsListAdapter.notifyDataSetChanged();
+        playlistEditorAdapter.notifyDataSetChanged();
     }
 
     public PlaylistsListAdapter getPlaylistsListAdapter() {

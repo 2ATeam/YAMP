@@ -3,8 +3,6 @@ package com.yamp.library;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import com.yamp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lux on 29.12.13.
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 public class PlaylistEditorFragment extends Fragment {
 
     FragmentActivity activity;
-    ArrayList<AudioFile> songsToAddToPlaylist;
+    List<AudioFile> songsToAddToPlaylist;
 
     public PlaylistEditorFragment() {
         songsToAddToPlaylist = new ArrayList<>();
@@ -32,6 +31,7 @@ public class PlaylistEditorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.audio_library_fragment_playlist_editing, container, false);
+        songsToAddToPlaylist.clear();
         return view;
     }
 
@@ -73,7 +73,12 @@ public class PlaylistEditorFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                songsToAddToPlaylist.add(AudioLibraryManager.getInstance().getTrack(pos));
+                AudioFile track = AudioLibraryManager.getInstance().getTrack(pos);
+                if (songsToAddToPlaylist.contains(track))
+                    songsToAddToPlaylist.remove(track);
+                else
+                    songsToAddToPlaylist.add(track);
+                AudioLibraryManager.getInstance().notifyAllAdapters();
             }
         });
     }
