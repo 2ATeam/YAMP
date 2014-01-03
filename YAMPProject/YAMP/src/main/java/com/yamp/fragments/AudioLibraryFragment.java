@@ -39,10 +39,10 @@ public class AudioLibraryFragment extends Fragment {
     private void createTabs(View view){
         TabHost host = (TabHost) view.findViewById(R.id.tabHost);
         host.setup();
-        addTab(host, "ALL", R.id.tabAll);
-        addTab(host, "PLAYLISTS", R.id.tabPlaylists);
-        addTab(host, "ALBUMS", R.id.tabAlbums);
-        addTab(host, "ARTISTS", R.id.tabArtists);
+        addTab(host, getString(R.string.al_tab_all_name), R.id.tabAll);
+        addTab(host, getString(R.string.al_tab_playlists_name), R.id.tabPlaylists);
+        addTab(host, getString(R.string.al_tab_albums_name), R.id.tabAlbums);
+        addTab(host, getString(R.string.al_tab_artists_name), R.id.tabArtists);
     }
 
     private void addTab(TabHost host, String indicator, int resID){
@@ -65,7 +65,6 @@ public class AudioLibraryFragment extends Fragment {
         albumsListView.setAdapter(AudioLibraryManager.getInstance().getAlbumsListAdapter());
         artistListView.setAdapter(AudioLibraryManager.getInstance().getArtistsListAdapter());
         playlistsListView.setAdapter(AudioLibraryManager.getInstance().getPlaylistsListAdapter());
-
     }
 
     @Override
@@ -97,21 +96,21 @@ public class AudioLibraryFragment extends Fragment {
         btnAddPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText txt = new EditText(activity);
-                new AlertDialog.Builder(activity) /// TODO: should be refactored later. (put this code into separate class)
-                        .setTitle("Enter Playlist Name:")
-                        .setView(txt)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                final EditText userInputBox = new EditText(activity);
+                new AlertDialog.Builder(activity)
+                        .setTitle(getString(R.string.prompt_enter_playlist_title))
+                        .setView(userInputBox)
+                        .setPositiveButton(getString(R.string.prompt_accept_btn_text), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                String reply = txt.getText().toString().trim();
+                                String reply = userInputBox.getText().toString().trim();
                                 if (reply.length() <= 0)
-                                    reply = "empty";
+                                    reply = getString(R.string.prompt_playlist_name_empty);
                                 if (!AudioLibraryManager.getInstance().addPlaylist(reply)) {
-                                    Toast.makeText(activity, "Same Playlist names are not allowed.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(activity, getString(R.string.prompt_playlist_same_name_error), Toast.LENGTH_LONG).show();
                                 }
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.prompt_decline_btn_text), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
                             }
