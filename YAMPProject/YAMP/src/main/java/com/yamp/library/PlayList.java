@@ -62,6 +62,7 @@ public class PlayList {
         current = getNext();
         return tracks.get(current);
     }
+
     public AudioFile prevTrack(){
         current = getPrev();
         return tracks.get(current);
@@ -72,10 +73,12 @@ public class PlayList {
         int next = getNext();
         return tracks.get(next);
     }
+
     public AudioFile getPrevTrack(){
         int prev = getPrev();
         return tracks.get(prev);
     }
+
     public AudioFile getCurrentTrack(){
         return tracks.get(Utilities.clamp(0, tracks.size()-1, current));
     }
@@ -87,6 +90,7 @@ public class PlayList {
     public int getCurrent() {
         return current;
     }
+
     public int getNext(){
         return  (current + 1) % (size());
     }

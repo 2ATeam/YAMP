@@ -44,10 +44,12 @@ public class PlaylistEditorAdapter extends ArrayAdapter<AudioFile> implements IS
         TextView duration = (TextView) view.findViewById(R.id.txtDuration);
         TextView artist = (TextView) view.findViewById(R.id.txtArtist);
         ImageView img = (ImageView) view.findViewById(R.id.imgMoveToPlaylist);
-        if (AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().contains(track)) /// TODO: fix this. it is not working.
+
+        if (AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().contains(track))
             img.setVisibility(View.INVISIBLE);
         else
             img.setVisibility(View.VISIBLE);
+
         songName.setText(track.getName().trim());
         albumName.setText(track.getAlbum().trim());
         duration.setText(String.valueOf(Utilities.formatTime(track.getDuration())));

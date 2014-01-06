@@ -1,11 +1,14 @@
 package com.yamp.library.Adapters;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
@@ -122,7 +125,17 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
         btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
+                new AlertDialog.Builder(activity)
+                    .setTitle("Are you sure?")
+                    .setPositiveButton(activity.getString(R.string.prompt_accept_btn_text), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());         }
+                    })
+                    .setNegativeButton(activity.getString(R.string.prompt_decline_btn_text), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    }).show();
             }
         });
 

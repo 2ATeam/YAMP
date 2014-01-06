@@ -55,9 +55,11 @@ public class SoundController extends Service{
     public boolean isPlaying(){
         return player.isPlaying();
     }
+
     public boolean isLooped(){
         return looped;
     }
+
     public boolean isPaused() { return paused; }
 
     private void stopInternal(){
@@ -98,8 +100,6 @@ public class SoundController extends Service{
         play();
     }
 
-
-
     /**
      * Sets new track, but won't play it.
      * Note: it won't set the track if some other track has already been playing.
@@ -130,9 +130,11 @@ public class SoundController extends Service{
     public int getDuration(){
         return player.getDuration();
     }
+
     public int getProgress(){
         return player.getCurrentPosition();
     }
+
     public float getProgressPercent(){
         return (float)getProgress() / (float)getDuration() * 100.f;
     }
@@ -140,11 +142,13 @@ public class SoundController extends Service{
     private float scaleVolume(int nonScaledVolume){
         return 1f - (float)(Math.log(MAX_VOLUME - nonScaledVolume)/Math.log(MAX_VOLUME)); // V = 1 - ln(max - x) / ln(max)
     }
+
     public void setVolume(int volume){
         currentVolume = Utilities.clamp(0, MAX_VOLUME - 1, volume);
         float scaledVolume = scaleVolume(currentVolume);
         player.setVolume(scaledVolume, scaledVolume);
     }
+
     public int getVolume(){
         return currentVolume;
     }
@@ -156,7 +160,6 @@ public class SoundController extends Service{
     /**
     *    Don't touch anything below :D
     **/
-
     private final IBinder binder = new SoundControllerBinder();
 
     @Override
@@ -178,33 +181,33 @@ public class SoundController extends Service{
         }
     }
 
-
     private ArrayList<PlaybackListener> playbackListeners = new ArrayList<>();
+
     public void setPlaybackListener(PlaybackListener listener){
         playbackListeners.add(listener);
     }
+
     private void notifyPlayingCompleted(boolean causedByUser){
         for (PlaybackListener listener : playbackListeners){
             listener.onPlayingCompleted(causedByUser);
         }
     }
+
     private void notifyPlayingStarted(boolean causedByUser){
         for (PlaybackListener listener : playbackListeners){
             listener.onPlayingStarted(causedByUser);
         }
     }
+
     private void notifyPlayingPaused(int currentProgress){
         for (PlaybackListener listener : playbackListeners){
             listener.onPlayingPaused(currentProgress);
         }
     }
+
     private void notifyPlayingResumed(int currentProgress){
         for (PlaybackListener listener : playbackListeners){
             listener.onPlayingResumed(currentProgress);
         }
     }
-
-
-
-
 }
