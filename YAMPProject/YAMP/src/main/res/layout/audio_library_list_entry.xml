@@ -25,7 +25,7 @@
         android:minWidth="80dp"
         android:layout_alignParentTop="true"
         android:focusableInTouchMode="false"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo_neon"
         android:adjustViewBounds="true" />
 
     <TextView
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgIsPlaing"
-        android:src="@drawable/is_playing"
+        android:src="@drawable/is_playing_neon"
         android:adjustViewBounds="true"
         android:maxWidth="50dp"
         android:visibility="invisible"
