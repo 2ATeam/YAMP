@@ -277,6 +277,14 @@ public class AudioLibraryManager {
         playlistEditorAdapter.notifyDataSetChanged();
     }
 
+    public PlayList getPlaylistByID(long playlistID){
+        for (PlayList playList : library.getPlayLists()) {
+            if (playList.getID() == playlistID)
+                return playList;
+        }
+        return null;
+    }
+
     public PlaylistsListAdapter getPlaylistsListAdapter() {
         return playlistsListAdapter;
     }
@@ -323,8 +331,10 @@ public class AudioLibraryManager {
 
     public void setCurrentlyEditedPlaylist(String currentlyEditedPlaylist) {
         for (PlayList playList : library.getPlayLists()) {
-            if (playList.getName() == currentlyEditedPlaylist)
+            if (playList.getName().equals(currentlyEditedPlaylist)){
                 this.currentlyEditedPlaylist = playList;
+                break;
+            }
         }
     }
 }

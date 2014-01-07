@@ -18,6 +18,7 @@
     <string name="prompt_playlist_same_name_error">Same Playlist names are not allowed.</string>
     <string name="prompt_accept_btn_text">Ok</string>
     <string name="prompt_decline_btn_text">Cancel</string>
+    <string name="prompt_playlist_remove_confirm">Are you sure</string>
 
     <string name="btnAddPlaylist_text">Add Playlist</string>
 
