@@ -71,12 +71,16 @@ public class TimelineFragment extends Fragment{
                 sbProgress.setProgress(0);
                 sbProgress.setMax(AudioManager.getInstance().getCurrentDuration());
                 updateTimers();
-                updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
+                if (AudioManager.getInstance().isPlaying()) ///TODO: kostil for SLR (Shuffled Listeners' Raises)
+                    updaterHandler.postDelayed(progressUpdater, TRACK_PROGRESS_DELAY);
             }
 
             @Override
             public void onPlayingCompleted(boolean causedByUser) {
-                updaterHandler.removeCallbacks(progressUpdater);
+                sbProgress.setProgress(0);
+                updateTimers();
+                if (!AudioManager.getInstance().isPlaying()) ///TODO: kostil for SLR (Shuffled Listeners' Raises)
+                    updaterHandler.removeCallbacks(progressUpdater);
             }
 
             @Override

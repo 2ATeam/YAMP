@@ -21,14 +21,14 @@ public class AudioManager {
 
 
     private boolean looped = false;
-    private boolean shuffle = false;
 
+    private boolean shuffle = false;
     private boolean readyToPlay = false;
 
     private PlayList trackList; // target playlist
+
     private SoundController controller;
     private static AudioManager instance;
-
     public static AudioManager getInstance() {
         if (instance == null) instance = new AudioManager();
         return instance;
@@ -47,9 +47,10 @@ public class AudioManager {
 
                     @Override
                     public void onPlayingCompleted(boolean causedByUser) {
-                        if (!AudioManager.this.controller.isLooped()) {// if track is not looped play next track.
+                        if (!isLoopedTrack()) {// if track is not looped play next track.
                             next();
-                            if (readyToPlay) playTrack();
+                            /// TODO: Another one kostil
+                            if (readyToPlay && (isPlaying() || isLooped())) playTrack();
                         }
                     }
 
@@ -68,8 +69,10 @@ public class AudioManager {
 
     private void setTrack(AudioFile track){
         String path = track.getPath();
-        if (controller.isPlaying())
+        if (controller.isPlaying()){
+            controller.pause();
             controller.play(path);
+        }
         else
             controller.setTrack(path);
         notifyNewTrackLoaded(track);
@@ -83,19 +86,18 @@ public class AudioManager {
     public void play() {
         if (!readyToPlay){
             readyToPlay = true;
-            playTrack();
+            setTrack(trackList.getCurrentTrack());
         }
         controller.play(); // resume
     }
+
     public void pause() {
-        if (isPlaying())
-            controller.pause();
+        controller.pause();
     }
     public void stop() {
         controller.stop();
         readyToPlay = false;
     }
-
     public void next() {
         if (shuffle) {
             int rnd = trackList.getCurrent();
@@ -104,6 +106,7 @@ public class AudioManager {
             }
             trackList.setCurrent(rnd);
         }
+
         if (!looped){
             if (trackList.getNext() == 0){
                 pause();
@@ -111,12 +114,11 @@ public class AudioManager {
             }
 
         }
-
-        notifyNextTrackLoaded(trackList.getNextTrack());
         setTrack(trackList.nextTrack());
+        notifyNextTrackLoaded(trackList.getNextTrack());
     }
+
     public void prev() {
-        notifyPrevTrackLoaded(trackList.getPrevTrack());
         if (shuffle) {
             int rnd = trackList.getCurrent();
             while(rnd == trackList.getCurrent()){
@@ -132,21 +134,19 @@ public class AudioManager {
             }
 
         }
-
         notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
     }
-
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
     }
+
     public int getVolume(){
         return controller.getVolume();
     }
     public void setVolume(int volume) {
         controller.setVolume(volume);
     }
-
     public void setPlayList(PlayList playlist) {
         if (playlist != null && playlist.size() > 0)
             this.trackList = playlist;
@@ -159,10 +159,10 @@ public class AudioManager {
     public void seekTo(int msec) {
         controller.seekTo(msec);
     }
+
     public int getCurrentProgress(){
         return controller.getProgress();
     }
-
     public int getCurrentDuration(){
         return controller.getDuration();
     }
@@ -170,20 +170,27 @@ public class AudioManager {
     public boolean isPlaying() {
         return controller.isPlaying();
     }
-    public boolean isLooped(){
+
+    public boolean isLoopedTrack(){
         return controller.isLooped();
+    }
+    public boolean isLooped() {
+        return looped;
     }
 
     public void setLoopMode(int loopMode) {
         switch (loopMode){
             case LoopButton.STATE_NONE:
                 this.looped = false;
+                break;
             case LoopButton.STATE_SINGLE:
+                this.looped = false;
                 controller.setLooping(true);
                 break;
             case LoopButton.STATE_ALL:
                 controller.setLooping(false);
                 this.looped = true;
+                break;
         }
     }
 

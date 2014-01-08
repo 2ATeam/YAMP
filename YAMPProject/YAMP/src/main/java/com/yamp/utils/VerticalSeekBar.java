@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
 
+import java.util.ArrayList;
+
 /**
  * Created by AdYa on 29.12.13.
  *
@@ -13,7 +15,7 @@ import android.widget.SeekBar;
  */
 public class VerticalSeekBar extends SeekBar {
 
-    private OnSeekBarChangeListener myListener;
+    private ArrayList<OnSeekBarChangeListener> seekBarChangeListeners = new ArrayList<>();
     public VerticalSeekBar(Context context) {
         super(context);
     }
@@ -38,7 +40,7 @@ public class VerticalSeekBar extends SeekBar {
 
     @Override
     public void setOnSeekBarChangeListener(OnSeekBarChangeListener mListener){
-        this.myListener = mListener;
+        this.seekBarChangeListeners.add(mListener);
     }
 
     protected void onDraw(Canvas c) {
@@ -53,24 +55,26 @@ public class VerticalSeekBar extends SeekBar {
         if (!isEnabled()) {
             return false;
         }
+        for (OnSeekBarChangeListener listener : seekBarChangeListeners) {
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if(myListener!=null)
-                    myListener.onStartTrackingTouch(this);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
-                onSizeChanged(getWidth(), getHeight(), 0, 0);
-                myListener.onProgressChanged(this, getMax() - (int) (getMax() * event.getY() / getHeight()), true);
-                break;
-            case MotionEvent.ACTION_UP:
-                myListener.onStopTrackingTouch(this);
-                break;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    listener.onStartTrackingTouch(this);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                    onSizeChanged(getWidth(), getHeight(), 0, 0);
+                    listener.onProgressChanged(this, getMax() - (int) (getMax() * event.getY() / getHeight()), true);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    listener.onStopTrackingTouch(this);
+                    break;
 
-            case MotionEvent.ACTION_CANCEL:
-                break;
+                case MotionEvent.ACTION_CANCEL:
+                    break;
+            }
         }
+        invalidate();
         return true;
     }
 }

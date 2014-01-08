@@ -72,8 +72,8 @@ public class SoundController extends Service{
     }
 
     public void pause(){
-        if (isPlaying()){
-            player.pause();
+        player.pause();
+        if (!paused){
             paused = true;
             notifyPlayingPaused(getProgress());
         }
@@ -83,10 +83,11 @@ public class SoundController extends Service{
         if (!prepared) return;
         if (isPlaying()) return;
 
-        if (paused) notifyPlayingResumed(getProgress());
-        else notifyPlayingStarted(true); /// TODO: not exactly 'true') here we must separate external play and internal play like stop :)
         paused = false;
         player.start();
+
+        if (paused) notifyPlayingResumed(getProgress());
+        else notifyPlayingStarted(true); /// TODO: not exactly 'true') here we must separate external play and internal play like stop :)
 
     }
 
