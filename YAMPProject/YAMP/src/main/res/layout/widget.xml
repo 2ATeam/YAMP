@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/wrlWidget">
 
-    <FrameLayout
-    android:id="@+id/widget_player_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    <Button android:id="@+id/wbPrev"
+        style="@style/ButtonPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/wbPlay" />
 
-    <FrameLayout
-        android:id="@+id/widget_control_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <ImageView android:id="@+id/wbPlay"
+        style="@style/WidgetButtonPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
-</LinearLayout>
+    <Button android:id="@+id/wbNext"
+        style="@style/ButtonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/wbPlay" />
+
+</RelativeLayout>
