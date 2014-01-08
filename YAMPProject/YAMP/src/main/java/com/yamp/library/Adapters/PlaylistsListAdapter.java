@@ -14,6 +14,7 @@ import com.yamp.R;
 import com.yamp.core.AudioManager;
 import com.yamp.core.PlayerMainActivity;
 import com.yamp.library.AudioFile;
+import com.yamp.library.AudioLibrary;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 
@@ -129,7 +130,10 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
                     .setTitle("Are you sure?")
                     .setPositiveButton(activity.getString(R.string.prompt_accept_btn_text), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());         }
+                            AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
+                            AudioLibraryManager.getInstance().scanForPlaylists();
+                            AudioLibraryManager.getInstance().getPlaylistsListAdapter().notifyDataSetChanged();
+                        }
                     })
                     .setNegativeButton(activity.getString(R.string.prompt_decline_btn_text), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {

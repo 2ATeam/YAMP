@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Created by Lux on 29.12.13.
  */
+
 public class PlaylistEditorFragment extends Fragment {
 
     FragmentActivity activity;
@@ -47,9 +48,10 @@ public class PlaylistEditorFragment extends Fragment {
 
     private void populateContent() {
         //get views
-        ListView tracksView = (ListView) activity.findViewById(R.id.lstEdAllSongs);
+        final ListView tracksView = (ListView) activity.findViewById(R.id.lstEdAllSongs);
         tracksView.setAdapter(AudioLibraryManager.getInstance().getPlaylistEditorAdapter());
-        TextView playlistName = (TextView) activity.findViewById(R.id.txtEdPlaylistName);
+
+        final TextView playlistName = (TextView) activity.findViewById(R.id.txtEdPlaylistName);
         playlistName.setText(AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().getName());
     }
 
@@ -85,11 +87,16 @@ public class PlaylistEditorFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 AudioFile track = AudioLibraryManager.getInstance().getTrack(pos);
+                PlayList playList = AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist();
+
                 if (AudioLibraryManager.getInstance().getCurrentlyEditedPlaylist().contains(track)){
-                    songsToAddToPlaylist.remove(track);
+                    AudioLibraryManager.getInstance().removeSongFromPlaylist(playList.getID(), track.getID());
                 }
-                else
-                    songsToAddToPlaylist.add(track);
+                else{
+                    AudioLibraryManager.getInstance().addSongToPlaylist(playList.getID(), track.getID());
+                }
+                AudioLibraryManager.getInstance().scanForPlaylists(); // perform rescan.
+                AudioLibraryManager.getInstance().getPlaylistEditorAdapter().notifyDataSetChanged();
             }
         });
     }

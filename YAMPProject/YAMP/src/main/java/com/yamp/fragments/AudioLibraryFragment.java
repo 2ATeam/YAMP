@@ -108,6 +108,10 @@ public class AudioLibraryFragment extends Fragment {
                                 if (!AudioLibraryManager.getInstance().addPlaylist(reply)) {
                                     Toast.makeText(activity, getString(R.string.prompt_playlist_same_name_error), Toast.LENGTH_LONG).show();
                                 }
+                                else{
+                                    AudioLibraryManager.getInstance().scanForPlaylists();
+                                    AudioLibraryManager.getInstance().getPlaylistsListAdapter().notifyDataSetChanged();
+                                }
                             }
                         })
                         .setNegativeButton(getString(R.string.prompt_decline_btn_text), new DialogInterface.OnClickListener() {
