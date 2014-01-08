@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
-import android.widget.FrameLayout;
 
 /**
  * Created by AdYa on 29.12.13.

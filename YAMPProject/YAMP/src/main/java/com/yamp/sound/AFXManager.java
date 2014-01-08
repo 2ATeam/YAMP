@@ -5,13 +5,10 @@ import android.media.audiofx.BassBoost;
 import android.media.audiofx.Equalizer;
 import android.media.audiofx.PresetReverb;
 import android.media.audiofx.Virtualizer;
-import android.support.v7.appcompat.R;
 
 import com.yamp.core.YAMPApplication;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.utils.Utilities;
-
-import java.util.ArrayList;
 
 /**
  * Created by AdYa on 24.11.13.

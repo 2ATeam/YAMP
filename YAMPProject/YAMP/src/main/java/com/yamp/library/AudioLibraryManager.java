@@ -7,15 +7,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.yamp.core.AudioManager;
 import com.yamp.library.Adapters.AlbumsArtistsListAdapter;
 import com.yamp.library.Adapters.CurrentListAdapter;
 import com.yamp.library.Adapters.PlaylistEditorAdapter;
 import com.yamp.library.Adapters.PlaylistsListAdapter;
 import com.yamp.library.Adapters.SongsListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AdYa on 24.11.13.

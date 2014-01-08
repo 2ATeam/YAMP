@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
 import com.yamp.core.PlayerMainActivity;
 import com.yamp.library.AudioFile;
-import com.yamp.library.AudioLibrary;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
 
