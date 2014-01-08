@@ -130,7 +130,10 @@ public class PlaylistsListAdapter extends BaseExpandableListAdapter implements I
                     .setTitle("Are you sure?")
                     .setPositiveButton(activity.getString(R.string.prompt_accept_btn_text), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());         }
+                            AudioLibraryManager.getInstance().removePlaylist(text.getText().toString());
+                            AudioLibraryManager.getInstance().scanForPlaylists();
+                            AudioLibraryManager.getInstance().getPlaylistsListAdapter().notifyDataSetChanged();
+                        }
                     })
                     .setNegativeButton(activity.getString(R.string.prompt_decline_btn_text), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {

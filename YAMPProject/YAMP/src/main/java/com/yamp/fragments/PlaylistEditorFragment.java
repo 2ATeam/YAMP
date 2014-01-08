@@ -95,8 +95,8 @@ public class PlaylistEditorFragment extends Fragment {
                 else{
                     AudioLibraryManager.getInstance().addSongToPlaylist(playList.getID(), track.getID());
                 }
-                AudioLibraryManager.getInstance().scanForPlaylists();
-                AudioLibraryManager.getInstance().notifyAllAdapters();
+                AudioLibraryManager.getInstance().scanForPlaylists(); // perform rescan.
+                AudioLibraryManager.getInstance().getPlaylistEditorAdapter().notifyDataSetChanged();
             }
         });
     }

@@ -68,11 +68,15 @@ public class AudioLibraryManager {
                 scanSongsForPlaylist(ID);
             } while (cursor.moveToNext());
         }
+        // update currently edited playlist reference.
+        if(currentlyEditedPlaylist != null){
+            setCurrentlyEditedPlaylist(currentlyEditedPlaylist.getName());
+        }
     }
 
     public long getPlaylistID(String playlistName){
         for (PlayList playList : library.getPlayLists()) {
-            if (playList.getName() == playlistName)
+            if (playList.getName().equals(playlistName))
                 return playList.getID();
         }
         return -1;
@@ -99,10 +103,6 @@ public class AudioLibraryManager {
         ContentValues cValues = new ContentValues();
         cValues.put(MediaStore.Audio.Playlists.NAME, name);
         resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, cValues);
-        scanForPlaylists();
-
-        if (playlistsListAdapter != null)
-            playlistsListAdapter.notifyDataSetChanged();
 
         return true;
     }
@@ -163,28 +163,22 @@ public class AudioLibraryManager {
             int columnID = cursor.getColumnIndex(MediaStore.Audio.Playlists._ID);
             String [] ID = { cursor.getString(columnID) };
             resolver.delete(uri, MediaStore.Audio.Playlists._ID + "=?", ID);
-            scanForPlaylists(); // perform rescan.
-            if (playlistsListAdapter != null)
-                playlistsListAdapter.notifyDataSetChanged();
         }
     }
 
     public void addSongToPlaylist(long playlistID, long songID){
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
+
         ContentValues cValues = new ContentValues();
         cValues.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, 0);
         cValues.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songID);
         resolver.insert(uri, cValues);
-        if (playlistsListAdapter != null)
-            playlistsListAdapter.notifyDataSetChanged();
     }
 
     public void removeSongFromPlaylist(long playlistID, long songID){
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistID);
         String[] args = { String.valueOf(songID) };
-        resolver.delete(uri, MediaStore.Audio.Playlists.Members._ID + "=?", args);
-        if (playlistsListAdapter != null)
-            playlistsListAdapter.notifyDataSetChanged();
+        resolver.delete(uri, MediaStore.Audio.Playlists.Members.AUDIO_ID + "=?", args);
     }
 
     private boolean validateCursor(Cursor cursor){
