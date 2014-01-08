@@ -8,6 +8,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.Window;
 
 import com.yamp.R;
 import com.yamp.fragments.AFXFragment;
@@ -55,7 +56,7 @@ public class PlayerMainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setVolumeControlStream(android.media.AudioManager.STREAM_MUSIC);
         setContentView(R.layout.activity_main);
 
@@ -73,7 +74,7 @@ public class PlayerMainActivity extends FragmentActivity {
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().performFullScan();
-        AudioManager.getInstance().setCurrentPlayList(AudioLibraryManager.getInstance().getLibrary());
+        AudioManager.getInstance().setPlayList(AudioLibraryManager.getInstance().getLibrary());
     }
 
     private void initializeGestures(){

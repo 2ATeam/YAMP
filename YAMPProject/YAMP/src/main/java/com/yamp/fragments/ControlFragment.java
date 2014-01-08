@@ -25,7 +25,7 @@ import com.yamp.utils.PlaybackButton;
 public class ControlFragment extends Fragment {
 
     private SeekBar sbVolume;
-    private PlaybackButton bPlay;
+    private CheckBox bPlay; // Checked - playing; not checked - paused
     private Button bNext;
     private Button bPrev;
 
@@ -50,22 +50,22 @@ public class ControlFragment extends Fragment {
                     AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
                         @Override
                         public void onPlayingStarted(boolean causedByUser) {
-                            if (bPlay.getState() == PlaybackButton.STATE_PAUSED)
-                                bPlay.performClick();
+                            bPlay.setChecked(AudioManager.getInstance().isPlaying());
                         }
 
                         @Override
                         public void onPlayingCompleted(boolean causedByUser) {
-                            if (bPlay.getState() == PlaybackButton.STATE_PLAYING)
-                                bPlay.performClick();
+                            bPlay.setChecked(AudioManager.getInstance().isPlaying());
                         }
 
                         @Override
                         public void onPlayingPaused(int currentProgress) {
+                            bPlay.setChecked(AudioManager.getInstance().isPlaying());
                         }
 
                         @Override
                         public void onPlayingResumed(int currentProgress) {
+                            bPlay.setChecked(AudioManager.getInstance().isPlaying());
                         }
                     });
                 }
@@ -81,7 +81,7 @@ public class ControlFragment extends Fragment {
         initialize();
         lbLooped.setState(AudioManager.getInstance().getLoopMode());
         cbVolume.setChecked(AudioManager.getInstance().getVolume() != 0);
-        bPlay.setState((AudioManager.getInstance().isPlaying()) ? PlaybackButton.STATE_PAUSED: PlaybackButton.STATE_PLAYING);
+        bPlay.setChecked(AudioManager.getInstance().isPlaying());
     }
 
 
@@ -91,14 +91,13 @@ public class ControlFragment extends Fragment {
     }
 
     private void awakeComponents(View fragment) {
-        bPlay = (PlaybackButton) fragment.findViewById(R.id.bPlay);
+        bPlay = (CheckBox) fragment.findViewById(R.id.bPlay);
         bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 playHandler();
             }
         });
-
 
         bNext = (Button) fragment.findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener() {

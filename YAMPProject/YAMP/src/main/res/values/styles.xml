@@ -30,6 +30,7 @@
     </style>
 
     <style name="ButtonPlay">
+        <item name="android:button">@null</item>
         <item name="android:background">@drawable/button_playback</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
@@ -44,7 +45,7 @@
         <item name="android:minHeight">3dp</item>
         <item name="android:maxHeight">3dp</item>
         <item name="android:thumb">@drawable/seek_point</item>
-        <item name="android:thumbOffset">0dp</item>
+        <item name="android:thumbOffset">8dp</item>
         <item name="android:focusable">true</item>
     </style>
 

@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/bPlay" />
 
-        <com.yamp.utils.PlaybackButton android:id="@+id/bPlay"
+        <CheckBox android:id="@+id/bPlay"
             style="@style/ButtonPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

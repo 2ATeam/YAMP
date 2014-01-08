@@ -161,7 +161,7 @@ public class AudioLibraryFragment extends Fragment {
 
     private void playTrack(PlayList playList, int trackIndex){
         playList.setCurrent(trackIndex);
-        AudioManager.getInstance().setCurrentPlayList(playList);
+        AudioManager.getInstance().setPlayList(playList);
         AudioManager.getInstance().playTrack();
     }
 }
