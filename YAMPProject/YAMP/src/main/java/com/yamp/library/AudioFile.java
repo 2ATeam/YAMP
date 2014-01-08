@@ -21,6 +21,7 @@ public class AudioFile {
     private String path;
     private int rank;
     private long ID;
+    private long albumID;
     private boolean isPlaying;
 
     public boolean isPlaying() {
@@ -31,7 +32,7 @@ public class AudioFile {
         this.isPlaying = isPlaying;
     }
 
-    public AudioFile(long id, String name, String artist, String album, int duration, String path) {
+    public AudioFile(long id, String name, String artist, String album, long albumID, int duration, String path) {
         this.ID = id;
         this.name = name;
         this.artist = artist;
@@ -39,6 +40,11 @@ public class AudioFile {
         this.duration = duration;
         this.path = path;
         this.isPlaying = false;
+        this.albumID = albumID;
+    }
+
+    public long getAlbumID() {
+        return albumID;
     }
 
     public AudioFile(String path) {

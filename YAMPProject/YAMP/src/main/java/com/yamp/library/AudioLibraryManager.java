@@ -121,15 +121,17 @@ public class AudioLibraryManager {
             int columnAlbum = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
             int columnDuration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             int columnData = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+            int columnAlbumID = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
 
             do {
                 long id = cursor.getLong(columnID);
+                long albumID = cursor.getLong(columnAlbumID);
                 String title = cursor.getString(columnTitle);
                 String artist = cursor.getString(columnArtist);
                 String album = cursor.getString(columnAlbum);
                 int duration = cursor.getInt(columnDuration);
                 String data = cursor.getString(columnData);
-                library.insertTrackIntoPlaylist(playlistID, new AudioFile(id, title, artist, album, duration, data));
+                library.insertTrackIntoPlaylist(playlistID, new AudioFile(id, title, artist, album, albumID, duration, data));
             } while (cursor.moveToNext());
         }
     }
@@ -146,14 +148,16 @@ public class AudioLibraryManager {
             int columnAlbum = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
             int columnDuration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             int columnData = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+            int columnAlbumID = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
             do{
                 long id = cursor.getLong(columnID);
+                long albumID = cursor.getLong(columnAlbumID);
                 String title = cursor.getString(columnTitle);
                 String artist = cursor.getString(columnArtist);
                 String album = cursor.getString(columnAlbum);
                 int duration = cursor.getInt(columnDuration);
                 String data = cursor.getString(columnData);
-                library.insertTrack(new AudioFile(id, title, artist, album, duration, data));
+                library.insertTrack(new AudioFile(id, title, artist, album, albumID, duration, data));
             } while(cursor.moveToNext());
         }
     }
