@@ -1,5 +1,6 @@
 package com.yamp.utils;
 
+import android.support.v7.appcompat.R;
 import android.util.Log;
 
 import com.yamp.core.AudioManager;

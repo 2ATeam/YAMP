@@ -22,6 +22,7 @@
         />
 
     <FrameLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/timeline_fragment"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"

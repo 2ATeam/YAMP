@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yamp="http://schemas.android.com/apk/res/com.yamp">
-    <item yamp:state_paused="true" android:drawable="@drawable/button_play"/>
-    <item yamp:state_playing="true" android:drawable="@drawable/button_pause"/>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/button_pause"/>
+    <item android:drawable="@drawable/button_play"/>
 </selector>
