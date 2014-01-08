@@ -79,6 +79,18 @@
                         android:id="@+id/list_all_artists" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/tabCurrent">
+
+                    <ListView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/list_current_playlist" />
+                </LinearLayout>
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>

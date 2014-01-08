@@ -43,6 +43,7 @@ public class AudioLibraryFragment extends Fragment {
         addTab(host, getString(R.string.al_tab_playlists_name), R.id.tabPlaylists);
         addTab(host, getString(R.string.al_tab_albums_name), R.id.tabAlbums);
         addTab(host, getString(R.string.al_tab_artists_name), R.id.tabArtists);
+        addTab(host, getString(R.string.al_tab_current_name), R.id.tabCurrent);
     }
 
     private void addTab(TabHost host, String indicator, int resID){
@@ -55,6 +56,7 @@ public class AudioLibraryFragment extends Fragment {
     private void populateLists() {
         //get views
         ListView allTracksView = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ListView currentPlaylistView = (ListView) activity.findViewById(R.id.list_current_playlist);
         ExpandableListView albumsListView = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
         ExpandableListView artistListView = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
         ExpandableListView playlistsListView = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
@@ -65,6 +67,7 @@ public class AudioLibraryFragment extends Fragment {
         albumsListView.setAdapter(AudioLibraryManager.getInstance().getAlbumsListAdapter());
         artistListView.setAdapter(AudioLibraryManager.getInstance().getArtistsListAdapter());
         playlistsListView.setAdapter(AudioLibraryManager.getInstance().getPlaylistsListAdapter());
+        currentPlaylistView.setAdapter(AudioLibraryManager.getInstance().getCurrentListAdapter());
     }
 
     @Override
@@ -79,14 +82,23 @@ public class AudioLibraryFragment extends Fragment {
 
     private void registerTouchHandlers() {
         //find components
-        ListView view = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ListView allTracksView = (ListView) activity.findViewById(R.id.list_all_tracks);
+        ListView currentView =  (ListView) activity.findViewById(R.id.list_current_playlist);;
         ExpandableListView exAlbumsList = (ExpandableListView) activity.findViewById(R.id.list_all_albums);
         ExpandableListView exArtistsList = (ExpandableListView) activity.findViewById(R.id.list_all_artists);
         ExpandableListView exPlaylistsList = (ExpandableListView) activity.findViewById(R.id.list_custom_playlists);
         Button btnAddPlaylist = (Button) activity.findViewById(R.id.btn_add_playlist);
 
         //setup controls
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        currentView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                AudioManager.getInstance().getCurrentPlayList().setCurrent(pos);
+                AudioManager.getInstance().playTrack();
+            }
+        });
+
+        allTracksView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 playTrack(AudioLibraryManager.getInstance().getLibrary(), pos);

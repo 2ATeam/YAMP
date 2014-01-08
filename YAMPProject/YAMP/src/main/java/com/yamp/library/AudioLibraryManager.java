@@ -7,13 +7,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.yamp.core.AudioManager;
 import com.yamp.library.Adapters.AlbumsArtistsListAdapter;
+import com.yamp.library.Adapters.CurrentListAdapter;
 import com.yamp.library.Adapters.PlaylistEditorAdapter;
 import com.yamp.library.Adapters.PlaylistsListAdapter;
 import com.yamp.library.Adapters.SongsListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AdYa on 24.11.13.
@@ -31,6 +33,7 @@ public class AudioLibraryManager {
     private AlbumsArtistsListAdapter artistsListAdapter;
     private PlaylistsListAdapter playlistsListAdapter;
     private PlaylistEditorAdapter playlistEditorAdapter;
+    private CurrentListAdapter currentListAdapter;
 
     private static AudioLibraryManager instance;
 
@@ -52,6 +55,7 @@ public class AudioLibraryManager {
         this.artistsListAdapter = new AlbumsArtistsListAdapter(getArtists(), activity);
         this.playlistsListAdapter = new PlaylistsListAdapter(getPlaylists(), activity);
         this.playlistEditorAdapter = new PlaylistEditorAdapter(activity);
+        this.currentListAdapter = new CurrentListAdapter(AudioManager.getInstance().getCurrentPlayList(), activity);
     }
 
     public void scanForPlaylists(){
@@ -251,12 +255,13 @@ public class AudioLibraryManager {
         return this.library.getTracks();
     }
 
-    private boolean adaptersAreReady(){
+    public boolean adaptersAreReady(){
         if (songsListAdapter      == null ||
             albumsListAdapter     == null ||
             artistsListAdapter    == null ||
             playlistsListAdapter  == null ||
-            playlistEditorAdapter == null)
+            playlistEditorAdapter == null ||
+            currentListAdapter    == null)
             return false;
         return true;
     }
@@ -264,8 +269,10 @@ public class AudioLibraryManager {
     public void notifyAllAdapters(){
         if (!adaptersAreReady())
             return;
+
         songsListAdapter.notifyDataSetChanged();
         albumsListAdapter.notifyDataSetChanged();
+        currentListAdapter.notifyDataSetChanged();
         artistsListAdapter.notifyDataSetChanged();
         playlistsListAdapter.notifyDataSetChanged();
         playlistEditorAdapter.notifyDataSetChanged();
@@ -301,6 +308,10 @@ public class AudioLibraryManager {
 
     public SongsListAdapter getSongsListAdapter() {
         return songsListAdapter;
+    }
+
+    public CurrentListAdapter getCurrentListAdapter() {
+        return currentListAdapter;
     }
 
     public AlbumsArtistsListAdapter getAlbumsListAdapter() {

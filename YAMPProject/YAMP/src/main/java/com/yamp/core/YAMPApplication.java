@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.yamp.events.SoundControllerBoundedListener;
-import com.yamp.library.AudioLibraryManager;
 import com.yamp.sound.SoundController;
 import com.yamp.utils.Logger;
 

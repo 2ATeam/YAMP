@@ -141,7 +141,6 @@ public class AudioManager {
                 pause();
    //             return;
             }
-
         }
         setTrack(trackList.prevTrack());
         notifyPrevTrackLoaded(trackList.getPrevTrack());
@@ -153,12 +152,23 @@ public class AudioManager {
     public int getVolume(){
         return controller.getVolume();
     }
+
     public void setVolume(int volume) {
         controller.setVolume(volume);
     }
+
     public void setPlayList(PlayList playlist) {
-        if (playlist != null && playlist.size() > 0)
+        if (playlist != null && playlist.size() > 0){
             this.trackList = playlist;
+            if (AudioLibraryManager.getInstance().adaptersAreReady()){
+                AudioLibraryManager.getInstance().getCurrentListAdapter().setDataSource(trackList);
+                AudioLibraryManager.getInstance().getCurrentListAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
+    public PlayList getCurrentPlayList(){
+        return this.trackList;
     }
 
     public AudioFile getCurrent(){
@@ -213,6 +223,7 @@ public class AudioManager {
      **/
 
     private ArrayList<TrackLoadedListener> trackLoadedListeners = new ArrayList<>();
+
     public void setTrackLoadedListener(TrackLoadedListener listener){
         trackLoadedListeners.add(listener);
     }
