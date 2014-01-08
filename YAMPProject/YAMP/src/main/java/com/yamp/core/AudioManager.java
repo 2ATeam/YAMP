@@ -1,8 +1,12 @@
 package com.yamp.core;
 
+import android.support.v4.app.FragmentActivity;
+import android.widget.ArrayAdapter;
+
 import com.yamp.events.PlaybackListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.events.TrackLoadedListener;
+import com.yamp.library.Adapters.CurrentListAdapter;
 import com.yamp.library.AudioFile;
 import com.yamp.library.AudioLibraryManager;
 import com.yamp.library.PlayList;
@@ -130,7 +134,6 @@ public class AudioManager {
                 pause();
                 return;
             }
-
         }
 
         notifyPrevTrackLoaded(trackList.getPrevTrack());
@@ -140,16 +143,27 @@ public class AudioManager {
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
     }
+
     public int getVolume(){
         return controller.getVolume();
     }
+
     public void setVolume(int volume) {
         controller.setVolume(volume);
     }
 
-    public void setPlayList(PlayList playlist) {
-        if (playlist != null && playlist.size() > 0)
+    public void setCurrentPlayList(PlayList playlist) {
+        if (playlist != null && playlist.size() > 0){
             this.trackList = playlist;
+            if (AudioLibraryManager.getInstance().adaptersAreReady()){
+                AudioLibraryManager.getInstance().getCurrentListAdapter().setDataSource(trackList);
+                AudioLibraryManager.getInstance().getCurrentListAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
+    public PlayList getCurrentPlayList(){
+        return this.trackList;
     }
 
     public AudioFile getCurrent(){
@@ -170,6 +184,7 @@ public class AudioManager {
     public boolean isPlaying() {
         return controller.isPlaying();
     }
+
     public boolean isLooped(){
         return controller.isLooped();
     }
@@ -196,6 +211,7 @@ public class AudioManager {
      **/
 
     private ArrayList<TrackLoadedListener> trackLoadedListeners = new ArrayList<>();
+
     public void setTrackLoadedListener(TrackLoadedListener listener){
         trackLoadedListeners.add(listener);
     }

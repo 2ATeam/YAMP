@@ -12,6 +12,7 @@
     <string name="al_tab_playlists_name">PLAYLISTS</string>
     <string name="al_tab_albums_name">ALBUMS</string>
     <string name="al_tab_artists_name">ARTISTS</string>
+    <string name="al_tab_current_name">CURRENT</string>
 
     <string name="prompt_enter_playlist_title">Enter Playlist Name:</string>
     <string name="prompt_playlist_name_empty">Empty</string>

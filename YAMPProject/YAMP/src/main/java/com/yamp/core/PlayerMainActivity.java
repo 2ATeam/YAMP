@@ -73,7 +73,7 @@ public class PlayerMainActivity extends FragmentActivity {
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().performFullScan();
-        AudioManager.getInstance().setPlayList(AudioLibraryManager.getInstance().getLibrary());
+        AudioManager.getInstance().setCurrentPlayList(AudioLibraryManager.getInstance().getLibrary());
     }
 
     private void initializeGestures(){
