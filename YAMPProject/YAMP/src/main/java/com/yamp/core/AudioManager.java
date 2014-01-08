@@ -1,5 +1,7 @@
 package com.yamp.core;
 
+import android.support.v7.appcompat.R;
+
 import com.yamp.events.PlaybackListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.events.TrackLoadedListener;
@@ -48,9 +50,16 @@ public class AudioManager {
                     @Override
                     public void onPlayingCompleted(boolean causedByUser) {
                         if (!isLoopedTrack()) {// if track is not looped play next track.
+                            int cur = trackList.getCurrent();
                             next();
-                            /// TODO: Another one kostil
-                            if (readyToPlay && (isPlaying() || isLooped())) playTrack();
+                            boolean kostil = (cur == (trackList.size() - 1) && trackList.getCurrent() == 0) && !isLooped();
+                            // kostil :
+                            //          * if we reached last track
+                            //          * and next() bring us to the first track
+                            //          * and player isn't looped
+                            // then we should not start playing... otherwise everything is OK
+                            /// TODO: Hello from India! :DDD
+                            if (readyToPlay && !kostil) playTrack();
                         }
                     }
 
@@ -110,7 +119,7 @@ public class AudioManager {
         if (!looped){
             if (trackList.getNext() == 0){
                 pause();
-                return;
+               // return;
             }
 
         }
@@ -130,11 +139,11 @@ public class AudioManager {
         if (!looped){
             if (trackList.getPrev() == trackList.size() - 1){
                 pause();
-                return;
+   //             return;
             }
         }
-        notifyPrevTrackLoaded(trackList.getPrevTrack());
         setTrack(trackList.prevTrack());
+        notifyPrevTrackLoaded(trackList.getPrevTrack());
     }
     public int getVolumeMax(){
         return SoundController.MAX_VOLUME;
@@ -192,6 +201,7 @@ public class AudioManager {
         switch (loopMode){
             case LoopButton.STATE_NONE:
                 this.looped = false;
+                controller.setLooping(false);
                 break;
             case LoopButton.STATE_SINGLE:
                 this.looped = false;

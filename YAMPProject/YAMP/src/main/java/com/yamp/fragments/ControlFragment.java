@@ -174,7 +174,7 @@ public class ControlFragment extends Fragment {
 
 
     private void loopedHandler(int loopMode) {
-        AudioManager.getInstance().setLoopMode(loopMode); /// TODO: Replace simple boolean with LOOP_MODE enum.
+        AudioManager.getInstance().setLoopMode(loopMode);
     }
 
     private void prevHandler() {
