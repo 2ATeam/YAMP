@@ -30,13 +30,14 @@ public class AlbumArtLoader {
                 in = res.openInputStream(uri);
                 return BitmapFactory.decodeStream(in, null, sBitmapOptions);
             } catch (FileNotFoundException ex) {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+            }
+            try {
+                if (in != null) {
+                    in.close();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return BitmapFactory.decodeResource(context.getResources(), R.drawable.logo);

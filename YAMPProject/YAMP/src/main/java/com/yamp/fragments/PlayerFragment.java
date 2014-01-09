@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
+import com.yamp.core.YAMPApplication;
 import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AlbumArtLoader;
 import com.yamp.library.AudioFile;
@@ -50,7 +51,7 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onNewTrackLoaded(AudioFile track) {
               updateText(track);
-                setCover(AlbumArtLoader.getArtwork(getActivity(), track.getAlbumID()));
+                setCover(AlbumArtLoader.getArtwork(YAMPApplication.getInstance().getApplicationContext(), track.getAlbumID()));
             }
 
             @Override
