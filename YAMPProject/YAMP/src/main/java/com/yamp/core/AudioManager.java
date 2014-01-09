@@ -38,7 +38,7 @@ public class AudioManager {
 
     private AudioManager() {
         instance = this;
-        YAMPApplication.setOnSoundControllerBoundedListener(new SoundControllerBoundedListener() {
+        YAMPApplication.addFirstSoundControllerBoundedListener(new SoundControllerBoundedListener() {
             @Override
             public void onSoundControllerBounded(SoundController controller) {
                 AudioManager.this.controller = controller;
@@ -189,12 +189,20 @@ public class AudioManager {
     public boolean isPlaying() {
         return controller.isPlaying();
     }
+    public boolean isPaused() {
+        return controller.isPaused();
+    }
 
     public boolean isLoopedTrack(){
         return controller.isLooped();
     }
+
     public boolean isLooped() {
         return looped;
+    }
+
+    public boolean isShuffled() {
+        return shuffle;
     }
 
     public void setLoopMode(int loopMode) {
@@ -227,7 +235,6 @@ public class AudioManager {
     public void setTrackLoadedListener(TrackLoadedListener listener){
         trackLoadedListeners.add(listener);
     }
-
     private void notifyNewTrackLoaded(AudioFile track){
         AudioLibraryManager.getInstance().notifyAllAdapters();
         for (TrackLoadedListener listener : trackLoadedListeners){
@@ -239,6 +246,7 @@ public class AudioManager {
             listener.onNextTrackLoaded(track);
         }
     }
+
     private void notifyPrevTrackLoaded(AudioFile track){
         for (TrackLoadedListener listener : trackLoadedListeners){
             listener.onPrevTrackLoaded(track);
@@ -248,10 +256,6 @@ public class AudioManager {
     // SoundController redirection
     public void setPlaybackListener(PlaybackListener listener) {
         controller.setPlaybackListener(listener);
-    }
-
-    public boolean isPaused() {
-        return controller.isPaused();
     }
 
     public void setShuffle(boolean shuffle) {

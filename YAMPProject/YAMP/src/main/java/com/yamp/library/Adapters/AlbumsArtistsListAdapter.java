@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
+import com.yamp.core.YAMPApplication;
+import com.yamp.library.AlbumArtLoader;
 import com.yamp.library.AudioFile;
 import com.yamp.library.PlayList;
 import com.yamp.utils.Utilities;
@@ -77,6 +79,8 @@ public class AlbumsArtistsListAdapter extends BaseExpandableListAdapter implemen
         PlayList album = albumArtists.get(i);
         TextView albumName = (TextView) convertView.findViewById(R.id.txtAlbumartistName);
         TextView albumSongsAmount = (TextView) convertView.findViewById(R.id.txtAlbunartistAmount);
+        ImageView albumCover = (ImageView) convertView.findViewById(R.id.albumartistPicture);
+        albumCover.setImageBitmap(AlbumArtLoader.getArtwork(YAMPApplication.getInstance(),album.getID()));
         albumName.setText(album.getName());
         albumSongsAmount.setText(String.valueOf(album.size()));
         return convertView;

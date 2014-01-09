@@ -47,7 +47,7 @@ public class YAMPApplication extends Application {
         instance = this;
         Logger.enable();///TODO: enable/disable Logging here
         bindSoundController();
-        loadCurrentState();
+        SessionSaver.load();
 
         MusicIntentReceiver receiver = new MusicIntentReceiver();
         registerReceiver(receiver, new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY));
@@ -65,24 +65,16 @@ public class YAMPApplication extends Application {
                 }
             }
         };
-        telephony.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
+        telephony.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
     @Override
     public void onTerminate() {
-        saveCurrentState();
+        SessionSaver.save();
         telephony.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         super.onTerminate();
     }
-
-    private void loadCurrentState() {
-    }
-
-    private void saveCurrentState() {
-
-    }
-
 
     public class CallIntentReceiver extends BroadcastReceiver {
         @Override
@@ -140,6 +132,11 @@ public class YAMPApplication extends Application {
 
     public static void setOnSoundControllerBoundedListener(SoundControllerBoundedListener listener) {
         instance.soundControllerBoundedListeners.add(listener);
+    }
+
+    ///TODO: Temporary fix for SLR bug.
+    public static void addFirstSoundControllerBoundedListener(SoundControllerBoundedListener listener){
+        instance.soundControllerBoundedListeners.add(0, listener);
     }
 
     private void notifySoundControllerBounded() {
