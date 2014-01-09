@@ -3,23 +3,38 @@ package com.yamp.utils;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.yamp.R;
 import com.yamp.core.AudioManager;
 import com.yamp.core.PlayerMainActivity;
 import com.yamp.core.YAMPApplication;
+import com.yamp.events.TrackLoadedListener;
+import com.yamp.library.AlbumArtLoader;
+import com.yamp.library.AudioFile;
 
 /**
  * Created by AdYa on 09.01.14.
  */
 public class WidgetProvider extends AppWidgetProvider {
 
-    private static String PLAY_CLICK = "PLAY_CLICK";
-    private static String NEXT_CLICK = "NEXT_CLICK";
-    private static String PREV_CLICK = "PREV_CLICK";
+    private static String PLAY_CLICK = "YAMP_PLAY_CLICK";
+    private static String NEXT_CLICK = "YAMP_NEXT_CLICK";
+    private static String PREV_CLICK = "YAMP_PREV_CLICK";
+
+    private static void forceUpdate() {
+        Intent intent = new Intent(YAMPApplication.getInstance(),WidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(YAMPApplication.getInstance()).getAppWidgetIds(new ComponentName(YAMPApplication.getInstance(), WidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        YAMPApplication.getInstance().sendBroadcast(intent);
+    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -37,12 +52,13 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context unusedContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        Context context = YAMPApplication.getInstance();
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         final int N = appWidgetIds.length;
-
+        Log.i("WIDGET","UPDATED");
         // Perform this loop procedure for each App Widget that belongs to this provider
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             int appWidgetId = appWidgetIds[i];
 
             // Create an Intent to launch PlayerActivity
@@ -67,10 +83,19 @@ public class WidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-            views.setOnClickPendingIntent(R.id.wrlWidget, launchPendingIntent);
+            views.setOnClickPendingIntent(R.id.wivCover, launchPendingIntent);
             views.setOnClickPendingIntent(R.id.wbPlay, playPendingIntent);
             views.setOnClickPendingIntent(R.id.wbNext, nextPendingIntent);
             views.setOnClickPendingIntent(R.id.wbPrev, prevPendingIntent);
+
+            if (YAMPApplication.isPlayerReady()){
+                if (AudioManager.getInstance().isPlaying())
+                    views.setImageViewResource(R.id.wbPlay, R.drawable.button_pause);
+                else
+                    views.setImageViewResource(R.id.wbPlay, R.drawable.button_play);
+                views.setImageViewBitmap(R.id.wivCover, AlbumArtLoader.getArtwork(YAMPApplication.getInstance(), AudioManager.getInstance().getCurrent().getAlbumID()));
+                views.setTextViewText(R.id.wtvTitle, AudioManager.getInstance().getCurrent().getName());
+            }
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -80,9 +105,33 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        if (YAMPApplication.isPlayerReady()){
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
+        if (YAMPApplication.isPlayerReady()){
+            if (AudioManager.getInstance().isPlaying())
+                views.setImageViewResource(R.id.wbPlay, R.drawable.button_pause);
+            else
+                views.setImageViewResource(R.id.wbPlay, R.drawable.button_play);
         }
+        else
+            views.setImageViewResource(R.id.wbPlay, R.drawable.button_play);
+
+        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
+            @Override
+            public void onNewTrackLoaded(AudioFile track) {
+                WidgetProvider.forceUpdate();
+            }
+
+            @Override
+            public void onNextTrackLoaded(AudioFile nextTrack) {
+
+            }
+
+            @Override
+            public void onPrevTrackLoaded(AudioFile prevTrack) {
+
+            }
+        });
     }
 
 
@@ -100,5 +149,7 @@ public class WidgetProvider extends AppWidgetProvider {
         } else {
             AudioManager.getInstance().play();
         }
+        forceUpdate();
     }
+
 }
