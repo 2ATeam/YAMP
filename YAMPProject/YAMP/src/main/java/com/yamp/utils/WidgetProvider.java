@@ -110,6 +110,9 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onEnabled(context);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
+        views.setImageViewResource(R.id.wivCover, R.drawable.logo);
+        views.setTextViewText(R.id.wtvTitle, "Tap logo to run YAMP");
+
         if (YAMPApplication.isPlayerReady()){
             if (AudioManager.getInstance().isPlaying())
                 views.setImageViewResource(R.id.wbPlay, R.drawable.button_pause);

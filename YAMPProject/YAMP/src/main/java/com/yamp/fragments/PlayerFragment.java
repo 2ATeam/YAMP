@@ -41,6 +41,26 @@ public class PlayerFragment extends Fragment {
         setCover(AlbumArtLoader.getArtwork(getActivity(), AudioManager.getInstance().getCurrent().getAlbumID()));
         restoreState();
 
+        if (savedInstanceState == null){
+            AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
+                @Override
+                public void onNewTrackLoaded(AudioFile track) {
+                    updateText(track);
+                    setCover(AlbumArtLoader.getArtwork(YAMPApplication.getInstance().getApplicationContext(), track.getAlbumID()));
+                }
+
+                @Override
+                public void onNextTrackLoaded(AudioFile nextTrack) {
+                    ///TODO: add swipe animation to the album cover image
+                }
+
+                @Override
+                public void onPrevTrackLoaded(AudioFile prevTrack) {
+                    ///TODO: add swipe animation to the album cover image
+                }
+            });
+        }
+
         return fragment;
     }
 
@@ -49,23 +69,7 @@ public class PlayerFragment extends Fragment {
         tvTitle = (TextView) fragment.findViewById(R.id.tvTitle);
         ivCover = (ImageView) fragment.findViewById(R.id.ivCover);
 
-        AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
-            @Override
-            public void onNewTrackLoaded(AudioFile track) {
-              updateText(track);
-                setCover(AlbumArtLoader.getArtwork(YAMPApplication.getInstance().getApplicationContext(), track.getAlbumID()));
-            }
 
-            @Override
-            public void onNextTrackLoaded(AudioFile nextTrack) {
-                ///TODO: add swipe animation to the album cover image
-            }
-
-            @Override
-            public void onPrevTrackLoaded(AudioFile prevTrack) {
-                ///TODO: add swipe animation to the album cover image
-            }
-        });
     }
 
 

@@ -64,13 +64,13 @@ public class PlayerMainActivity extends FragmentActivity {
         audioLibraryFragment = new AudioLibraryFragment();
         afxFragment = new AFXFragment();
         playlistEditorFragment = new PlaylistEditorFragment();
+        initializeGestures();
 
         if (savedInstanceState != null) return;
         getSupportFragmentManager().beginTransaction().add(R.id.player_fragment, playerFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.timeline_fragment, new TimelineFragment()).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.control_fragment, new ControlFragment()).commit();
 
-        initializeGestures();
 
         AudioLibraryManager.getInstance().setResolver(getContentResolver());
         AudioLibraryManager.getInstance().performFullScan();
