@@ -14,9 +14,12 @@ import com.yamp.R;
 import com.yamp.core.AudioManager;
 import com.yamp.core.PlayerMainActivity;
 import com.yamp.core.YAMPApplication;
+import com.yamp.events.PlaybackListener;
+import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.events.TrackLoadedListener;
 import com.yamp.library.AlbumArtLoader;
 import com.yamp.library.AudioFile;
+import com.yamp.sound.SoundController;
 
 /**
  * Created by AdYa on 09.01.14.
@@ -112,9 +115,18 @@ public class WidgetProvider extends AppWidgetProvider {
                 views.setImageViewResource(R.id.wbPlay, R.drawable.button_pause);
             else
                 views.setImageViewResource(R.id.wbPlay, R.drawable.button_play);
+            init();
         }
-        else
+        else{
             views.setImageViewResource(R.id.wbPlay, R.drawable.button_play);
+
+        YAMPApplication.setOnSoundControllerBoundedListener(new SoundControllerBoundedListener() {
+            @Override
+            public void onSoundControllerBounded(SoundController controller) {
+               init();
+            }
+        });
+        }
 
         AudioManager.getInstance().setTrackLoadedListener(new TrackLoadedListener() {
             @Override
@@ -134,6 +146,29 @@ public class WidgetProvider extends AppWidgetProvider {
         });
     }
 
+private void init(){
+    AudioManager.getInstance().setPlaybackListener(new PlaybackListener() {
+        @Override
+        public void onPlayingStarted(boolean causedByUser) {
+            forceUpdate();
+        }
+
+        @Override
+        public void onPlayingPaused(int currentProgress) {
+            forceUpdate();
+        }
+
+        @Override
+        public void onPlayingResumed(int currentProgress) {
+            forceUpdate();
+        }
+
+        @Override
+        public void onPlayingCompleted(boolean causedByUser) {
+            forceUpdate();
+        }
+    });
+}
 
     private void prevHandler() {
         AudioManager.getInstance().prev();

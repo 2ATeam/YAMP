@@ -42,8 +42,8 @@
         </receiver>
 
         <receiver
-            android:icon="@drawable/logo"
-            android:label="Example Widget"
+            android:icon="@drawable/yamp"
+            android:label="YAMP Widget"
             android:name=".utils.WidgetProvider" >
             <intent-filter >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
