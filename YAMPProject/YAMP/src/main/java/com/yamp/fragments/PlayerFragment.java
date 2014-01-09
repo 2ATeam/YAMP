@@ -38,7 +38,9 @@ public class PlayerFragment extends Fragment {
         View fragment = inflater.inflate(R.layout.player_fragment, container, false);
 
         awakeComponents(fragment);
+        setCover(AlbumArtLoader.getArtwork(getActivity(), AudioManager.getInstance().getCurrent().getAlbumID()));
         restoreState();
+
         return fragment;
     }
 
