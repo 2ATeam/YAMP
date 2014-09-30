@@ -1,7 +1,5 @@
 package com.yamp.core;
 
-import android.support.v7.appcompat.R;
-
 import com.yamp.events.PlaybackListener;
 import com.yamp.events.SoundControllerBoundedListener;
 import com.yamp.events.TrackLoadedListener;
@@ -97,7 +95,7 @@ public class AudioManager {
             readyToPlay = true;
             setTrack(trackList.getCurrentTrack());
         }
-        controller.play(); // resume
+        controller.play(); /// resume
     }
 
     public void pause() {
