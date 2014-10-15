@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<selector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yamp="http://schemas.android.com/apk/res/com.yamp">
-    <item yamp:state_looping_none="true" android:drawable="@drawable/loop_none"/>
-    <item yamp:state_looping_all="true" android:drawable="@drawable/loop_all"/>
-    <item yamp:state_looping_single="true" android:drawable="@drawable/loop_single"/>
-</selector>
