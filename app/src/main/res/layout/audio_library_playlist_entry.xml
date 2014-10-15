@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Playlist Name"
+        android:id="@+id/txtPlaylistName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/playlistPicture"
+        android:layout_marginLeft="15dp"
+        android:editable="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playlistPicture"
+        android:maxHeight="120dp"
+        android:maxWidth="120dp"
+        android:minHeight="120dp"
+        android:minWidth="120dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/playlist"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="48dp"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="songs amount"
+        android:id="@+id/txtAlbunartistAmount"
+        android:layout_below="@+id/txtPlaylistName"
+        android:layout_toRightOf="@+id/playlistPicture"
+        android:layout_marginLeft="15dp" />
+
+    <ImageView
+        android:id="@+id/btnRemove"
+        style="@style/ButtonRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount"
+        android:clickable="true"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgEditPlaylist"
+        android:src="@drawable/add"
+        android:layout_alignBottom="@+id/txtAlbunartistAmount"
+        android:layout_toLeftOf="@+id/btnRemove"
+        android:maxWidth="50dp"
+        android:adjustViewBounds="true"
+        android:clickable="true" />
+
+</RelativeLayout>
